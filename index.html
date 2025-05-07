@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-[#0A1A2F] text-white font-[Poppins]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spudy Intelligence Header</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+  <style>
+    .glass {
+      background: rgba(10, 26, 47, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #00F0FF, #FFD700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pulse-glow {
+      animation: glow 2s infinite;
+    }
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 5px #00F0FF; }
+      50% { text-shadow: 0 0 15px #FFD700; }
+    }
+    .shrink-header {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      backdrop-filter: blur(12px);
+      background-color: rgba(10, 26, 47, 0.8);
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body class="relative overflow-x-hidden">
+
+  <!-- Header -->
+  <header id="spudy-header" class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center transition-all duration-300 bg-[#0A1A2F]">
+    
+    <!-- Logo -->
+    <a href="https://spudytv14.github.io/matipa-spudy/#spudy-music" class="text-2xl font-bold pulse-glow gradient-text">
+      Spudy Intelligence
+    </a>
+
+    <!-- Navigation -->
+    <nav class="hidden md:flex gap-10 text-lg items-center">
+      <div class="relative group">
+        <button class="hover:text-[#FFD700] transition">Services</button>
+        <div class="absolute top-full mt-2 left-0 hidden group-hover:block glass p-4 rounded-lg shadow-lg min-w-[150px] transition-all ease-[cubic-bezier(0.4, 0, 0.2, 1)]">
+          <a href="#" class="block py-1 hover:text-[#00F0FF]">AI Solutions</a>
+          <a href="#" class="block py-1 hover:text-[#FFD700]">Consulting</a>
+        </div>
+      </div>
+      <div class="relative group">
+        <button class="hover:text-[#FFD700] transition">Solutions</button>
+        <div class="absolute top-full mt-2 left-0 hidden group-hover:block glass p-4 rounded-lg shadow-lg min-w-[150px] transition-all ease-[cubic-bezier(0.4, 0, 0.2, 1)]">
+          <a href="#" class="block py-1 hover:text-[#00F0FF]">Smart Systems</a>
+          <a href="#" class="block py-1 hover:text-[#FFD700]">Data Analytics</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contact Us -->
+    <div class="relative group">
+      <button class="bg-[#FFD700] text-[#0A1A2F] px-4 py-2 rounded-full font-semibold hover:shadow-lg transition">
+        Contact Us
+      </button>
+      <div class="absolute right-0 top-full mt-2 hidden group-hover:flex flex-col gap-2 glass p-4 rounded-lg shadow-lg min-w-[220px] animate-fadeIn">
+        <a href="mailto:spudytv14@gmail.com" class="flex items-center gap-2 hover:text-[#00F0FF] transition">
+          <i class="fas fa-envelope"></i> spudytv14@gmail.com
+        </a>
+        <a href="https://wa.me/263716669706" class="flex items-center gap-2 hover:text-[#00F0FF] transition">
+          <i class="fab fa-whatsapp"></i> +263716669706
+        </a>
+        <a href="tel:+263776998296" class="flex items-center gap-2 hover:text-[#00F0FF] transition">
+          <i class="fas fa-phone-alt"></i> +263776998296
+        </a>
+      </div>
+
+      <!-- Security Icons -->
+      <div class="absolute -right-10 top-2 flex flex-col items-center gap-1 text-sm">
+        <div class="tooltip group relative">
+          <i class="fas fa-shield-alt text-[#00F0FF]"></i>
+          <span class="absolute -top-6 right-1 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1">Your Data is Protected</span>
+        </div>
+        <div class="tooltip group relative">
+          <i class="fas fa-check-circle text-[#FFD700]"></i>
+          <span class="absolute -top-6 right-1 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1">Your Data is Protected</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Spacer -->
+  <div class="pt-24"></div>
+
+  <!-- Sample Content -->
+  <section class="p-10 text-white">
+    <h1 class="text-5xl font-bold gradient-text mb-4">Welcome to Spudy Intelligence</h1>
+    <p class="text-lg text-gray-300">Empowering minds with AI solutions.</p>
+  </section>
+
+  <script>
+    // Header shrink on scroll
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('spudy-header');
+      if (window.scrollY > 10) {
+        header.classList.add('shrink-header');
+      } else {
+        header.classList.remove('shrink-header');
+      }
+    });
+  </script>
+</body>
+</html>
+
+<html lang="en" class="bg-[#0A1A2F] text-white font-[Poppins]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spudy Intelligence - Auth</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+  <style>
+    .glass {
+      background: rgba(10, 26, 47, 0.4);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .floating-label {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      color: #ccc;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    input:focus + label,
+    input:not(:placeholder-shown) + label {
+      transform: translateY(-1.5rem) scale(0.85);
+      color: #00F0FF;
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #FFD700, #00F0FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .underline-animate {
+      background: linear-gradient(to right, #FFD700, #00F0FF);
+      height: 2px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .input-wrapper:hover .underline-animate {
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+  <!-- Auth Card -->
+  <div class="glass w-full max-w-md p-8 rounded-xl shadow-2xl relative overflow-hidden transition-all duration-300" id="auth-card">
+    
+    <!-- Toggle -->
+    <div class="flex justify-between mb-6">
+      <button id="loginBtn" class="w-1/2 py-2 font-semibold text-[#00F0FF] border-b-2 border-[#00F0FF]">Login</button>
+      <button id="registerBtn" class="w-1/2 py-2 font-semibold text-gray-400 border-b-2 border-transparent">Register</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="space-y-6">
+      <div class="relative input-wrapper">
+        <input type="email" placeholder=" " class="w-full px-4 py-3 bg-transparent border-b border-gray-500 focus:outline-none peer text-white" id="loginEmail">
+        <label class="floating-label">Email</label>
+        <div class="underline-animate"></div>
+      </div>
+      <div class="relative input-wrapper">
+        <input type="password" placeholder=" " class="w-full px-4 py-3 bg-transparent border-b border-gray-500 focus:outline-none peer text-white" id="loginPassword">
+        <label class="floating-label">Password</label>
+        <div class="underline-animate"></div>
+      </div>
+      <button type="submit" class="w-full py-3 mt-4 bg-gradient-to-r from-[#FFD700] to-[#00F0FF] rounded-full font-semibold text-[#0A1A2F] hover:scale-105 transition-all">Login</button>
+    </form>
+
+    <!-- Register Form -->
+    <form id="registerForm" class="hidden space-y-6">
+      <div class="relative input-wrapper">
+        <input type="email" placeholder=" " class="w-full px-4 py-3 bg-transparent border-b border-gray-500 focus:outline-none peer text-white" id="regEmail">
+        <label class="floating-label">Email</label>
+        <div class="underline-animate"></div>
+        <p id="emailError" class="text-red-500 text-sm mt-1 hidden"><i class="fas fa-times-circle"></i> Invalid email format</p>
+      </div>
+      <div class="relative input-wrapper">
+        <input type="password" placeholder=" " class="w-full px-4 py-3 bg-transparent border-b border-gray-500 focus:outline-none peer text-white" id="regPassword">
+        <label class="floating-label">Password</label>
+        <div class="underline-animate"></div>
+      </div>
+      
+      <!-- Password Strength -->
+      <div class="w-full h-2 bg-gray-700 rounded overflow-hidden">
+        <div id="strengthBar" class="h-full bg-[#FFD700] transition-all duration-300 w-0"></div>
+      </div>
+
+      <!-- Password Checklist -->
+      <ul class="text-sm space-y-1 mt-2" id="passwordChecklist">
+        <li id="checkLength" class="text-gray-400"><i class="fas fa-times-circle mr-1"></i> 8+ characters</li>
+        <li id="checkUpper" class="text-gray-400"><i class="fas fa-times-circle mr-1"></i> Uppercase letter</li>
+        <li id="checkNumber" class="text-gray-400"><i class="fas fa-times-circle mr-1"></i> Number</li>
+        <li id="checkSymbol" class="text-gray-400"><i class="fas fa-times-circle mr-1"></i> Special symbol</li>
+      </ul>
+
+      <button type="submit" class="w-full py-3 mt-4 bg-gradient-to-r from-[#FFD700] to-[#00F0FF] rounded-full font-semibold text-[#0A1A2F] hover:scale-105 transition-all">Register</button>
+    </form>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="absolute top-0 left-0 w-full text-center py-3 bg-[#00F0FF]/80 text-[#0A1A2F] font-bold gradient-text hidden">
+      <i class="fas fa-check-circle"></i> Success!
+    </div>
+  </div>
+
+  <script>
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const successMessage = document.getElementById('successMessage');
+
+    loginBtn.onclick = () => {
+      loginForm.classList.remove('hidden');
+      registerForm.classList.add('hidden');
+      loginBtn.classList.add('text-[#00F0FF]', 'border-[#00F0FF]');
+      registerBtn.classList.remove('text-[#00F0FF]', 'border-[#00F0FF]');
+    };
+
+    registerBtn.onclick = () => {
+      registerForm.classList.remove('hidden');
+      loginForm.classList.add('hidden');
+      registerBtn.classList.add('text-[#00F0FF]', 'border-[#00F0FF]');
+      loginBtn.classList.remove('text-[#00F0FF]', 'border-[#00F0FF]');
+    };
+
+    const regEmail = document.getElementById('regEmail');
+    const emailError = document.getElementById('emailError');
+
+    regEmail.addEventListener('input', () => {
+      const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(regEmail.value);
+      emailError.classList.toggle('hidden', isValid);
+      regEmail.classList.toggle('border-red-500', !isValid);
+      regEmail.classList.toggle('border-[#00F0FF]', isValid);
+    });
+
+    const regPassword = document.getElementById('regPassword');
+    const checklistItems = {
+      checkLength: (v) => v.length >= 8,
+      checkUpper: (v) => /[A-Z]/.test(v),
+      checkNumber: (v) => /[0-9]/.test(v),
+      checkSymbol: (v) => /[^A-Za-z0-9]/.test(v)
+    };
+
+    regPassword.addEventListener('input', () => {
+      const val = regPassword.value;
+      let passed = 0;
+      for (const [id, test] of Object.entries(checklistItems)) {
+        const el = document.getElementById(id);
+        const pass = test(val);
+        passed += pass ? 1 : 0;
+        el.className = pass ? 'text-[#FFD700]' : 'text-gray-400';
+        el.innerHTML = `<i class="fas ${pass ? 'fa-check-circle' : 'fa-times-circle'} mr-1"></i> ${el.textContent.trim().split(' ').slice(1).join(' ')}`;
+      }
+      document.getElementById('strengthBar').style.width = `${passed * 25}%`;
+    });
+
+    registerForm.onsubmit = (e) => {
+      e.preventDefault();
+      successMessage.classList.remove('hidden');
+      setTimeout(() => {
+        successMessage.classList.add('hidden');
+        registerForm.reset();
+        document.getElementById('strengthBar').style.width = '0%';
+        for (const id in checklistItems) {
+          document.getElementById(id).className = 'text-gray-400';
+        }
+      }, 2000);
+    };
+
+    loginForm.onsubmit = (e) => {
+      e.preventDefault();
+      successMessage.classList.remove('hidden');
+      setTimeout(() => {
+        successMessage.classList.add('hidden');
+        loginForm.reset();
+      }, 2000);
+    };
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spudy Resources</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script>
+    // Inline countdown timer function
+    function countdownTimer() {
+      const target = new Date("2025-08-01T00:00:00").getTime();
+      setInterval(() => {
+        const now = new Date().getTime();
+        const diff = target - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById("countdown").innerText = `${days} days`;
+      }, 1000);
+    }
+    window.onload = countdownTimer;
+  </script>
+  <script>
+    function downloadBook() {
+      window.open("https://drive.google.com/yourbooklink", "_blank");
+      const toast = document.createElement("div");
+      toast.innerText = "✅ Download Started!";
+      toast.className = "fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-[#00F0FF] text-[#0A1A2F] font-semibold px-6 py-2 rounded shadow-lg animate-fade-in-up z-50";
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+
+    function copyEmail() {
+      navigator.clipboard.writeText("spudytv14@gmail.com");
+      const toast = document.getElementById("copyToast");
+      toast.classList.remove("hidden");
+      setTimeout(() => toast.classList.add("hidden"), 2000);
+    }
+
+    function toggleBookGrid() {
+      document.getElementById('bookGrid').classList.toggle('hidden');
+    }
+
+    function validateEmail(e) {
+      e.preventDefault();
+      const email = document.getElementById("courseEmail");
+      const error = document.getElementById("courseEmailError");
+      const success = document.getElementById("courseSuccess");
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+      error.classList.toggle("hidden", valid);
+      email.classList.toggle("border-red-500", !valid);
+      email.classList.toggle("border-[#00F0FF]", valid);
+      if (valid) {
+        success.classList.remove("hidden");
+        setTimeout(() => success.classList.add("hidden"), 2000);
+      }
+    }
+
+    function showCareerDetails(role) {
+      document.getElementById("careerDetails").classList.remove("hidden");
+    }
+  </script>
+  <script>
+    // Add basic animations
+    const style = document.createElement("style");
+    style.innerHTML = `
+      @keyframes bounce-slow {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+      }
+      .animate-bounce-slow { animation: bounce-slow 2.5s infinite; }
+
+      @keyframes slide-in-top {
+        0% { transform: translateY(20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+      }
+      .animate-slide-in-top { animation: slide-in-top 0.5s ease-out forwards; }
+
+      @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up { animation: fade-in-up 0.4s ease-in-out; }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .gradient-text {
+        background: linear-gradient(to right, #FFD700, #00F0FF);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0A1A2F] text-white font-[Poppins]">
+
+<section class="px-6 py-20 space-y-16">
+  <div class="text-center space-y-2">
+    <h2 class="text-4xl font-bold gradient-text">Spudy Resources</h2>
+    <p class="text-gray-300">Explore books, enroll in courses, or find your next career opportunity.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+    <!-- 📘 Books -->
+    <div onclick="toggleBookGrid()" class="glass p-6 rounded-xl hover:shadow-xl cursor-pointer transition-all duration-500 relative overflow-hidden">
+      <div class="flex items-center space-x-4 group">
+        <div class="w-12 h-12 bg-gradient-to-r from-[#00F0FF] to-[#FFD700] rounded-full flex items-center justify-center transform group-hover:rotate-[360deg] transition duration-700">
+          📚
+        </div>
+        <h3 class="text-xl font-semibold">Download Books</h3>
+      </div>
+      <div id="bookGrid" class="hidden mt-6 space-y-4 animate__animated animate__fadeIn">
+        <div class="flex flex-col items-center space-y-2">
+          <img src="https://via.placeholder.com/120x160" alt="Book Cover" class="w-32 h-44 rounded-lg shadow-lg hover:scale-105 transition animate-bounce-slow">
+          <h4 class="text-lg gradient-text">Chronicles of a Form One Legend</h4>
+          <button onclick="downloadBook()" class="bg-[#00F0FF] text-[#0A1A2F] font-semibold px-4 py-2 rounded hover:shadow-lg transition">Download</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🎓 Courses -->
+    <div class="glass p-6 rounded-xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xl font-semibold">Enroll in Courses</h3>
+        <span class="text-[#FFD700]" id="countdown">Loading...</span>
+      </div>
+      <form onsubmit="validateEmail(event)" class="space-y-4">
+        <div class="relative">
+          <input type="email" id="courseEmail" placeholder=" " class="w-full px-4 py-3 bg-transparent border-b border-gray-500 text-white focus:outline-none peer" />
+          <label class="absolute left-4 top-3 text-gray-400 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4 peer-focus:top-[-10px] peer-focus:text-sm transition-all">Notify Me</label>
+          <p id="courseEmailError" class="text-red-500 text-sm hidden"><i class="fas fa-times-circle"></i> Invalid email</p>
+        </div>
+        <button type="submit" class="w-full py-2 bg-gradient-to-r from-[#FFD700] to-[#00F0FF] text-[#0A1A2F] font-bold rounded hover:scale-105 transition">Register</button>
+        <div id="courseSuccess" class="text-green-400 hidden animate-slide-in-top">✅ Success! We’ll Contact You.</div>
+      </form>
+    </div>
+
+    <!-- 🧠 Careers -->
+    <div class="glass p-6 rounded-xl space-y-4">
+      <h3 class="text-xl font-semibold">Careers at Spudy</h3>
+      <div class="grid grid-cols-2 gap-4 text-center text-sm">
+        <div class="hover:bg-[#00F0FF]/10 p-3 rounded cursor-pointer" onclick="showCareerDetails('Technical')">🛠 Technical</div>
+        <div class="hover:bg-[#00F0FF]/10 p-3 rounded cursor-pointer" onclick="showCareerDetails('Marketing')">📣 Marketing</div>
+        <div class="hover:bg-[#00F0FF]/10 p-3 rounded cursor-pointer" onclick="showCareerDetails('Coder')">💻 Coder</div>
+        <div class="hover:bg-[#00F0FF]/10 p-3 rounded cursor-pointer" onclick="showCareerDetails('Brainstormers')">🧠 Brainstormers</div>
+      </div>
+      <div id="careerDetails" class="hidden mt-4 text-center space-y-2">
+        <p class="text-sm">Send CV to <span class="font-semibold">spudytv14@gmail.com</span></p>
+        <button onclick="copyEmail()" class="text-[#FFD700] border border-[#FFD700] px-4 py-1 rounded hover:animate-bounce hover:shadow-md">
+          <i class="fas fa-envelope"></i> Copy Email
+        </button>
+        <p id="copyToast" class="text-green-400 text-sm hidden">✅ Email Copied!</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spudy Ecosystem Showcase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* Tilt and Particle Effects */
+    .tilt-card {
+      transition: transform 0.3s ease;
+      transform-style: preserve-3d;
+    }
+    .tilt-card:hover {
+      transform: rotateY(8deg) rotateX(4deg);
+    }
+    .gradient-border {
+      border-image: linear-gradient(90deg, #0A1A2F, #FFD700) 1;
+    }
+    .magnetic {
+      transition: transform 0.2s ease;
+    }
+    .glass {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .infinite-scroll {
+      animation: scroll 30s linear infinite;
+    }
+    @keyframes drawUnderline {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+  </style>
+</head>
+<body class="bg-[#0A1A2F] text-white font-[Poppins] overflow-x-hidden">
+  <section class="p-10 space-y-20">
+    <!-- 1. Dynamic Feature Carousel -->
+    <div class="text-center space-y-4">
+      <h2 class="text-3xl font-bold text-[#FFD700]">Explore the Spudy Ecosystem</h2>
+      <div class="flex justify-center space-x-6 overflow-x-auto snap-x">
+        <div class="tilt-card snap-center bg-[#1A2B44] p-6 rounded-xl w-64 text-center relative group">
+          <div class="text-5xl mb-4 text-[#FFD700]">🎵</div>
+          <h3 class="text-xl font-bold mb-2">Spudy Music</h3>
+          <button class="bg-[#00F0FF] text-[#0A1A2F] px-4 py-2 mt-2 rounded magnetic">Explore</button>
+        </div>
+        <div class="tilt-card snap-center bg-[#1A2B44] p-6 rounded-xl w-64 text-center relative group">
+          <div class="text-5xl mb-4 text-[#FFD700]">📚</div>
+          <h3 class="text-xl font-bold mb-2">Spudy Books</h3>
+          <button class="bg-[#00F0FF] text-[#0A1A2F] px-4 py-2 mt-2 rounded magnetic">Explore</button>
+        </div>
+        <div class="tilt-card snap-center bg-[#1A2B44] p-6 rounded-xl w-64 text-center relative group">
+          <div class="text-5xl mb-4 text-[#FFD700]">🧠</div>
+          <h3 class="text-xl font-bold mb-2">Spudy AI Labs</h3>
+          <button class="bg-[#00F0FF] text-[#0A1A2F] px-4 py-2 mt-2 rounded magnetic">Explore</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Glowing Testimonials -->
+    <div class="text-center space-y-6">
+      <h2 class="text-3xl font-bold gradient-text">What People Say</h2>
+      <div class="flex space-x-4 overflow-x-auto snap-x">
+        <div class="glass snap-center p-6 rounded-xl min-w-[300px]">
+          <video class="rounded w-full" controls>
+            <source src="testimony.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <p class="mt-3 text-sm text-gray-300">“Spudy changed how I study. Just wow!”</p>
+        </div>
+        <div class="glass snap-center p-6 rounded-xl min-w-[300px]">
+          <video class="rounded w-full" controls>
+            <source src="testimony2.mp4" type="video/mp4" />
+          </video>
+          <p class="mt-3 text-sm text-gray-300">“AI Labs gave me superpowers in coding.”</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Partnership Logos Grid -->
+    <div>
+      <h2 class="text-2xl font-bold text-center mb-6">Our Partners</h2>
+      <div class="overflow-hidden whitespace-nowrap relative">
+        <div class="flex space-x-10 infinite-scroll">
+          <img src="partner1.png" class="h-12 grayscale hover:grayscale-0 transition hover:scale-110" />
+          <img src="partner2.png" class="h-12 grayscale hover:grayscale-0 transition hover:scale-110" />
+          <img src="partner3.png" class="h-12 grayscale hover:grayscale-0 transition hover:scale-110" />
+          <!-- more logos -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Newsletter -->
+    <div class="text-center space-y-4">
+      <h2 class="text-2xl font-bold">Join Our Newsletter</h2>
+      <form onsubmit="event.preventDefault(); document.getElementById('newsletter-msg').classList.remove('hidden');" class="space-y-4">
+        <input type="email" placeholder="Your Email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" class="px-4 py-2 rounded border-2 gradient-border focus:outline-none" />
+        <br />
+        <button type="submit" class="bg-[#FFD700] text-[#0A1A2F] px-6 py-2 rounded hover:scale-105">Join</button>
+        <div id="newsletter-msg" class="hidden text-[#00F0FF] mt-2">✔️ Welcome to the Spudy Circle!</div>
+      </form>
+    </div>
+
+    <!-- 5. Live Stats Counter -->
+    <div class="text-center">
+      <h2 class="text-2xl font-bold mb-4">Our Impact</h2>
+      <div class="text-[#FFD700] text-lg space-x-6">
+        <span id="downloads">0</span>+ Downloads
+        <span id="courses">0</span>+ Courses
+        <span id="hires">0</span>+ Hires
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Stats roll-up
+    const stats = [
+      { id: 'downloads', end: 10000 },
+      { id: 'courses', end: 200 },
+      { id: 'hires', end: 50 }
+    ];
+    stats.forEach(stat => {
+      let start = 0;
+      const el = document.getElementById(stat.id);
+      const duration = 1500;
+      const increment = stat.end / (duration / 30);
+      const counter = setInterval(() => {
+        start += increment;
+        if (start >= stat.end) {
+          el.innerText = stat.end.toLocaleString();
+          clearInterval(counter);
+        } else {
+          el.innerText = Math.floor(start).toLocaleString();
+        }
+      }, 30);
+    });
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spudy Intelligence Footer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.9.0/umd/Draggable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    body { margin: 0; font-family: 'Poppins', sans-serif; }
+    .footer { background: #0A1A2F; padding: 50px 10% 30px 10%; color: white; position: relative; }
+    .footer-column { display: flex; justify-content: space-between; }
+    .footer-column div { width: 30%; }
+    .footer a { color: #FFD700; text-decoration: none; font-size: 16px; transition: all 0.3s ease; }
+    .footer a:hover { text-decoration: underline; }
+    .footer .quick-links a { display: block; margin: 10px 0; }
+    .footer .contact-matrix i { font-size: 24px; padding: 10px; cursor: pointer; transition: transform 0.2s ease; }
+    .footer .contact-matrix i:hover { transform: scale(1.1); }
+    .footer .social-hub i { font-size: 28px; margin: 10px; cursor: pointer; transition: all 0.3s ease; }
+    .footer .social-hub i:hover { transform: scale(1.2); }
+    .chat-toggle { position: fixed; bottom: 20px; right: 20px; background: gold; border-radius: 50px; padding: 15px; cursor: pointer; transition: all 0.3s ease; }
+    .back-to-top { position: fixed; bottom: 100px; right: 20px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; padding: 15px; cursor: pointer; transition: all 0.3s ease; }
+    .back-to-top:hover { background: #00F0FF; }
+    .footer .legal-text { text-align: center; font-size: 14px; color: gold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .footer .legal-text p { animation: scroll 10s linear infinite; }
+    @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    .footer .signature { position: relative; font-size: 22px; font-weight: bold; transition: all 0.3s ease; }
+    .footer .signature:hover { color: #FFD700; }
+    .footer .signature span { display: inline-block; transition: all 0.5s ease; }
+    .footer .signature span:hover { transform: translateY(-5px); }
+  </style>
+</head>
+<body>
+  <footer class="footer">
+    <div class="footer-column">
+      <div class="quick-links">
+        <h3>Quick Links</h3>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+        <div class="dropdowns">
+          <a href="#">Services</a>
+          <a href="#">Resources</a>
+        </div>
+      </div>
+      <div class="contact-matrix">
+        <h3>Contact Us</h3>
+        <i class="fas fa-envelope" onclick="copyToClipboard('email')"></i>
+        <i class="fas fa-phone-alt" onclick="copyToClipboard('phone')"></i>
+        <i class="fab fa-whatsapp" onclick="copyToClipboard('whatsapp')"></i>
+        <span id="copied-toast" style="display: none; color: green;">✔️ Copied!</span>
+      </div>
+      <div class="social-hub">
+        <h3>Follow Us</h3>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-facebook-f"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-linkedin-in"></i>
+      </div>
+    </div>
+    <div class="legal-text">
+      <p>&copy; 2025 Spudy Intelligence Company. All Rights Reserved.</p>
+    </div>
+    <div class="signature">
+      <span>SPUDY INTELLIGENCE</span>
+    </div>
+    <div class="chat-toggle">
+      <i class="fas fa-comment"></i>
+    </div>
+    <div class="back-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+  </footer>
+
+  <script>
+    // GSAP Animations
+    gsap.from('.footer', { y: 200, opacity: 0, duration: 0.5, delay: 0.3 });
+
+    // Copy to Clipboard Function
+    function copyToClipboard(type) {
+      let text = '';
+      if (type === 'email') text = 'spudytv14@gmail.com';
+      if (type === 'phone') text = '+263716669706';
+      if (type === 'whatsapp') text = '+263776998296';
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('copied-toast');
+        toast.style.display = 'inline';
+        setTimeout(() => toast.style.display = 'none', 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
