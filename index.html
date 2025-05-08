@@ -148,7 +148,6 @@
 
 </body>
 </html>
------
  <!-- LOGIN / REGISTER SECTION BELOW HEADER -->
 <section id="auth-section" style="margin-top: 100px;">
   <div class="auth-container">
@@ -349,5 +348,198 @@
     emailEl.value = '';
     passwordEl.value = '';
     document.querySelectorAll('.form-group').forEach(group => group.classList.remove('success', 'error'));
+  }
+</script>
+------------
+<!-- Explore Opportunities Section (Below Login/Register) -->
+<section id="explore-opportunities" style="display: none; margin-top: 50px;">
+  <div class="container">
+    <h2>Explore Opportunities</h2>
+    <div class="cards-container">
+      <!-- Spudy Books -->
+      <div class="card" onclick="openSpudyBooks()">
+        <h3>Download Spudy Books</h3>
+        <img src="spudybook1.png" alt="Spudy Book" class="icon" />
+        <p>Discover our latest book: Spudy: Chronicles of a Form One Legend.</p>
+      </div>
+
+      <!-- Enroll in Spudy Courses -->
+      <div class="card" onclick="enrollCourses()">
+        <h3>Join Our Learning Network</h3>
+        <img src="spudy-courses.png" alt="Courses Icon" class="icon" />
+        <p>Upcoming class starts August 2025.</p>
+      </div>
+
+      <!-- Careers at Spudy -->
+      <div class="card" onclick="openCareers()">
+        <h3>Be Part of Our Future</h3>
+        <img src="spudy-careers.png" alt="Careers Icon" class="icon" />
+        <p>We're hiring across multiple roles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal for Spudy Books -->
+<div id="booksModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3>Available Books</h3>
+    <p><strong>Spudy: Chronicles of a Form One Legend</strong></p>
+    <a href="https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=sharing" target="_blank">Download</a>
+  </div>
+</div>
+
+<style>
+  /* Explore Opportunities Section */
+  #explore-opportunities {
+    text-align: center;
+    padding: 50px 20px;
+    background: #0d1117;
+    color: #f1f1f1;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .cards-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    width: 30%;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #fff;
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 20px rgba(0, 255, 170, 0.2);
+  }
+
+  .card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .card .icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+  }
+
+  .card p {
+    font-size: 16px;
+  }
+
+  /* Modal for Spudy Books */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    color: #333;
+  }
+
+  .modal-content h3 {
+    margin-bottom: 20px;
+  }
+
+  .close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .cards-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+</style>
+
+<script>
+  // Simulate check for login status
+  let isLoggedIn = false; // Update this based on your actual login state
+
+  // Check if the user is logged in before showing the Explore Opportunities section
+  if (!isLoggedIn) {
+    document.getElementById('explore-opportunities').style.display = 'none';
+    alert('Please log in first.');
+    window.location.href = '#auth-section'; // Scroll to the login section
+  } else {
+    document.getElementById('explore-opportunities').style.display = 'block';
+  }
+
+  // Functions for opening modals and actions
+  function openSpudyBooks() {
+    if (isLoggedIn) {
+      document.getElementById('booksModal').style.display = 'block';
+    } else {
+      alert('Please log in to view Spudy Books.');
+      window.location.href = '#auth-section'; // Scroll to login
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('booksModal').style.display = 'none';
+  }
+
+  function enrollCourses() {
+    if (isLoggedIn) {
+      alert('You have successfully enrolled in Spudy Courses!');
+    } else {
+      alert('Please log in to enroll in courses.');
+      window.location.href = '#auth-section'; // Scroll to login
+    }
+  }
+
+  function openCareers() {
+    if (isLoggedIn) {
+      window.location.href = 'mailto:spudytv14@gmail.com?subject=Job Application - [Role]';
+    } else {
+      alert('Please log in to apply for careers.');
+      window.location.href = '#auth-section'; // Scroll to login
+    }
   }
 </script>
