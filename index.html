@@ -1,120 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Spudy Intelligence Technologies - Premium Header</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spudy Intelligence Technologies</title>
   <style>
-    /* Header Styles */
+    :root {
+      --emerald: #10b981;
+      --dark-bg: #0d1117;
+      --text-light: #f1f1f1;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #121212;
-      color: #fff;
+      background-color: var(--dark-bg);
+      font-family: 'Segoe UI', sans-serif;
+      color: var(--text-light);
     }
-    
-    #header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(145deg, #0f172a, #0d1117);
-      padding: 20px 40px;
+
+    /* Header Layout */
+    header {
       position: sticky;
       top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #10b981;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      background: linear-gradient(145deg, #0f172a, #0d1117);
       display: flex;
       align-items: center;
-      animation: shine 2s infinite alternate;
+      justify-content: space-between;
+      padding: 30px 60px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      z-index: 999;
+      flex-wrap: wrap;
     }
 
-    .logo span {
-      color: #ffffff;
+    /* Logo Section */
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--emerald);
+      animation: glow 2s infinite alternate;
+      text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
     }
 
-    @keyframes shine {
-      0% {
-        color: #10b981;
-      }
-      50% {
-        color: #ffffff;
-      }
-      100% {
-        color: #10b981;
-      }
+    @keyframes glow {
+      0% { text-shadow: 0 0 8px rgba(16,185,129,0.5); }
+      100% { text-shadow: 0 0 16px rgba(16,185,129,0.8); }
     }
 
+    /* Nav Styling */
     nav ul {
-      list-style-type: none;
+      list-style: none;
       display: flex;
-      gap: 30px;
-      margin: 0;
+      gap: 24px;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    nav li {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 12px 24px;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    nav li:hover {
+      background-color: rgba(16, 185, 129, 0.15);
+      transform: translateY(-2px);
     }
 
     nav a {
+      color: var(--text-light);
       text-decoration: none;
-      color: #fff;
       font-size: 18px;
-      transition: color 0.3s ease, transform 0.3s ease;
+      font-weight: 500;
     }
 
-    nav a:hover {
-      color: #10b981;
-      transform: scale(1.1);
-    }
-
-    /* Contact Us Section */
+    /* Contact Icons */
     .contact-icons {
       display: flex;
       gap: 20px;
+      padding-top: 10px;
     }
 
     .contact-icons a {
-      font-size: 24px;
-      color: #fff;
-      transition: transform 0.3s ease, color 0.3s ease;
+      font-size: 26px;
+      color: var(--text-light);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+      padding: 12px;
+      text-align: center;
+      width: 50px;
+      height: 50px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease, background 0.3s ease;
     }
 
     .contact-icons a:hover {
-      color: #10b981;
-      transform: scale(1.2);
+      background-color: var(--emerald);
+      color: #000;
+      transform: scale(1.15);
     }
 
-    /* Mobile Responsiveness */
+    /* Responsive Behavior */
     @media (max-width: 768px) {
-      #header {
+      header {
         flex-direction: column;
         align-items: flex-start;
+        padding: 30px;
       }
 
       nav ul {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
       }
 
       .contact-icons {
-        margin-top: 10px;
+        margin-top: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header Section -->
-  <header id="header">
-    <div class="logo">
-      <span>Spudy</span> Intelligence Technologies
-    </div>
+  <header>
+    <div class="logo">Spudy Intelligence</div>
+
     <nav>
       <ul>
         <li><a href="#">About</a></li>
@@ -124,16 +137,14 @@
         <li><a href="#">Blog</a></li>
       </ul>
     </nav>
+
     <div class="contact-icons">
       <a href="mailto:spudytv14@gmail.com" title="Email">&#9993;</a>
-      <a href="https://wa.me/263716669706" title="WhatsApp">&#9742;</a>
+      <a href="https://wa.me/263716669706" title="WhatsApp">&#128241;</a>
       <a href="tel:+263776998296" title="Call">&#128222;</a>
       <a href="#" title="Telegram">&#128172;</a>
     </div>
   </header>
 
-  <script>
-    // Optional: Add JS for scroll-triggered animation or other interactions if needed
-  </script>
 </body>
 </html>
