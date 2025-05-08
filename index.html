@@ -78,3 +78,77 @@
 
 </body>
 </html>
+----
+<!-- Spudy Intelligence: Books, Courses, Careers Section -->
+<section class="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-800 py-24 px-6 text-white" id="spudy-actions">
+  <div class="max-w-7xl mx-auto text-center mb-16">
+    <h2 class="text-4xl md:text-5xl font-bold mb-4 animate-fade-up">Join the Movement</h2>
+    <p class="text-xl text-blue-300 animate-fade-up delay-100">Explore how Spudy Intelligence is shaping the future across books, education, and innovation careers.</p>
+  </div>
+
+  <!-- Grid of Action Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
+    
+    <!-- Books Card -->
+    <div class="bg-white bg-opacity-5 backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-blue-500/30 transition-all duration-300 group relative">
+      <h3 class="text-2xl font-semibold mb-2">Spudy Books</h3>
+      <p class="text-blue-200 mb-4">Explore our featured reads.</p>
+      <img src="spudybook1.png" alt="Spudy Book" class="w-16 h-16 mx-auto group-hover:scale-110 transition" />
+      
+      <button onclick="toggleBook()" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl transition">View Book</button>
+
+      <div id="bookDetails" class="mt-4 hidden text-sm animate-fade-in">
+        <p class="mb-2 font-medium">📘 Spudy: Chronicles of a Form One Legend</p>
+        <a href="https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=sharing" target="_blank"
+           class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-700 px-4 py-2 rounded-lg inline-block font-semibold mt-2">
+          📥 Download Book
+        </a>
+      </div>
+    </div>
+
+    <!-- Courses Card -->
+    <div class="bg-white bg-opacity-5 backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
+      <h3 class="text-2xl font-semibold mb-2">Spudy Courses</h3>
+      <p class="text-blue-200 mb-4">Next class starts <strong>August 2025</strong></p>
+      <form onsubmit="registerCourse(event)" class="space-y-4">
+        <input type="email" id="courseEmail" placeholder="Your Email"
+               class="w-full px-4 py-2 rounded-lg bg-blue-900 bg-opacity-40 placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition" required />
+        <button type="submit"
+                class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-indigo-700 hover:to-blue-800 py-2 rounded-xl font-semibold transition">
+          📩 Register for Class
+        </button>
+        <p id="courseConfirm" class="text-green-400 mt-2 hidden">✅ You've been registered!</p>
+      </form>
+    </div>
+
+    <!-- Careers Card -->
+    <div class="bg-white bg-opacity-5 backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
+      <h3 class="text-2xl font-semibold mb-2">Careers at Spudy</h3>
+      <p class="text-blue-200 mb-4">Send us your CV — we’re hiring!</p>
+      <ul class="text-sm text-left space-y-2">
+        <li>👨‍💻 Technical Specialist</li>
+        <li>📣 Marketing Expert</li>
+        <li>💻 Coder</li>
+        <li>🧠 Brainstormer</li>
+      </ul>
+      <a href="mailto:spudytv14@gmail.com"
+         class="mt-6 inline-block bg-gradient-to-r from-purple-600 to-pink-600 hover:from-pink-600 hover:to-purple-700 text-white px-4 py-2 rounded-xl font-medium transition">
+        ✉️ Send CV via Email
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript for Book Toggle and Form -->
+<script>
+  function toggleBook() {
+    const book = document.getElementById('bookDetails');
+    book.classList.toggle('hidden');
+  }
+
+  function registerCourse(event) {
+    event.preventDefault();
+    const confirmMsg = document.getElementById('courseConfirm');
+    confirmMsg.classList.remove('hidden');
+  }
+</script>
