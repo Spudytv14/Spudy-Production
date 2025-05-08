@@ -149,154 +149,9 @@
 </body>
 </html>
 -----
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login/Register | Spudy</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at top left, #0f172a, #0d1117);
-      font-family: 'Segoe UI', sans-serif;
-      color: #f1f1f1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .auth-wrapper {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 40px;
-      width: 360px;
-      box-shadow: 0 0 20px rgba(0, 255, 170, 0.1);
-      animation: fadeScale 0.8s ease-out;
-      position: relative;
-    }
-
-    @keyframes fadeScale {
-      0% { opacity: 0; transform: scale(0.95); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 28px;
-    }
-
-    .tab-buttons {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .tab-buttons button {
-      background: none;
-      border: none;
-      color: #f1f1f1;
-      margin: 0 10px;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 20px;
-      transition: background 0.3s;
-    }
-
-    .tab-buttons button.active, .tab-buttons button:hover {
-      background: rgba(16, 185, 129, 0.3);
-    }
-
-    .form-group {
-      position: relative;
-      margin-bottom: 20px;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.07);
-      color: #f1f1f1;
-      outline: none;
-    }
-
-    .form-group label {
-      position: absolute;
-      left: 12px;
-      top: 12px;
-      transition: 0.3s ease;
-      pointer-events: none;
-      color: #aaa;
-    }
-
-    .form-group input:focus + label,
-    .form-group input:not(:placeholder-shown) + label {
-      top: -10px;
-      left: 8px;
-      font-size: 12px;
-      color: #10b981;
-    }
-
-    .form-group.success input {
-      border: 2px solid #10b981;
-    }
-
-    .form-group.error input {
-      border: 2px solid #ef4444;
-      animation: shake 0.3s;
-    }
-
-    .form-group small {
-      color: #10b981;
-      display: none;
-    }
-
-    .form-group.success small {
-      display: block;
-      animation: fadeOut 3s forwards;
-    }
-
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
-    }
-
-    @keyframes fadeOut {
-      0% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { opacity: 0; display: none; }
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 12px;
-      background: #10b981;
-      border: none;
-      color: black;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .submit-btn:hover {
-      background: #14f1a2;
-    }
-
-    .hidden {
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="auth-wrapper" id="authWrapper">
+ <!-- LOGIN / REGISTER SECTION BELOW HEADER -->
+<section id="auth-section" style="margin-top: 100px;">
+  <div class="auth-container">
     <h2 id="formTitle">Login</h2>
     <div class="tab-buttons">
       <button class="active" onclick="switchForm('login')">Login</button>
@@ -316,43 +171,183 @@
       <button type="submit" class="submit-btn">Submit</button>
     </form>
   </div>
+</section>
 
-  <script>
-    const emailEl = document.getElementById('email');
-    const passwordEl = document.getElementById('password');
-    const form = document.getElementById('authForm');
-    const wrapper = document.getElementById('authWrapper');
+<style>
+  #auth-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #0f172a, #0d1117);
+    padding: 50px 20px;
+  }
 
-    const validateEmail = email => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);
-    const validatePassword = pwd => /^(?=.*\\d)(?=.*[A-Z])(?=.*\\W).{8,}$/.test(pwd);
+  .auth-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.15);
+    backdrop-filter: blur(15px);
+    animation: fadeScale 0.8s ease-out;
+    color: #f1f1f1;
+  }
 
-    const setStatus = (el, isValid) => {
-      const group = el.parentElement;
-      group.classList.remove('success', 'error');
-      group.classList.add(isValid ? 'success' : 'error');
-    };
+  @keyframes fadeScale {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const emailValid = validateEmail(emailEl.value);
-      const pwdValid = validatePassword(passwordEl.value);
+  .auth-container h2 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 30px;
+  }
 
-      setStatus(emailEl, emailValid);
-      setStatus(passwordEl, pwdValid);
+  .tab-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
 
-      if (emailValid && pwdValid) {
-        setTimeout(() => wrapper.style.display = 'none', 2000);
-      }
-    });
+  .tab-buttons button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    color: #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
 
-    function switchForm(type) {
-      document.getElementById('formTitle').innerText = type.charAt(0).toUpperCase() + type.slice(1);
-      document.querySelectorAll('.tab-buttons button').forEach(btn => btn.classList.remove('active'));
-      document.querySelector('.tab-buttons button:nth-child(' + (type === 'login' ? 1 : 2) + ')').classList.add('active');
-      emailEl.value = '';
-      passwordEl.value = '';
-      document.querySelectorAll('.form-group').forEach(group => group.classList.remove('success', 'error'));
+  .tab-buttons button.active,
+  .tab-buttons button:hover {
+    background: rgba(16, 185, 129, 0.3);
+    color: #10b981;
+  }
+
+  .form-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.07);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    outline: none;
+  }
+
+  .form-group label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    transition: 0.3s;
+    color: #aaa;
+    pointer-events: none;
+  }
+
+  .form-group input:focus + label,
+  .form-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #10b981;
+  }
+
+  .form-group.success input {
+    border: 2px solid #10b981;
+  }
+
+  .form-group.error input {
+    border: 2px solid #ef4444;
+    animation: shake 0.3s;
+  }
+
+  .form-group small {
+    color: #10b981;
+    display: none;
+    font-size: 12px;
+  }
+
+  .form-group.success small {
+    display: block;
+    animation: fadeOut 3s forwards;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #10b981;
+    color: black;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background: #14f1a2;
+  }
+
+  @media (max-width: 480px) {
+    .auth-container {
+      padding: 30px 20px;
     }
-  </script>
-</body>
-</html>
+  }
+</style>
+
+<script>
+  const emailEl = document.getElementById('email');
+  const passwordEl = document.getElementById('password');
+  const form = document.getElementById('authForm');
+  const wrapper = document.getElementById('auth-section');
+
+  const validateEmail = email => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);
+  const validatePassword = pwd => /^(?=.*\\d)(?=.*[A-Z])(?=.*\\W).{8,}$/.test(pwd);
+
+  const setStatus = (el, isValid) => {
+    const group = el.parentElement;
+    group.classList.remove('success', 'error');
+    group.classList.add(isValid ? 'success' : 'error');
+  };
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const emailValid = validateEmail(emailEl.value);
+    const pwdValid = validatePassword(passwordEl.value);
+
+    setStatus(emailEl, emailValid);
+    setStatus(passwordEl, pwdValid);
+
+    if (emailValid && pwdValid) {
+      setTimeout(() => wrapper.style.display = 'none', 2000);
+    }
+  });
+
+  function switchForm(type) {
+    document.getElementById('formTitle').innerText = type.charAt(0).toUpperCase() + type.slice(1);
+    document.querySelectorAll('.tab-buttons button').forEach(btn => btn.classList.remove('active'));
+    document.querySelector('.tab-buttons button:nth-child(' + (type === 'login' ? 1 : 2) + ')').classList.add('active');
+    emailEl.value = '';
+    passwordEl.value = '';
+    document.querySelectorAll('.form-group').forEach(group => group.classList.remove('success', 'error'));
+  }
+</script>
