@@ -2,531 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Spudy Intelligence Technologies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spudy Intelligence Company</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root {
-      --emerald: #10b981;
-      --dark-bg: #0d1117;
-      --text-light: #f1f1f1;
+    .glass {
+      backdrop-filter: blur(10px);
+      background: rgba(10, 25, 47, 0.75);
     }
 
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--dark-bg);
-      font-family: 'Segoe UI', sans-serif;
-      color: var(--text-light);
-    }
-
-    /* Header Layout */
-    header {
-      position: sticky;
-      top: 0;
-      background: linear-gradient(145deg, #0f172a, #0d1117);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 30px 60px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-      z-index: 999;
-      flex-wrap: wrap;
-    }
-
-    /* Logo Section */
-    .logo {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      color: var(--emerald);
-      animation: glow 2s infinite alternate;
-      text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
-    }
-
-    @keyframes glow {
-      0% { text-shadow: 0 0 8px rgba(16,185,129,0.5); }
-      100% { text-shadow: 0 0 16px rgba(16,185,129,0.8); }
-    }
-
-    /* Nav Styling */
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 24px;
-      padding: 0;
-      margin: 20px 0;
-    }
-
-    nav li {
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 12px 24px;
-      border-radius: 50px;
-      transition: all 0.3s ease;
-    }
-
-    nav li:hover {
-      background-color: rgba(16, 185, 129, 0.15);
-      transform: translateY(-2px);
-    }
-
-    nav a {
-      color: var(--text-light);
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 500;
-    }
-
-    /* Contact Icons */
-    .contact-icons {
-      display: flex;
-      gap: 20px;
-      padding-top: 10px;
-    }
-
-    .contact-icons a {
-      font-size: 26px;
-      color: var(--text-light);
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 50%;
-      padding: 12px;
-      text-align: center;
-      width: 50px;
-      height: 50px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-
-    .contact-icons a:hover {
-      background-color: var(--emerald);
-      color: #000;
+    .icon-hover:hover {
       transform: scale(1.15);
+      transition: transform 0.3s ease;
     }
 
-    /* Responsive Behavior */
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 30px;
-      }
+    .dropdown-enter {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
 
-      nav ul {
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .contact-icons {
-        margin-top: 20px;
-      }
+    .dropdown-enter-active {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 300ms, transform 300ms;
     }
   </style>
 </head>
-<body>
+<body class="bg-gray-900 text-white">
 
-  <header>
-    <div class="logo">Spudy Intelligence Technologies</div>
+  <!-- Header -->
+  <header class="fixed top-0 w-full z-50 glass shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold tracking-tight">Spudy <span class="text-blue-400">Intelligence</span> Company</h1>
+      <nav class="flex items-center gap-6">
+        <a href="#home" class="hover:text-blue-400 transition">Home</a>
+        <a href="#about" class="hover:text-blue-400 transition">About</a>
+        <a href="#events" class="hover:text-blue-400 transition">Events</a>
+        <a href="#register" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition text-white font-semibold shadow-lg">Register Now</a>
 
-    <nav>
-      <ul>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Blog</a></li>
-      </ul>
-    </nav>
-
-    <div class="contact-icons">
-      <a href="mailto:spudytv14@gmail.com" title="Email">&#9993;</a>
-      <a href="https://wa.me/263716669706" title="WhatsApp">&#128241;</a>
-      <a href="tel:+263776998296" title="Call">&#128222;</a>
-      <a href="#" title="Telegram">&#128172;</a>
+        <!-- Contact Dropdown -->
+        <div class="relative group">
+          <button class="text-white hover:text-blue-400 transition">Contact Us</button>
+          <div class="absolute right-0 mt-2 hidden group-hover:flex flex-col bg-blue-800 p-3 rounded-xl shadow-lg space-y-3 z-50">
+            <a href="mailto:spudytv14@gmail.com" class="icon-hover">
+              <img src="https://www.svgrepo.com/show/223047/email.svg" alt="Email" class="w-6 h-6" />
+            </a>
+            <a href="https://wa.me/263716669706" target="_blank" class="icon-hover">
+              <img src="https://www.svgrepo.com/show/303150/whatsapp-symbol-logo.svg" alt="WhatsApp" class="w-6 h-6" />
+            </a>
+            <a href="tel:+263776998296" class="icon-hover">
+              <img src="https://www.svgrepo.com/show/21069/phone.svg" alt="Phone" class="w-6 h-6" />
+            </a>
+            <a href="#" class="icon-hover">
+              <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" class="w-6 h-6" />
+            </a>
+            <a href="#" class="icon-hover">
+              <img src="https://www.svgrepo.com/show/452229/instagram-1.svg" alt="Instagram" class="w-6 h-6" />
+            </a>
+            <a href="#" class="icon-hover">
+              <img src="https://www.svgrepo.com/show/448234/twitter.svg" alt="X" class="w-6 h-6" />
+            </a>
+          </div>
+        </div>
+      </nav>
     </div>
   </header>
 
+  <!-- Hero Section Background Placeholder -->
+  <section class="h-screen flex items-center justify-center text-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');">
+    <div class="bg-black bg-opacity-60 p-10 rounded-xl">
+      <h2 class="text-4xl md:text-6xl font-bold mb-4">Driven by Innovation</h2>
+      <p class="text-xl md:text-2xl text-blue-300">Powered by Passion</p>
+    </div>
+  </section>
+
 </body>
 </html>
- <!-- LOGIN / REGISTER SECTION BELOW HEADER -->
-<section id="auth-section" style="margin-top: 100px;">
-  <div class="auth-container">
-    <h2 id="formTitle">Login</h2>
-    <div class="tab-buttons">
-      <button class="active" onclick="switchForm('login')">Login</button>
-      <button onclick="switchForm('register')">Register</button>
-    </div>
-    <form id="authForm">
-      <div class="form-group">
-        <input type="email" id="email" placeholder=" " required />
-        <label for="email">Email</label>
-        <small>✔️ Looks good!</small>
-      </div>
-      <div class="form-group">
-        <input type="password" id="password" placeholder=" " required />
-        <label for="password">Password</label>
-        <small>✔️ Looks good!</small>
-      </div>
-      <button type="submit" class="submit-btn">Submit</button>
-    </form>
-  </div>
-</section>
-
-<style>
-  #auth-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(to right, #0f172a, #0d1117);
-    padding: 50px 20px;
-  }
-
-  .auth-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 40px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0, 255, 170, 0.15);
-    backdrop-filter: blur(15px);
-    animation: fadeScale 0.8s ease-out;
-    color: #f1f1f1;
-  }
-
-  @keyframes fadeScale {
-    0% { opacity: 0; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-
-  .auth-container h2 {
-    text-align: center;
-    font-size: 26px;
-    margin-bottom: 30px;
-  }
-
-  .tab-buttons {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .tab-buttons button {
-    background: none;
-    border: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    color: #ccc;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .tab-buttons button.active,
-  .tab-buttons button:hover {
-    background: rgba(16, 185, 129, 0.3);
-    color: #10b981;
-  }
-
-  .form-group {
-    position: relative;
-    margin-bottom: 20px;
-  }
-
-  .form-group input {
-    width: 100%;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.07);
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    outline: none;
-  }
-
-  .form-group label {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    transition: 0.3s;
-    color: #aaa;
-    pointer-events: none;
-  }
-
-  .form-group input:focus + label,
-  .form-group input:not(:placeholder-shown) + label {
-    top: -10px;
-    left: 10px;
-    font-size: 12px;
-    color: #10b981;
-  }
-
-  .form-group.success input {
-    border: 2px solid #10b981;
-  }
-
-  .form-group.error input {
-    border: 2px solid #ef4444;
-    animation: shake 0.3s;
-  }
-
-  .form-group small {
-    color: #10b981;
-    display: none;
-    font-size: 12px;
-  }
-
-  .form-group.success small {
-    display: block;
-    animation: fadeOut 3s forwards;
-  }
-
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-  }
-
-  @keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; display: none; }
-  }
-
-  .submit-btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    background: #10b981;
-    color: black;
-    font-weight: bold;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-
-  .submit-btn:hover {
-    background: #14f1a2;
-  }
-
-  @media (max-width: 480px) {
-    .auth-container {
-      padding: 30px 20px;
-    }
-  }
-</style>
-
-<script>
-  const emailEl = document.getElementById('email');
-  const passwordEl = document.getElementById('password');
-  const form = document.getElementById('authForm');
-  const wrapper = document.getElementById('auth-section');
-
-  const validateEmail = email => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);
-  const validatePassword = pwd => /^(?=.*\\d)(?=.*[A-Z])(?=.*\\W).{8,}$/.test(pwd);
-
-  const setStatus = (el, isValid) => {
-    const group = el.parentElement;
-    group.classList.remove('success', 'error');
-    group.classList.add(isValid ? 'success' : 'error');
-  };
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const emailValid = validateEmail(emailEl.value);
-    const pwdValid = validatePassword(passwordEl.value);
-
-    setStatus(emailEl, emailValid);
-    setStatus(passwordEl, pwdValid);
-
-    if (emailValid && pwdValid) {
-      setTimeout(() => wrapper.style.display = 'none', 2000);
-    }
-  });
-
-  function switchForm(type) {
-    document.getElementById('formTitle').innerText = type.charAt(0).toUpperCase() + type.slice(1);
-    document.querySelectorAll('.tab-buttons button').forEach(btn => btn.classList.remove('active'));
-    document.querySelector('.tab-buttons button:nth-child(' + (type === 'login' ? 1 : 2) + ')').classList.add('active');
-    emailEl.value = '';
-    passwordEl.value = '';
-    document.querySelectorAll('.form-group').forEach(group => group.classList.remove('success', 'error'));
-  }
-</script>
-------------
-<!-- Explore Opportunities Section -->
-<section id="explore-opportunities" style="margin-top: 60px;">
-  <div class="container">
-    <h2>🚀 Explore Opportunities</h2>
-    <div class="cards-container">
-      <!-- Spudy Books -->
-      <div class="card" onclick="handleAction('books')">
-        <img src="spudybook1.png" alt="Spudy Book" class="icon" />
-        <h3>Download Spudy Books</h3>
-        <p>Access books like <strong>Spudy: Chronicles of a Form One Legend</strong></p>
-      </div>
-
-      <!-- Spudy Courses -->
-      <div class="card" onclick="handleAction('courses')">
-        <img src="spudy-courses.png" alt="Courses" class="icon" />
-        <h3>Join Our Learning Network</h3>
-        <p><span class="upcoming">Upcoming</span> class starts August 2025</p>
-      </div>
-
-      <!-- Careers -->
-      <div class="card" onclick="handleAction('careers')">
-        <img src="spudy-careers.png" alt="Careers" class="icon" />
-        <h3>Be Part of Our Future</h3>
-        <p>We’re hiring: Technical, Marketing, Coders & Brainstormers</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Optional Modal for Books -->
-<div id="booksModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <h3>📘 Spudy Books</h3>
-    <p><strong>Spudy: Chronicles of a Form One Legend</strong></p>
-    <a href="https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=sharing" target="_blank">📥 Download</a>
-  </div>
-</div>
-
-<style>
-  #explore-opportunities {
-    background: #0d1117;
-    color: #fff;
-    padding: 60px 20px;
-    text-align: center;
-  }
-
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
-  }
-
-  .card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 25px;
-    width: 300px;
-    box-shadow: 0 8px 24px rgba(0, 255, 170, 0.08);
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-
-  .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 28px rgba(0, 255, 170, 0.2);
-  }
-
-  .card h3 {
-    margin: 15px 0 10px;
-    font-size: 20px;
-  }
-
-  .card .icon {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-  }
-
-  .upcoming {
-    display: inline-block;
-    background: #00ffaa;
-    color: #000;
-    padding: 3px 10px;
-    font-size: 12px;
-    border-radius: 10px;
-    animation: blink 1s infinite alternate;
-  }
-
-  @keyframes blink {
-    from { opacity: 0.4; }
-    to { opacity: 1; }
-  }
-
-  /* Modal */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 99;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-  }
-
-  .modal-content {
-    background: #fff;
-    margin: 10% auto;
-    padding: 30px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    position: relative;
-  }
-
-  .modal-content a {
-    display: inline-block;
-    margin-top: 10px;
-    background: #0d1117;
-    color: #0f0;
-    padding: 10px 20px;
-    border-radius: 6px;
-    text-decoration: none;
-  }
-
-  .close {
-    position: absolute;
-    top: 8px;
-    right: 16px;
-    font-size: 26px;
-    color: #444;
-    cursor: pointer;
-  }
-
-  @media (max-width: 768px) {
-    .cards-container {
-      flex-direction: column;
-    }
-    .card {
-      width: 90%;
-      margin: auto;
-    }
-  }
-</style>
-
-<script>
-  // Set login state
-  let isLoggedIn = false; // Change to true after login success
-
-  // Action handler
-  function handleAction(type) {
-    if (!isLoggedIn) {
-      alert('🔒 Please log in to access this feature.');
-      window.location.href = '#auth-section';
-      return;
-    }
-
-    if (type === 'books') {
-      document.getElementById('booksModal').style.display = 'block';
-    } else if (type === 'courses') {
-      alert('🎓 You’ve successfully enrolled in the upcoming Spudy course!');
-    } else if (type === 'careers') {
-      window.location.href = 'mailto:spudytv14@gmail.com?subject=Job Application - [Role]';
-    }
-  }
-
-  // Close modal
-  function closeModal() {
-    document.getElementById('booksModal').style.display = 'none';
-  }
-</script>
