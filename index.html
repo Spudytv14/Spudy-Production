@@ -4,790 +4,402 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spudy Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-
-        body {
-            overflow-x: hidden;
-        }
-
-        /* Header Section */
-        .header {
-            height: 100vh;
-            width: 100%;
-            background: linear-gradient(rgba(9, 23, 47, 0.9), rgba(9, 23, 47, 0.7)),
-                        url('https://images.unsplash.com/photo-1491841550275-adc9c2cdda06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .content {
-            position: absolute;
-            top: 50%;
-            left: 10%;
-            transform: translateY(-50%);
-            color: white;
-            max-width: 800px;
-            z-index: 1;
-            margin-bottom: 20px;
-        }
-
-        .content h1 {
-            font-size: 4em;
-            margin-bottom: 20px;
-            animation: slideRight 1s ease;
-        }
-
-        .content p {
-            font-size: 1.2em;
-            line-height: 1.6;
-            animation: slideUp 1s ease;
-        }
-
-        .about-content {
-            background: rgba(42, 117, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(42, 117, 255, 0.3);
-            box-shadow: 0 5px 15px rgba(42, 117, 255, 0.2);
-            margin-top: 20px;
-        }
-
-        .about-content div {
-            margin-bottom: 15px;
-            animation: slideUp 1s ease forwards;
-            opacity: 0;
-        }
-
-        .about-content div:nth-child(1) { animation-delay: 0.2s; }
-        .about-content div:nth-child(2) { animation-delay: 0.4s; }
-        .about-content div:nth-child(3) { animation-delay: 0.6s; }
-
-        .about-content h3 {
-            font-size: 1.3em;
-            margin-bottom: 10px;
-            color: #2a75ff;
-        }
-
-        .about-content p {
-            font-size: 1em;
-            line-height: 1.6;
-            color: #d3e3ff;
-        }
-
-        .action-buttons {
-            position: fixed;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            z-index: 100;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            background: rgba(42, 117, 255, 0.9);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 5px 15px rgba(42, 117, 255, 0.3);
-            font-size: 1em;
-            font-weight: 600;
-        }
-
-        .btn:hover {
-            background: #2a75ff;
-            transform: translateX(-10px);
-            box-shadow: 0 8px 25px rgba(42, 117, 255, 0.5);
-        }
-
-        /* Section Styles */
-        .books-section, .courses-section, .careers-section {
-            padding: 100px 10%;
-            background: linear-gradient(rgba(9, 23, 47, 0.95), rgba(9, 23, 47, 0.98));
-            color: white;
-            position: relative;
-            z-index: 2;
-        }
-
-        .books-section h2, .courses-section h2, .careers-section h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: #2a75ff;
-            text-align: center;
-            animation: slideRight 1s ease;
-        }
-
-        .books-section p.intro, .courses-section p.intro, .careers-section p.intro {
-            font-size: 1.2em;
-            line-height: 1.6;
-            color: #d3e3ff;
-            text-align: center;
-            margin-bottom: 40px;
-            animation: slideUp 1s ease;
-        }
-
-        .action-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .action-card {
-            background: rgba(42, 117, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            border: 1px solid rgba(42, 117, 255, 0.3);
-            transform: translateY(50px);
-            opacity: 0;
-            animation: slideUp 1s ease forwards;
-            transition: all 0.3s ease;
-        }
-
-        .action-card:nth-child(1) { animation-delay: 0.2s; }
-        .action-card:nth-child(2) { animation-delay: 0.4s; }
-        .action-card:nth-child(3) { animation-delay: 0.6s; }
-        .action-card:nth-child(4) { animation-delay: 0.8s; }
-
-        .action-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(42, 117, 255, 0.5);
-        }
-
-        .action-card h3 {
-            font-size: 2em;
-            margin-bottom: 15px;
-            color: #2a75ff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .action-card p {
-            font-size: 1.1em;
-            line-height: 1.8;
-            color: #d3e3ff;
-        }
-
-        .action-card img {
-            width: 200px;
-            height: auto;
-            margin: 20px auto;
-            display: block;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .action-card img:hover {
-            transform: scale(1.05);
-        }
-
-        .action-card input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            background: rgba(9, 23, 47, 0.9);
-            color: white;
-            border: 1px solid rgba(42, 117, 255, 0.3);
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-
-        .action-card input:focus {
-            outline: none;
-            border-color: #2a75ff;
-            box-shadow: 0 0 10px rgba(42, 117, 255, 0.5);
-        }
-
-        .action-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-            font-size: 1em;
-            color: #d3e3ff;
-        }
-
-        .action-card ul li {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        #bookDetails {
-            margin-top: 20px;
-            font-size: 1em;
-            color: #d3e3ff;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        #bookDetails.show {
-            display: block;
-            opacity: 1;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        #downloadBtn {
-            margin-top: 10px;
-            display: none;
-        }
-
-        .course-form {
-            margin-top: 20px;
-            font-size: 1em;
-            color: #d3e3ff;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .course-form.show {
-            display: block;
-            opacity: 1;
-        }
-
-        .course-confirm {
-            color: #4ade80;
-            margin-top: 10px;
-            font-size: 1em;
-            display: none;
-        }
-
-        .course-card {
-            cursor: pointer;
-        }
-
-        .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(42, 117, 255, 0.5);
-        }
-
-        select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            background: rgba(9, 23, 47, 0.9);
-            color: white;
-            border: 1px solid rgba(42, 117, 255, 0.3);
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: #2a75ff;
-            box-shadow: 0 0 10px rgba(42, 117, 255, 0.5);
-        }
-
-        /* Engagement Section */
-        .engagement-section {
-            padding: 100px 10%;
-            background: linear-gradient(rgba(9, 23, 47, 0.95), rgba(9, 23, 47, 0.98));
-            color: white;
-            position: relative;
-            z-index: 2;
-        }
-
-        .engagement-section h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: #2a75ff;
-            text-align: center;
-            animation: slideRight 1s ease;
-        }
-
-        .engagement-section p.intro {
-            font-size: 1.2em;
-            line-height: 1.6;
-            color: #d3e3ff;
-            text-align: center;
-            margin-bottom: 40px;
-            animation: slideUp 1s ease;
-        }
-
-        .testimonial-container {
-            background: rgba(42, 117, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            margin: 0 auto 40px;
-            max-width: 800px;
-            border: 1px solid rgba(42, 117, 255, 0.3);
-            animation: slideUp 1s ease;
-        }
-
-        .testimonial-container p {
-            font-size: 1.2em;
-            line-height: 1.8;
-            color: #d3e3ff;
-            font-style: italic;
-        }
-
-        .testimonial-container h4 {
-            font-size: 1.3em;
-            margin-top: 20px;
-            color: white;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stat-card {
-            background: rgba(42, 117, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            border: 1px solid rgba(42, 117, 255, 0.3);
-            transform: translateY(50px);
-            opacity: 0;
-            animation: slideUp 1s ease forwards;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:nth-child(1) { animation-delay: 0.2s; }
-        .stat-card:nth-child(2) { animation-delay: 0.4s; }
-        .stat-card:nth-child(3) { animation-delay: 0.6s; }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(42, 117, 255, 0.5);
-        }
-
-        .stat-card div {
-            font-size: 3em;
-            font-weight: bold;
-            color: #2a75ff;
-        }
-
-        .stat-card p {
-            font-size: 1.1em;
-            color: #d3e3ff;
-            margin-top: 10px;
-        }
-
-        /* Footer Section */
-        .footer {
-            padding: 60px 10% 40px;
-            background: linear-gradient(rgba(9, 23, 47, 0.95), rgba(9, 23, 47, 0.98));
-            color: white;
-            position: relative;
-            z-index: 2;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer h3 {
-            font-size: 2em;
-            margin-bottom: 15px;
-            color: #2a75ff;
-        }
-
-        .footer h4 {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            color: #2a75ff;
-        }
-
-        .footer p {
-            font-size: 1em;
-            line-height: 1.8;
-            color: #d3e3ff;
-        }
-
-        .footer .quick-links, .footer .contact-links {
-            background: rgba(42, 117, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(42, 117, 255, 0.3);
-            box-shadow: 0 5px 15px rgba(42, 117, 255, 0.2);
-        }
-
-        .footer .quick-links ul, .footer .contact-links ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer .quick-links ul li, .footer .contact-links ul li {
-            margin-bottom: 12px;
-            animation: slideUp 1s ease forwards;
-            opacity: 0;
-        }
-
-        .footer .quick-links ul li:nth-child(1) { animation-delay: 0.2s; }
-        .footer .quick-links ul li:nth-child(2) { animation-delay: 0.4s; }
-        .footer .quick-links ul li:nth-child(3) { animation-delay: 0.6s; }
-        .footer .quick-links ul li:nth-child(4) { animation-delay: 0.8s; }
-        .footer .contact-links ul li:nth-child(1) { animation-delay: 0.2s; }
-        .footer .contact-links ul li:nth-child(2) { animation-delay: 0.4s; }
-        .footer .contact-links ul li:nth-child(3) { animation-delay: 0.6s; }
-        .footer .contact-links ul li:nth-child(4) { animation-delay: 0.8s; }
-        .footer .contact-links ul li:nth-child(5) { animation-delay: 1.0s; }
-        .footer .contact-links ul li:nth-child(6) { animation-delay: 1.2s; }
-
-        .footer .quick-links ul li a, .footer .contact-links ul li a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #d3e3ff;
-            font-size: 1.1em;
-            font-weight: 500;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .footer .quick-links ul li a:hover, .footer .contact-links ul li a:hover {
-            background: rgba(42, 117, 255, 0.2);
-            color: #2a75ff;
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(42, 117, 255, 0.3);
-        }
-
-        .footer .quick-links ul li a::after, .footer .contact-links ul li a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 15px;
-            background: linear-gradient(to right, #2a75ff, #4a95ff);
-            transition: width 0.3s ease;
-        }
-
-        .footer .quick-links ul li a:hover::after, .footer .contact-links ul li a:hover::after {
-            width: calc(100% - 30px);
-        }
-
-        .footer .copyright {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 0.9em;
-            color: #d3e3ff;
-            border-top: 1px solid rgba(42, 117, 255, 0.3);
-            padding-top: 20px;
-        }
-
-        /* Animations */
-        @keyframes slideRight {
-            from { transform: translateX(-100px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Floating Elements */
-        .floating-element {
-            position: absolute;
-            background: rgba(42, 117, 255, 0.1);
-            border-radius: 50%;
-            animation: float 20s infinite linear;
-            z-index: 1;
-        }
-
+        body { margin: 0; background: #0a0a0a; overflow-x: hidden; }
+        #canvas { width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: -1; }
+        .content { position: relative; z-index: 10; color: white; }
+        .glow { text-shadow: 0 0 10px rgba(59, 130, 246, 0.8), 0 0 20px rgba(59, 130, 246, 0.6); }
+        .nav-link:hover { color: #3b82f6; transition: color 0.3s ease; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
         @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(500px, 500px) rotate(360deg); }
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
         }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .content h1 { font-size: 3em; }
-            .content { max-width: 90%; }
-            .about-content { padding: 15px; }
-            .about-content h3 { font-size: 1.2em; }
-            .about-content p { font-size: 0.9em; }
-            .action-buttons { right: 15px; }
-            .btn { padding: 12px 25px; }
-            .books-section h2, .courses-section h2, .careers-section h2, .engagement-section h2 { font-size: 2em; }
-            .action-card, .stat-card, .testimonial-container { padding: 20px; }
-            .action-card h3 { font-size: 1.5em; }
-            .action-card p, .stat-card p { font-size: 1em; }
-            .action-card img { width: 150px; }
-            .footer h3 { font-size: 1.5em; }
-            .footer h4 { font-size: 1.3em; }
-            .footer .quick-links, .footer .contact-links { padding: 15px; }
-            .footer .quick-links ul li a, .footer .contact-links ul li a { font-size: 1em; padding: 8px 12px; }
-        }
+        #dynamic-text { transition: opacity 0.5s ease; }
+        .contact-icons { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
+        .contact-icon-card { background: #1a202c; padding: 1rem; border-radius: 0.5rem; }
+        .contact-icon-card a { color: #3b82f6; font-size: 1.5rem; }
+        .contact-subscribe { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+        .contact-subscribe input { width: 100%; max-width: 300px; padding: 0.5rem; background: #2d3748; color: white; border-radius: 0.25rem; border: none; }
+        .contact-subscribe button { background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.25rem; border: none; cursor: pointer; }
+        .contact-subscribe button:hover { background: #2563eb; }
+        .contact-links { display: flex; gap: 0.5rem; justify-content: center; }
+        .contact-links a { color: #3b82f6; }
+        .contact-links a:hover { color: #2563eb; }
+        .footer-social { text-align: center; margin-bottom: 1rem; }
+        .footer-social-grid { display: flex; justify-content: center; gap: 1rem; }
+        .footer-social-card { background: #1a202c; padding: 0.75rem; border-radius: 0.5rem; }
+        .footer-social-card a { color: #3b82f6; font-size: 1.25rem; }
+        .error { color: #ef4444; display: none; font-size: 0.875rem; }
+        section { padding: 2rem 1rem; min-height: 60vh; }
     </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header class="header" id="hero">
-        <div class="floating-element" style="width: 200px; height: 200px; top: 20%; left: 5%;"></div>
-        <div class="content">
-            <h1>Spudy Library</h1>
-            <p>Your gateway to a world of knowledge and creativity.</p>
-            <div class="about-content">
-                <div>
-                    <h3>Introduction</h3>
+    <canvas id="canvas"></canvas>
+    <div class="content font-sans">
+        <!-- Navigation -->
+        <nav class="flex justify-between items-center p-6 bg-black bg-opacity-50 sticky top-0 z-20">
+            <div class="text-2xl font-bold glow">Spudy Library</div>
+            <div class="space-x-6">
+                <a href="#home" class="nav-link text-lg">Home</a>
+                <a href="#spudy-books" class="nav-link text-lg">Books</a>
+                <a href="#spudy-courses" class="nav-link text-lg">Courses</a>
+                <a href="#spudy-careers" class="nav-link text-lg">Careers</a>
+                <a href="#contact" class="nav-link text-lg">Contact</a>
+            </div>
+        </nav>
+
+        <!-- Home Section -->
+        <section id="home" class="flex flex-col justify-center items-center text-center px-4">
+            <h1 class="text-5xl md:text-7xl font-extrabold glow animate-float mb-4">Spudy Library</h1>
+            <p id="dynamic-text" class="text-xl md:text-2xl max-w-2xl mb-6">Your gateway to knowledge</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
+                    <h3 class="text-2xl font-semibold glow mb-4">Introduction</h3>
                     <p>Forged from a simple nickname, Spudy Library has blossomed into a dynamic hub for knowledge, offering books and courses that inspire creativity.</p>
                 </div>
-                <div>
-                    <h3>Vision</h3>
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
+                    <h3 class="text-2xl font-semibold glow mb-4">Vision</h3>
                     <p>To be a pioneering force in digital libraries, empowering individuals with accessible, creative, and educational resources.</p>
                 </div>
-                <div>
-                    <h3>Mission</h3>
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
+                    <h3 class="text-2xl font-semibold glow mb-4">Mission</h3>
                     <p>To passionately curate a user-centric library of books and courses, fostering learning and creativity with impactful solutions.</p>
                 </div>
             </div>
-        </div>
-        <div class="action-buttons">
-            <button class="btn" onclick="scrollToContact()">
-                <i class="fas fa-phone-alt"></i> Contact Us
-            </button>
-        </div>
-    </header>
+        </section>
 
-    <!-- Spudy Books Section -->
-    <section class="books-section" id="spudy-books">
-        <div class="floating-element" style="width: 150px; height: 150px; top: 10%; left: 5%;"></div>
-        <div class="floating-element" style="width: 100px; height: 100px; top: 80%; left: 85%;"></div>
-        <h2>Spudy Books</h2>
-        <p class="intro">Browse our curated collection of books to spark your imagination.</p>
-        <div class="action-grid">
-            <div class="action-card">
-                <h3><i class="fas fa-book"></i> Our Collection</h3>
-                <p>Discover our featured book in the Spudy Library collection.</p>
-                <img src="spudybook1.png" alt="Spudy: Chronicles of a Form One Legend">
-                <button class="btn" onclick="toggleBook()">View Book</button>
-                <div id="bookDetails" class="hidden">
-                    <p class="mb-2 font-medium">📘 Select a book to download:</p>
-                    <select id="bookSelect" onchange="downloadBook()">
-                        <option value="">Choose a book</option>
-                        <option value="https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=drive_link">Spudy: Chronicles of a Form One Legend</option>
-                    </select>
-                    <button id="downloadBtn" class="btn" onclick="openDownloadLink()"><i class="fas fa-download"></i> Download</button>
+        <!-- Spudy Books Section -->
+        <section id="spudy-books" class="flex flex-col justify-center items-center text-center px-4 bg-black bg-opacity-50">
+            <h2 class="text-4xl font-bold glow mb-6">Spudy Books</h2>
+            <p class="text-xl md:text-2xl max-w-2xl mb-6">Browse our curated collection of books to spark your imagination.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
+                    <h3 class="text-2xl font-semibold glow mb-4">Our Collection</h3>
+                    <p>Discover our featured book in the Spudy Library collection.</p>
+                    <img src="spudybook1.png" alt="Spudy: Chronicles of a Form One Legend" class="w-48 mx-auto my-4 rounded-lg hover:scale-105 transition-transform">
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="toggleBook()">View Book</button>
+                    <div id="bookDetails" class="hidden mt-4">
+                        <p class="mb-2 font-medium">📘 Select a book to download:</p>
+                        <select id="bookSelect" class="w-full p-2 bg-gray-800 rounded text-white" onchange="downloadBook()">
+                            <option value="">Choose a book</option>
+                            <option value="https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=drive_link">Spudy: Chronicles of a Form One Legend</option>
+                        </select>
+                        <button id="downloadBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 hidden" onclick="openDownloadLink()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Courses Section -->
-    <section class="courses-section" id="spudy-courses">
-        <div class="floating-element" style="width: 150px; height: 150px; top: 10%; left: 5%;"></div>
-        <div class="floating-element" style="width: 100px; height: 100px; top: 80%; left: 85%;"></div>
-        <h2>Courses</h2>
-        <p class="intro">Enroll in our educational courses to enhance your skills in tech, AI, and writing.</p>
-        <div class="action-grid">
-            <div class="action-card course-card" onclick="toggleCourse('ai-fundamentals')">
-                <h3><i class="fas fa-robot"></i> AI Fundamentals</h3>
-                <p>Learn the basics of artificial intelligence and its applications.</p>
-                <div id="ai-fundamentals-form" class="course-form">
-                    <form onsubmit="registerCourse(event, 'AI Fundamentals')">
-                        <input type="email" placeholder="Your Email" required>
-                        <button type="submit" class="btn"><i class="fas fa-envelope"></i> Register for Class</button>
-                        <p class="course-confirm">✅ You've been registered!</p>
-                    </form>
+        <!-- Courses Section -->
+        <section id="spudy-courses" class="flex flex-col justify-center items-center text-center px-4 bg-black bg-opacity-50">
+            <h2 class="text-4xl font-bold glow mb-6">Courses</h2>
+            <p class="text-xl md:text-2xl max-w-2xl mb-6">Enroll in our educational courses to enhance your skills in tech, AI, and writing.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
+                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-robot"></i> AI Fundamentals</h3>
+                    <p>Learn the basics of artificial intelligence and its applications.</p>
+                    <div id="ai-fundamentals-form" class="course-form mt-4">
+                        <form onsubmit="registerCourse(event, 'AI Fundamentals')">
+                            <input type="email" placeholder="Your Email" class="w-full p-2 bg-gray-800 rounded text-white mb-2" required>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                <i class="fas fa-envelope"></i> Register for Class
+                            </button>
+                            <p class="course-confirm text-green-400 mt-2 hidden">✅ You've been registered!</p>
+                        </form>
+                    </div>
+                </div>
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
+                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-laptop-code"></i> Tech for Beginners</h3>
+                    <p>Master essential tech skills for the digital age.</p>
+                    <div id="tech-beginners-form" class="course-form mt-4">
+                        <form onsubmit="registerCourse(event, 'Tech for Beginners')">
+                            <input type="email" placeholder="Your Email" class="w-full p-2 bg-gray-800 rounded text-white mb-2" required>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                <i class="fas fa-envelope"></i> Register for Class
+                            </button>
+                            <p class="course-confirm text-green-400 mt-2 hidden">✅ You've been registered!</p>
+                        </form>
+                    </div>
+                </div>
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
+                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-pen"></i> Creative Writing Mastery</h3>
+                    <p>Develop your writing skills to craft compelling stories.</p>
+                    <div id="creative-writing-form" class="course-form mt-4">
+                        <form onsubmit="registerCourse(event, 'Creative Writing Mastery')">
+                            <input type="email" placeholder="Your Email" class="w-full p-2 bg-gray-800 rounded text-white mb-2" required>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                <i class="fas fa-envelope"></i> Register for Class
+                            </button>
+                            <p class="course-confirm text-green-400 mt-2 hidden">✅ You've been registered!</p>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="action-card course-card" onclick="toggleCourse('tech-beginners')">
-                <h3><i class="fas fa-laptop-code"></i> Tech for Beginners</h3>
-                <p>Master essential tech skills for the digital age.</p>
-                <div id="tech-beginners-form" class="course-form">
-                    <form onsubmit="registerCourse(event, 'Tech for Beginners')">
-                        <input type="email" placeholder="Your Email" required>
-                        <button type="submit" class="btn"><i class="fas fa-envelope"></i> Register for Class</button>
-                        <p class="course-confirm">✅ You've been registered!</p>
-                    </form>
+        </section>
+
+        <!-- Career Opportunities Section -->
+        <section id="spudy-careers" class="flex flex-col justify-center items-center text-center px-4 bg-black bg-opacity-50">
+            <h2 class="text-4xl font-bold glow mb-6">Career Opportunities</h2>
+            <p class="text-xl md:text-2xl max-w-2xl mb-6">Join our team to shape the future of Spudy Library’s digital experience.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
+                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-laptop-code"></i> Technical Specialist</h3>
+                    <p>Join our team to drive library technology innovations.</p>
+                    <ul class="text-left mt-4">
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Degree in Computer Science or related field</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> 3+ years in software development</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Experience with cloud platforms</li>
+                    </ul>
+                    <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Technical Specialist at Spudy Library" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
+                        <i class="fas fa-envelope"></i> Send CV
+                    </a>
+                </div>
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
+                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-bullhorn"></i> Marketing Expert</h3>
+                    <p>Promote our library’s books and courses to the world.</p>
+                    <ul class="text-left mt-4">
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Degree in Marketing or Communications</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> 2+ years in digital marketing</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Strong social media skills</li>
+                    </ul>
+                    <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Marketing Expert at Spudy Library" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
+                        <i class="fas fa-envelope"></i> Send CV
+                    </a>
+                </div>
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
+                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-code"></i> Coder</h3>
+                    <p>Build and maintain our digital library platform.</p>
+                    <ul class="text-left mt-4">
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Proficiency in JavaScript, Python, or similar</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> 1+ years in web development</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Familiarity with APIs</li>
+                    </ul>
+                    <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Coder at Spudy Library" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
+                        <i class="fas fa-envelope"></i> Send CV
+                    </a>
+                </div>
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
+                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-brain"></i> Brainstormer</h3>
+                    <p>Generate creative ideas for library content and engagement.</p>
+                    <ul class="text-left mt-4">
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Strong creative thinking skills</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Experience in content creation</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Passion for education</li>
+                    </ul>
+                    <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Brainstormer at Spudy Library" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
+                        <i class="fas fa-envelope"></i> Send CV
+                    </a>
                 </div>
             </div>
-            <div class="action-card course-card" onclick="toggleCourse('creative-writing')">
-                <h3><i class="fas fa-pen"></i> Creative Writing Mastery</h3>
-                <p>Develop your writing skills to craft compelling stories.</p>
-                <div id="creative-writing-form" class="course-form">
-                    <form onsubmit="registerCourse(event, 'Creative Writing Mastery')">
-                        <input type="email" placeholder="Your Email" required>
-                        <button type="submit" class="btn"><i class="fas fa-envelope"></i> Register for Class</button>
-                        <p class="course-confirm">✅ You've been registered!</p>
-                    </form>
+        </section>
+
+        <!-- Engagement Section -->
+        <section id="spudy-engagement" class="flex flex-col justify-center items-center text-center px-4 bg-black bg-opacity-50">
+            <h2 class="text-4xl font-bold glow mb-6">Trusted by Readers</h2>
+            <p class="text-xl md:text-2xl max-w-2xl mb-6">Spudy Library’s growing community of readers and learners is transforming the way knowledge is shared.</p>
+            <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg max-w-2xl w-full">
+                <p id="testimonialText" class="text-lg mb-4 italic">"Spudy’s book collection brought joy to my reading journey!"</p>
+                <h4 id="testimonialName" class="text-sm">Tariro M., Avid Reader</h4>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mt-6">
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
+                    <div data-count="5000" class="text-4xl font-bold text-blue-500">0</div>
+                    <p class="mt-2">Book Downloads</p>
+                </div>
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
+                    <div data-count="1200" class="text-4xl font-bold text-blue-500">0</div>
+                    <p class="mt-2">Course Enrollments</p>
+                </div>
+                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
+                    <div data-count="10000" class="text-4xl font-bold text-blue-500">0</div>
+                    <p class="mt-2">Library Visits</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Career Opportunities Section -->
-    <section class="careers-section" id="spudy-careers">
-        <div class="floating-element" style="width: 150px; height: 150px; top: 10%; left: 5%;"></div>
-        <div class="floating-element" style="width: 100px; height: 100px; top: 80%; left: 85%;"></div>
-        <h2>Career Opportunities</h2>
-        <p class="intro">Join our team to shape the future of Spudy Library’s digital experience.</p>
-        <div class="action-grid">
-            <div class="action-card">
-                <h3><i class="fas fa-laptop-code"></i> Technical Specialist</h3>
-                <p>Join our team to drive library technology innovations.</p>
-                <ul>
-                    <li><i class="fas fa-check"></i> Degree in Computer Science or related field</li>
-                    <li><i class="fas fa-check"></i> 3+ years in software development</li>
-                    <li><i class="fas fa-check"></i> Experience with cloud platforms</li>
-                </ul>
-                <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Technical Specialist at Spudy Library" class="btn">
-                    <i class="fas fa-envelope"></i> Send CV
-                </a>
+        <!-- Contact Section -->
+        <section id="contact" class="flex flex-col justify-center items-center text-center px-4 bg-black bg-opacity-50">
+            <h2 class="text-4xl font-bold glow mb-6">Contact Us</h2>
+            <div class="contact-content max-w-2xl w-full">
+                <div class="contact-icons">
+                    <div class="contact-icon-card">
+                        <a href="https://api.whatsapp.com/send?phone=263716669706" target="_blank" rel="noopener noreferrer" data-tooltip="Chat on WhatsApp" aria-label="Chat on WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                    <div class="contact-icon-card">
+                        <a href="mailto:spudytv14@gmail.com" data-tooltip="Send us an Email" aria-label="Send us an Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                    <div class="contact-icon-card">
+                        <a href="https://g.co/kgs/hC6zuio" target="_blank" rel="noopener noreferrer" data-tooltip="View on Google Maps" aria-label="View on Google Maps">
+                            <i class="fas fa-map"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-subscribe">
+                    <input type="email" id="subscribe-email" placeholder="Enter your email" aria-label="Enter your email for subscription" required>
+                    <button type="submit" data-tooltip="Subscribe to updates" aria-label="Subscribe to updates" onclick="submitSubscribe(event)">Subscribe</button>
+                    <div id="subscribe-error" class="error">Please enter a valid email address</div>
+                </div>
+                <div class="contact-links">
+                    <a href="https://spudytv14.github.io/Legai-Services/" target="_blank" rel="noopener noreferrer" data-tooltip="View Terms" aria-label="View Terms of Service">Terms of Service</a> |
+                    <a href="#privacy" data-tooltip="Privacy Information" aria-label="View Privacy Information">Privacy Centre</a> |
+                    <a href="mailto:spudytv14@gmail.com" data-tooltip="Share Feedback" aria-label="Share Feedback">Have feedback? Let us know</a>
+                </div>
             </div>
-            <div class="action-card">
-                <h3><i class="fas fa-bullhorn"></i> Marketing Expert</h3>
-                <p>Promote our library’s books and courses to the world.</p>
-                <ul>
-                    <li><i class="fas fa-check"></i> Degree in Marketing or Communications</li>
-                    <li><i class="fas fa-check"></i> 2+ years in digital marketing</li>
-                    <li><i class="fas fa-check"></i> Strong social media skills</li>
-                </ul>
-                <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Marketing Expert at Spudy Library" class="btn">
-                    <i class="fas fa-envelope"></i> Send CV
-                </a>
-            </div>
-            <div class="action-card">
-                <h3><i class="fas fa-code"></i> Coder</h3>
-                <p>Build and maintain our digital library platform.</p>
-                <ul>
-                    <li><i class="fas fa-check"></i> Proficiency in JavaScript, Python, or similar</li>
-                    <li><i class="fas fa-check"></i> 1+ years in web development</li>
-                    <li><i class="fas fa-check"></i> Familiarity with APIs</li>
-                </ul>
-                <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Coder at Spudy Library" class="btn">
-                    <i class="fas fa-envelope"></i> Send CV
-                </a>
-            </div>
-            <div class="action-card">
-                <h3><i class="fas fa-brain"></i> Brainstormer</h3>
-                <p>Generate creative ideas for library content and engagement.</p>
-                <ul>
-                    <li><i class="fas fa-check"></i> Strong creative thinking skills</li>
-                    <li><i class="fas fa-check"></i> Experience in content creation</li>
-                    <li><i class="fas fa-check"></i> Passion for education</li>
-                </ul>
-                <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Brainstormer at Spudy Library" class="btn">
-                    <i class="fas fa-envelope"></i> Send CV
-                </a>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Engagement Section -->
-    <section class="engagement-section" id="spudy-engagement">
-        <div class="floating-element" style="width: 120px; height: 120px; top: 15%; left: 90%;"></div>
-        <div class="floating-element" style="width: 180px; height: 180px; top: 85%; left: 10%;"></div>
-        <h2>Trusted by Readers</h2>
-        <p class="intro">Spudy Library’s growing community of readers and learners is transforming the way knowledge is shared.</p>
-        <div class="testimonial-container">
-            <p id="testimonialText">"Spudy’s book collection brought joy to my reading journey!"</p>
-            <h4 id="testimonialName">Tariro M., Avid Reader</h4>
-        </div>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div data-count="5000">0</div>
-                <p>Book Downloads</p>
+        <!-- Footer -->
+        <footer class="py-6 text-center bg-black bg-opacity-50">
+            <div class="footer-social">
+                <h3 class="text-2xl font-bold glow mb-4">Follow Us</h3>
+                <div class="footer-social-grid">
+                    <div class="footer-social-card">
+                        <a href="https://facebook.com/matipaishe_blessing" target="_blank" rel="noopener noreferrer" data-tooltip="Follow on Facebook" aria-label="Follow on Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                    </div>
+                    <div class="footer-social-card">
+                        <a href="https://x.com/matipaishe_blessing" target="_blank" rel="noopener noreferrer" data-tooltip="Follow on X" aria-label="Follow on X">
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
+                    </div>
+                    <div class="footer-social-card">
+                        <a href="https://instagram.com/matipaishe_blessing" target="_blank" rel="noopener noreferrer" data-tooltip="Follow on Instagram" aria-label="Follow on Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div data-count="1200">0</div>
-                <p>Course Enrollments</p>
-            </div>
-            <div class="stat-card">
-                <div data-count="10000">0</div>
-                <p>Library Visits</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer Section -->
-    <footer class="footer">
-        <div class="floating-element" style="width: 100px; height: 100px; top: 20%; left: 5%;"></div>
-        <div class="footer-grid">
-            <div>
-                <h3>Spudy Library</h3>
-                <p>Empowering readers and learners through a vibrant digital library experience.</p>
-            </div>
-            <div class="quick-links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#hero"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#spudy-courses"><i class="fas fa-book"></i> Courses</a></li>
-                    <li><a href="#spudy-careers"><i class="fas fa-briefcase"></i> Careers</a></li>
-                    <li><a href="#contact"><i class="fas fa-phone"></i> Contact</a></li>
-                </ul>
-            </div>
-            <div id="contact" class="contact-links">
-                <h4>Contact Us</h4>
-                <ul>
-                    <li><a href="mailto:spudytv14@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-                    <li><a href="https://wa.me/263716669706"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
-                    <li><a href="https://g.co/kgs/hC6zuio"><i class="fas fa-map"></i> Google Map</a></li>
-                    <li><a href="https://facebook.com/matipaishe_blessing"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-                    <li><a href="https://x.com/matipaishe_blessing"><i class="fab fa-x-twitter"></i> X</a></li>
-                    <li><a href="https://instagram.com/matipaishe_blessing"><i class="fab fa-instagram"></i> Instagram</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            © 2025 Spudy Library. All rights reserved.
-        </div>
-    </footer>
+            <p class="text-sm">© 2025 Spudy Library. All Rights Reserved.</p>
+        </footer>
+    </div>
 
     <script>
-        // Header: Smooth Scroll to Contact
-        function scrollToContact() {
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-        }
+        // Three.js 3D Tech Background - Circuit Board
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
 
-        // Header: Floating Elements
-        for (let i = 0; i < 5; i++) {
-            const element = document.createElement('div');
-            element.className = 'floating-element';
-            element.style.width = Math.random() * 100 + 50 + 'px';
-            element.style.height = element.style.width;
-            element.style.top = Math.random() * 100 + '%';
-            element.style.left = Math.random() * 100 + '%';
-            element.style.animationDuration = Math.random() * 20 + 10 + 's';
-            document.querySelector('.header').appendChild(element);
+        const boardGeometry = new THREE.PlaneGeometry(40, 40, 40, 40);
+        const boardMaterial = new THREE.MeshBasicMaterial({ color: 0x3b82f6, wireframe: true, transparent: true, opacity: 0.3 });
+        const circuitBoard = new THREE.Mesh(boardGeometry, boardMaterial);
+        circuitBoard.rotation.x = -Math.PI / 3;
+        circuitBoard.position.set(0, -5, -10);
+        scene.add(circuitBoard);
+
+        const nodeCount = 30;
+        const nodes = new THREE.Group();
+        const nodeGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+        const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x3b82f6 });
+        const nodePositions = [];
+
+        for (let i = 0; i < nodeCount; i++) {
+            const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+            node.position.set(
+                (Math.random() - 0.5) * 30,
+                Math.random() * 5,
+                (Math.random() - 0.5) * 30
+            );
+            nodePositions.push(node.position.clone());
+            nodes.add(node);
         }
+        scene.add(nodes);
+
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.5 });
+        const lines = new THREE.Group();
+        for (let i = 0; i < nodeCount - 1; i += 2) {
+            const geometry = new THREE.BufferGeometry().setFromPoints([
+                nodePositions[i],
+                nodePositions[i + 1]
+            ]);
+            const line = new THREE.Line(geometry, lineMaterial);
+            lines.add(line);
+        }
+        scene.add(lines);
+
+        camera.position.set(0, 10, 20);
+        camera.lookAt(0, 0, 0);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            circuitBoard.rotation.z += 0.002;
+            nodes.children.forEach((node, i) => {
+                node.scale.setScalar(1 + 0.2 * Math.sin(Date.now() * 0.002 + i));
+                node.position.y = nodePositions[i].y + Math.sin(Date.now() * 0.001 + i) * 0.5;
+            });
+            lines.children.forEach((line, i) => {
+                const idx = i * 2;
+                const positions = line.geometry.attributes.position.array;
+                positions[0] = nodes.children[idx].position.x;
+                positions[1] = nodes.children[idx].position.y;
+                positions[2] = nodes.children[idx].position.z;
+                positions[3] = nodes.children[idx + 1].position.x;
+                positions[4] = nodes.children[idx + 1].position.y;
+                positions[5] = nodes.children[idx + 1].position.z;
+                line.geometry.attributes.position.needsUpdate = true;
+                line.material.opacity = 0.5 + 0.3 * Math.sin(Date.now() * 0.002 + i);
+            });
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Dynamic text cycling
+        const phrases = [
+            "Your gateway to knowledge",
+            "Explore Spudy Library",
+            "Learn with Spudy Library",
+            "Create with Spudy Library"
+        ];
+        let currentPhraseIndex = 0;
+        const dynamicText = document.getElementById('dynamic-text');
+
+        function changeText() {
+            dynamicText.style.opacity = 0;
+            setTimeout(() => {
+                dynamicText.textContent = phrases[currentPhraseIndex];
+                dynamicText.style.opacity = 1;
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+            }, 500);
+        }
+        setInterval(changeText, 3000);
+        changeText();
 
         // Books: Book Toggle
         function toggleBook() {
             const bookDetails = document.getElementById('bookDetails');
             bookDetails.classList.toggle('hidden');
-            bookDetails.classList.toggle('show');
             if (bookDetails.classList.contains('hidden')) {
-                document.getElementById('downloadBtn').style.display = 'none';
+                document.getElementById('downloadBtn').classList.add('hidden');
                 document.getElementById('bookSelect').value = '';
             }
         }
@@ -799,9 +411,9 @@
             const downloadBtn = document.getElementById('downloadBtn');
             selectedBookUrl = select.value;
             if (selectedBookUrl) {
-                downloadBtn.style.display = 'block';
+                downloadBtn.classList.remove('hidden');
             } else {
-                downloadBtn.style.display = 'none';
+                downloadBtn.classList.add('hidden');
             }
         }
 
@@ -812,27 +424,13 @@
             }
         }
 
-        // Courses: Course Toggle
-        function toggleCourse(courseId) {
-            const form = document.getElementById(`${courseId}-form`);
-            const isVisible = form.style.display === 'block';
-            document.querySelectorAll('.course-form').forEach(f => {
-                f.style.display = 'none';
-                f.classList.remove('show');
-            });
-            if (!isVisible) {
-                form.style.display = 'block';
-                form.classList.add('show');
-            }
-        }
-
         // Courses: Course Registration
         function registerCourse(event, courseName) {
             event.preventDefault();
             const form = event.target;
             const email = form.querySelector('input[type="email"]').value;
             if (email) {
-                form.querySelector('.course-confirm').style.display = 'block';
+                form.querySelector('.course-confirm').classList.remove('hidden');
             }
         }
 
@@ -889,20 +487,21 @@
 
         window.addEventListener('scroll', animateCounts);
 
-        // Floating Elements for Sections
-        const sections = ['books-section', 'courses-section', 'careers-section', 'engagement-section', 'footer'];
-        sections.forEach(section => {
-            for (let i = 0; i < 3; i++) {
-                const element = document.createElement('div');
-                element.className = 'floating-element';
-                element.style.width = Math.random() * 80 + 50 + 'px';
-                element.style.height = element.style.width;
-                element.style.top = Math.random() * 100 + '%';
-                element.style.left = Math.random() * 100 + '%';
-                element.style.animationDuration = Math.random() * 15 + 10 + 's';
-                document.querySelector(`.${section}`).appendChild(element);
+        // Subscribe form validation
+        function submitSubscribe(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('subscribe-email');
+            const errorMsg = document.getElementById('subscribe-error');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (emailPattern.test(emailInput.value)) {
+                errorMsg.style.display = 'none';
+                alert('Subscribed successfully!');
+                emailInput.value = '';
+            } else {
+                errorMsg.style.display = 'block';
             }
-        });
+        }
     </script>
 </body>
 </html>
