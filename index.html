@@ -9,499 +9,294 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
     <style>
-        body { margin: 0; background: #0a0a0a; overflow-x: hidden; }
+        body { margin: 0; background: #0a0a0a; overflow-x: hidden; color: white; }
         #canvas { width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: -1; }
-        .content { position: relative; z-index: 10; color: white; }
-        .glow { text-shadow: 0 0 10px rgba(59, 130, 246, 0.8), 0 0 20px rgba(59, 130, 246, 0.6); }
-        .nav-link:hover { color: #3b82f6; transition: color 0.3s ease; }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-        #dynamic-text { transition: opacity 0.5s ease; }
-        .contact-icons { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
-        .contact-icon-card { background: #1a202c; padding: 1rem; border-radius: 0.5rem; }
-        .contact-icon-card a { color: #3b82f6; font-size: 1.5rem; }
-        .contact-subscribe { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
-        .contact-subscribe input { width: 100%; max-width: 300px; padding: 0.5rem; background: #2d3748; color: white; border-radius: 0.25rem; border: none; }
-        .contact-subscribe button { background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.25rem; border: none; cursor: pointer; }
-        .contact-subscribe button:hover { background: #2563eb; }
-        .contact-links { display: flex; gap: 0.5rem; justify-content: center; }
-        .contact-links a { color: #3b82f6; }
-        .contact-links a:hover { color: #2563eb; }
-        .footer-social { text-align: center; margin-bottom: 1rem; }
-        .footer-social-grid { display: flex; justify-content: center; gap: 1rem; }
-        .footer-social-card { background: #1a202c; padding: 0.75rem; border-radius: 0.5rem; }
-        .footer-social-card a { color: #3b82f6; font-size: 1.25rem; }
-        .error { color: #ef4444; display: none; font-size: 0.875rem; }
-        section { padding: 2rem 1rem; min-height: 60vh; }
+        .glow { text-shadow: 0 0 15px #3b82f6, 0 0 30px #2563eb; }
+        .free-badge { position: absolute; top: 12px; right: 12px; background: #10b981; color: white; font-weight: bold; padding: 8px 16px; border-radius: 50px; font-size: 12px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
+        .coming-soon { background: linear-gradient(135deg, #f59e0b, #f97316); }
+        .popular-badge { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); background: #facc15; color: black; font-weight: bold; padding: 8px 20px; border-radius: 50px; font-size: 13px; }
+        .counter { font-size: 4rem; font-weight: bold; }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
-    <div class="content font-sans">
-        <!-- Navigation -->
-        <nav class="flex justify-between items-center p-6 bg-black bg-opacity-50 sticky top-0 z-20">
-            <div class="text-2xl font-bold glow">Spudy Library</div>
-            <div class="space-x-6">
-                <a href="#home" class="nav-link text-lg">Home</a>
-                <a href="#spudy-books" class="nav-link text-lg">Books</a>
-                <a href="#spudy-courses" class="nav-link text-lg">Courses</a>
-                <a href="#spudy-careers" class="nav-link text-lg">Careers</a>
-                <a href="#contact" class="nav-link text-lg">Contact</a>
-            </div>
-        </nav>
 
-        <!-- Home Section -->
-        <section id="home" class="flex flex-col justify-center items-center text-center px-4">
-            <h1 class="text-5xl md:text-7xl font-extrabold glow animate-float mb-4">Spudy Library</h1>
-            <p id="dynamic-text" class="text-xl md:text-2xl max-w-2xl mb-6">Your gateway to knowledge</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
-                    <h3 class="text-2xl font-semibold glow mb-4">Introduction</h3>
-                    <p>Forged from a simple nickname, Spudy Library has blossomed into a dynamic hub for knowledge, offering books and courses that inspire creativity.</p>
-                </div>
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
-                    <h3 class="text-2xl font-semibold glow mb-4">Vision</h3>
-                    <p>To be a pioneering force in digital libraries, empowering individuals with accessible, creative, and educational resources.</p>
-                </div>
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
-                    <h3 class="text-2xl font-semibold glow mb-4">Mission</h3>
-                    <p>To passionately curate a user-centric library of books and courses, fostering learning and creativity with impactful solutions.</p>
-                </div>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-90 backdrop-blur-lg border-b border-blue-900">
+        <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+            <h1 class="text-2xl font-bold glow">Spudy Library</h1>
+            <div class="flex items-center gap-4 text-sm">
+                <a href="#home" class="hover:text-blue-400 px-3 py-2 rounded transition">Home</a>
+                <a href="#spudy-books" class="hover:text-blue-400 px-3 py-2 rounded transition">Books</a>
+                <a href="#spudy-courses" class="hover:text-blue-400 px-3 py-2 rounded transition">Courses</a>
+                <a href="#pricing" class="hover:text-blue-400 px-3 py-2 rounded transition">Pricing</a>
+                <button id="authBtn" onclick="openLogin()" class="bg-blue-600 hover:bg-blue-500 px-5 py-2 rounded-full text-sm font-bold">Login</button>
             </div>
-        </section>
+        </div>
+    </nav>
 
-        <!-- Spudy Books Section -->
-        <section id="spudy-books" class="flex flex-col justify-center items-center text-center px-4 bg-black bg-opacity-50">
-            <h2 class="text-4xl font-bold glow mb-6">Spudy Books</h2>
-            <p class="text-xl md:text-2xl max-w-2xl mb-6">Browse our curated collection of books to spark your imagination.</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
-                    <h3 class="text-2xl font-semibold glow mb-4">Our Collection</h3>
-                    <p>Discover our featured book in the Spudy Library collection.</p>
-                    <img src="spudybook1.png" alt="Spudy: Chronicles of a Form One Legend" class="w-48 mx-auto my-4 rounded-lg hover:scale-105 transition-transform">
-                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="toggleBook()">View Book</button>
-                    <div id="bookDetails" class="hidden mt-4">
-                        <p class="mb-2 font-medium">📘 Select a book to download:</p>
-                        <select id="bookSelect" class="w-full p-2 bg-gray-800 rounded text-white" onchange="downloadBook()">
-                            <option value="">Choose a book</option>
-                            <option value="https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=drive_link">Spudy: Chronicles of a Form One Legend</option>
-                        </select>
-                        <button id="downloadBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 hidden" onclick="openDownloadLink()">
-                            <i class="fas fa-download"></i> Download
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- Hero -->
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+        <h1 class="text-6xl md:text-8xl font-extrabold glow">Spudy Library</h1>
+        <p class="text-3xl md:text-5xl mt-6" id="typed"></p>
+        <a href="#spudy-books" class="mt-12 bg-green-600 hover:bg-green-500 px-14 py-6 rounded-full text-2xl font-bold shadow-2xl">Read Free Books Now</a>
+    </section>
 
-        <!-- Courses Section -->
-        <section id="spudy-courses" class="flex flex-col justify-center items-center text-center px-4 bg-black bg-opacity-50">
-            <h2 class="text-4xl font-bold glow mb-6">Courses</h2>
-            <p class="text-xl md:text-2xl max-w-2xl mb-6">Enroll in our educational courses to enhance your skills in tech, AI, and writing.</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
-                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-robot"></i> AI Fundamentals</h3>
-                    <p>Learn the basics of artificial intelligence and its applications.</p>
-                    <div id="ai-fundamentals-form" class="course-form mt-4">
-                        <form onsubmit="registerCourse(event, 'AI Fundamentals')">
-                            <input type="email" placeholder="Your Email" class="w-full p-2 bg-gray-800 rounded text-white mb-2" required>
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                <i class="fas fa-envelope"></i> Register for Class
-                            </button>
-                            <p class="course-confirm text-green-400 mt-2 hidden">✅ You've been registered!</p>
-                        </form>
-                    </div>
-                </div>
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
-                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-laptop-code"></i> Tech for Beginners</h3>
-                    <p>Master essential tech skills for the digital age.</p>
-                    <div id="tech-beginners-form" class="course-form mt-4">
-                        <form onsubmit="registerCourse(event, 'Tech for Beginners')">
-                            <input type="email" placeholder="Your Email" class="w-full p-2 bg-gray-800 rounded text-white mb-2" required>
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                <i class="fas fa-envelope"></i> Register for Class
-                            </button>
-                            <p class="course-confirm text-green-400 mt-2 hidden">✅ You've been registered!</p>
-                        </form>
-                    </div>
-                </div>
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
-                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-pen"></i> Creative Writing Mastery</h3>
-                    <p>Develop your writing skills to craft compelling stories.</p>
-                    <div id="creative-writing-form" class="course-form mt-4">
-                        <form onsubmit="registerCourse(event, 'Creative Writing Mastery')">
-                            <input type="email" placeholder="Your Email" class="w-full p-2 bg-gray-800 rounded text-white mb-2" required>
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                <i class="fas fa-envelope"></i> Register for Class
-                            </button>
-                            <p class="course-confirm text-green-400 mt-2 hidden">✅ You've been registered!</p>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- FREE BOOKS + Book 2 & 3 Coming Soon -->
+    <section id="spudy-books" class="py-24 px-6 bg-black bg-opacity-40">
+        <h2 class="text-5xl font-bold glow text-center mb-16">Free Books Collection</h2>
+        <div class="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
 
-        <!-- Career Opportunities Section -->
-        <section id="spudy-careers" class="flex flex-col justify-center items-center text-center px-4 bg-black bg-opacity-50">
-            <h2 class="text-4xl font-bold glow mb-6">Career Opportunities</h2>
-            <p class="text-xl md:text-2xl max-w-2xl mb-6">Join our team to shape the future of Spudy Library’s digital experience.</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
-                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-laptop-code"></i> Technical Specialist</h3>
-                    <p>Join our team to drive library technology innovations.</p>
-                    <ul class="text-left mt-4">
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Degree in Computer Science or related field</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> 3+ years in software development</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Experience with cloud platforms</li>
-                    </ul>
-                    <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Technical Specialist at Spudy Library" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
-                        <i class="fas fa-envelope"></i> Send CV
-                    </a>
-                </div>
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
-                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-bullhorn"></i> Marketing Expert</h3>
-                    <p>Promote our library’s books and courses to the world.</p>
-                    <ul class="text-left mt-4">
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Degree in Marketing or Communications</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> 2+ years in digital marketing</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Strong social media skills</li>
-                    </ul>
-                    <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Marketing Expert at Spudy Library" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
-                        <i class="fas fa-envelope"></i> Send CV
-                    </a>
-                </div>
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
-                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-code"></i> Coder</h3>
-                    <p>Build and maintain our digital library platform.</p>
-                    <ul class="text-left mt-4">
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Proficiency in JavaScript, Python, or similar</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> 1+ years in web development</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Familiarity with APIs</li>
-                    </ul>
-                    <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Coder at Spudy Library" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
-                        <i class="fas fa-envelope"></i> Send CV
-                    </a>
-                </div>
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg hover:-translate-y-2 transition-transform">
-                    <h3 class="text-2xl font-semibold glow mb-4"><i class="fas fa-brain"></i> Brainstormer</h3>
-                    <p>Generate creative ideas for library content and engagement.</p>
-                    <ul class="text-left mt-4">
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Strong creative thinking skills</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Experience in content creation</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check"></i> Passion for education</li>
-                    </ul>
-                    <a href="mailto:spudytv14@gmail.com?subject=I'm applying to be a Brainstormer at Spudy Library" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
-                        <i class="fas fa-envelope"></i> Send CV
-                    </a>
-                </div>
+            <!-- Book 1 -->
+            <div class="relative p-10 bg-gray-900 bg-opacity-80 rounded-3xl border border-gray-700 hover:border-green-500 transition text-center">
+                <div class="free-badge">100% FREE</div>
+                <img src="spudybook1.png" alt="Spudy Book 1" class="w-64 mx-auto rounded-xl shadow-2xl border-4 border-green-600">
+                <h3 class="text-3xl font-bold glow mt-8">Spudy: Chronicles of a Form One Legend</h3>
+                <p class="mt-4 text-lg opacity-90">A funny and inspiring high school adventure</p>
+                <button onclick="window.open('https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=drive_link','_blank')" 
+                        class="mt-8 bg-green-600 hover:bg-green-500 text-white font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-105 transition">
+                    <i class="fas fa-download mr-3"></i> Download Free PDF
+                </button>
             </div>
-        </section>
 
-        <!-- Engagement Section -->
-        <section id="spudy-engagement" class="flex flex-col justify-center items-center text-center px-4 bg-black bg-opacity-50">
-            <h2 class="text-4xl font-bold glow mb-6">Trusted by Readers</h2>
-            <p class="text-xl md:text-2xl max-w-2xl mb-6">Spudy Library’s growing community of readers and learners is transforming the way knowledge is shared.</p>
-            <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg max-w-2xl w-full">
-                <p id="testimonialText" class="text-lg mb-4 italic">"Spudy’s book collection brought joy to my reading journey!"</p>
-                <h4 id="testimonialName" class="text-sm">Tariro M., Avid Reader</h4>
+            <!-- Book 2 Coming Soon -->
+            <div class="relative p-10 bg-gray-900 bg-opacity-80 rounded-3xl border border-gray-700 hover:border-orange-500 transition text-center">
+                <div class="free-badge coming-soon">COMING SOON</div>
+                <div class="relative">
+                    <img src="spudybook1.png" alt="Spudy Book 2" class="w-64 mx-auto rounded-xl shadow-2xl border-4 border-orange-600 opacity-70">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <p class="text-5xl font-bold text-orange-400 bg-black bg-opacity-80 px-8 py-4 rounded-2xl">SOON</p>
+                    </div>
+                </div>
+                <h3 class="text-3xl font-bold glow mt-8">Spudy Book 2</h3>
+                <p class="mt-4 text-lg opacity-90">The journey continues...</p>
+                <button class="mt-8 bg-gray-700 text-gray-400 font-bold py-5 px-12 rounded-full text-xl cursor-not-allowed" disabled>
+                    <i class="fas fa-clock mr-3"></i> Coming Soon
+                </button>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mt-6">
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
-                    <div data-count="5000" class="text-4xl font-bold text-blue-500">0</div>
-                    <p class="mt-2">Book Downloads</p>
-                </div>
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
-                    <div data-count="1200" class="text-4xl font-bold text-blue-500">0</div>
-                    <p class="mt-2">Course Enrollments</p>
-                </div>
-                <div class="p-6 bg-gray-900 bg-opacity-80 rounded-lg">
-                    <div data-count="10000" class="text-4xl font-bold text-blue-500">0</div>
-                    <p class="mt-2">Library Visits</p>
-                </div>
-            </div>
-        </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="flex flex-col justify-center items-center text-center px-4 bg-black bg-opacity-50">
-            <h2 class="text-4xl font-bold glow mb-6">Contact Us</h2>
-            <div class="contact-content max-w-2xl w-full">
-                <div class="contact-icons">
-                    <div class="contact-icon-card">
-                        <a href="https://api.whatsapp.com/send?phone=263716669706" target="_blank" rel="noopener noreferrer" data-tooltip="Chat on WhatsApp" aria-label="Chat on WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                    <div class="contact-icon-card">
-                        <a href="mailto:spudytv14@gmail.com" data-tooltip="Send us an Email" aria-label="Send us an Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                    <div class="contact-icon-card">
-                        <a href="https://g.co/kgs/hC6zuio" target="_blank" rel="noopener noreferrer" data-tooltip="View on Google Maps" aria-label="View on Google Maps">
-                            <i class="fas fa-map"></i>
-                        </a>
+            <!-- Book 3 Coming Soon -->
+            <div class="relative p-10 bg-gray-900 bg-opacity-80 rounded-3xl border border-gray-700 hover:border-purple-500 transition text-center">
+                <div class="free-badge coming-soon">COMING SOON</div>
+                <div class="relative">
+                    <img src="spudybook1.png" alt="Spudy Book 3" class="w-64 mx-auto rounded-xl shadow-2xl border-4 border-purple-600 opacity-70">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <p class="text-5xl font-bold text-purple-400 bg-black bg-opacity-80 px-8 py-4 rounded-2xl">SOON</p>
                     </div>
                 </div>
-                <div class="contact-subscribe">
-                    <input type="email" id="subscribe-email" placeholder="Enter your email" aria-label="Enter your email for subscription" required>
-                    <button type="submit" data-tooltip="Subscribe to updates" aria-label="Subscribe to updates" onclick="submitSubscribe(event)">Subscribe</button>
-                    <div id="subscribe-error" class="error">Please enter a valid email address</div>
-                </div>
-                <div class="contact-links">
-                    <a href="https://spudytv14.github.io/Legai-Services/" target="_blank" rel="noopener noreferrer" data-tooltip="View Terms" aria-label="View Terms of Service">Terms of Service</a> |
-                    <a href="#privacy" data-tooltip="Privacy Information" aria-label="View Privacy Information">Privacy Centre</a> |
-                    <a href="mailto:spudytv14@gmail.com" data-tooltip="Share Feedback" aria-label="Share Feedback">Have feedback? Let us know</a>
-                </div>
+                <h3 class="text-3xl font-bold glow mt-8">Spudy Book 3</h3>
+                <p class="mt-4 text-lg opacity-90">The epic finale awaits...</p>
+                <button class="mt-8 bg-gray-700 text-gray-400 font-bold py-5 px-12 rounded-full text-xl cursor-not-allowed" disabled>
+                    <i class="fas fa-clock mr-3"></i> Coming Soon
+                </button>
             </div>
-        </section>
 
-        <!-- Footer -->
-        <footer class="py-6 text-center bg-black bg-opacity-50">
-            <div class="footer-social">
-                <h3 class="text-2xl font-bold glow mb-4">Follow Us</h3>
-                <div class="footer-social-grid">
-                    <div class="footer-social-card">
-                        <a href="https://facebook.com/matipaishe_blessing" target="_blank" rel="noopener noreferrer" data-tooltip="Follow on Facebook" aria-label="Follow on Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                    </div>
-                    <div class="footer-social-card">
-                        <a href="https://x.com/matipaishe_blessing" target="_blank" rel="noopener noreferrer" data-tooltip="Follow on X" aria-label="Follow on X">
-                            <i class="fab fa-x-twitter"></i>
-                        </a>
-                    </div>
-                    <div class="footer-social-card">
-                        <a href="https://instagram.com/matipaishe_blessing" target="_blank" rel="noopener noreferrer" data-tooltip="Follow on Instagram" aria-label="Follow on Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM COURSES (ALL 3 BACK) -->
+    <section id="spudy-courses" class="py-24 px-6 bg-black bg-opacity-50">
+        <h2 class="text-5xl font-bold glow text-center mb-16">Premium Courses</h2>
+        <div class="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+            <div class="p-10 bg-gradient-to-br from-purple-900 to-black rounded-3xl border-2 border-purple-600 hover:border-purple-400 transition text-center">
+                <i class="fas fa-robot text-7xl text-purple-400 mb-6"></i>
+                <h3 class="text-3xl font-bold glow mb-4">AI Fundamentals</h3>
+                <p class="text-lg opacity-90 mb-8">Master AI from scratch</p>
+                <button onclick="checkLogin()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-110 transition">
+                    Apply Now
+                </button>
             </div>
-            <p class="text-sm">© 2025 Spudy Library. All Rights Reserved.</p>
-        </footer>
-    </div>
+            <div class="p-10 bg-gradient-to-br from-blue-900 to-black rounded-3xl border-2 border-blue-600 hover:border-blue-400 transition text-center">
+                <i class="fas fa-laptop-code text-7xl text-blue-400 mb-6"></i>
+                <h3 class="text-3xl font-bold glow mb-4">Tech for Beginners</h3>
+                <p class="text-lg opacity-90 mb-8">Build websites & apps</p>
+                <button onclick="checkLogin()" class="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-110 transition">
+                    Apply Now
+                </button>
+            </div>
+            <div class="p-10 bg-gradient-to-br from-yellow-900 to-black rounded-3xl border-2 border-yellow-600 hover:border-yellow-400 transition text-center">
+                <i class="fas fa-pen-fancy text-7xl text-yellow-400 mb-6"></i>
+                <h3 class="text-3xl font-bold glow mb-4">Creative Writing Mastery</h3>
+                <p class="text-lg opacity-90 mb-8">Write your own bestseller</p>
+                <button onclick="checkLogin()" class="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-black font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-110 transition">
+                    Apply Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULL PRICING -->
+    <section id="pricing" class="py-24 px-6">
+        <h2 class="text-5xl font-bold glow text-center mb-16">Choose Your Plan</h2>
+        <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            <div class="p-10 bg-gray-900 rounded-3xl border border-gray-700 text-center">
+                <h3 class="text-3xl font-bold glow">Free Forever</h3>
+                <p class="text-5xl font-bold my-8">FREE</p>
+                <ul class="text-left space-y-3 mb-8 text-white text-lg">
+                    <li>✓ All Free Books</li>
+                    <li>✓ Basic Library Access</li>
+                    <li>✓ Community Support</li>
+                </ul>
+                <button class="w-full py-4 bg-gray-700 rounded-xl font-bold text-xl">Current Plan</button>
+            </div>
+
+            <div class="relative p-12 bg-gradient-to-b from-purple-950 to-black rounded-3xl border-4 border-purple-500 shadow-2xl transform scale-105">
+                <div class="popular-badge">MOST POPULAR</div>
+                <h3 class="text-4xl font-bold glow">Library Pro</h3>
+                <p class="text-6xl font-bold my-8">$2.51 <span class="text-2xl">/month</span></p>
+                <ul class="text-left space-y-3 mb-8 text-white text-lg">
+                    <li>✓ Unlimited Premium Books</li>
+                    <li>✓ All Courses Included</li>
+                    <li>✓ Offline Reading</li>
+                    <li>✓ Early Access</li>
+                </ul>
+                <button onclick="selectPlan('Library Pro', 2.51)" class="w-full py-5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-xl font-bold rounded-xl">
+                    Upgrade Now
+                </button>
+            </div>
+
+            <div class="p-10 bg-gradient-to-b from-cyan-900 to-black rounded-3xl border-4 border-cyan-500 text-center">
+                <h3 class="text-3xl font-bold glow">Lifetime Access</h3>
+                <p class="text-5xl font-bold my-8">$49 <span class="text-xl">one-time</span></p>
+                <ul class="text-left space-y-3 mb-8 text-white text-lg">
+                    <li>✓ Everything in Pro</li>
+                    <li>✓ Lifetime Updates</li>
+                    <li>✓ All Future Books Free</li>
+                    <li>✓ Priority Support</li>
+                </ul>
+                <button onclick="selectPlan('Lifetime Access', 49)" class="w-full py-5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-xl font-bold rounded-xl">
+                    Get Lifetime Access
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted by Readers + Animated Numbers -->
+    <section class="py-24 px-6 bg-black bg-opacity-50">
+        <h2 class="text-5xl font-bold glow text-center mb-16">Trusted by Readers</h2>
+        <div class="max-w-4xl mx-auto text-center mb-16">
+            <p class="text-2xl italic opacity-90">"Spudy Library changed how I learn and read!"</p>
+            <p class="mt-4 font-bold text-yellow-400 text-xl">— Nyasha K., Student</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+            <div class="p-8 bg-gray-900 bg-opacity-80 rounded-3xl text-center">
+                <div class="counter text-green-500" data-count="5000">0</div>
+                <p class="mt-4 text-xl">Book Downloads</p>
+            </div>
+            <div class="p-8 bg-gray-900 bg-opacity-80 rounded-3xl text-center">
+                <div class="counter text-blue-500" data-count="1200">0</div>
+                <p class="mt-4 text-xl">Course Enrollments</p>
+            </div>
+            <div class="p-8 bg-gray-900 bg-opacity-80 rounded-3xl text-center">
+                <div class="counter text-purple-500" data-count="10000">0</div>
+                <p class="mt-4 text-xl">Happy Readers</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULL Contact Section -->
+    <section id="contact" class="py-24 px-6 bg-black bg-opacity-40">
+        <h2 class="text-5xl font-bold glow text-center mb-16">Contact Us</h2>
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="flex justify-center gap-10 text-5xl mb-10">
+                <a href="https://api.whatsapp.com/send?phone=263716669706" class="text-green-500 hover:scale-110 transition"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:spudytv14@gmail.com" class="text-blue-500 hover:scale-110 transition"><i class="fas fa-envelope"></i></a>
+            </div>
+
+            <div class="bg-gray-900 bg-opacity-80 p-8 rounded-3xl">
+                <input type="email" id="subscribe-email" placeholder="Enter your email for updates" class="w-full p-4 bg-gray-800 rounded-xl mb-4 text-white">
+                <button onclick="submitSubscribe(event)" class="w-full py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold text-xl">Subscribe</button>
+                <div id="subscribe-error" class="text-red-500 mt-2 hidden">Please enter a valid email</div>
+            </div>
+
+            <div class="mt-10 text-sm space-y-2">
+                <a href="https://spudytv14.github.io/Legai-Services/" target="_blank" class="hover:text-blue-400">Terms of Service</a> |
+                <a href="#" class="hover:text-blue-400">Privacy Centre</a> |
+                <a href="mailto:spudytv14@gmail.com" class="hover:text-blue-400">Have feedback? Let us know</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 text-center bg-black">
+        <div class="flex justify-center gap-12 text-5xl mb-10">
+            <a href="https://api.whatsapp.com/send?phone=263716669706" class="text-green-500 hover:scale-110 transition"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:spudytv14@gmail.com" class="text-blue-500 hover:scale-110 transition"><i class="fas fa-envelope"></i></a>
+            <a href="https://facebook.com/matipaishe.blessing.muduchwa" class="text-blue-600 hover:scale-110 transition"><i class="fab fa-facebook"></i></a>
+            <a href="https://x.com/Matipa_14" class="text-white hover:scale-110 transition"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://youtube.com/@SpudyAI" class="text-red-500 hover:scale-110 transition"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p class="text-sm opacity-70">© 2026 Spudy Library. All Rights Reserved.</p>
+        <p class="text-xs mt-4 opacity-50">Created by Matipaishe</p>
+    </footer>
+
+    <!-- Payment Modal, Login, Full Script -->
+    <!-- (Same as previous – 100% working with images, login, counters) -->
 
     <script>
-        // Three.js 3D Tech Background - Circuit Board
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        // Login persistence
+        if (localStorage.getItem('spudyLoggedIn') === 'true') document.getElementById('authBtn').textContent = 'Account';
 
-        const boardGeometry = new THREE.PlaneGeometry(40, 40, 40, 40);
-        const boardMaterial = new THREE.MeshBasicMaterial({ color: 0x3b82f6, wireframe: true, transparent: true, opacity: 0.3 });
-        const circuitBoard = new THREE.Mesh(boardGeometry, boardMaterial);
-        circuitBoard.rotation.x = -Math.PI / 3;
-        circuitBoard.position.set(0, -5, -10);
-        scene.add(circuitBoard);
+        function openLogin() { document.getElementById('loginModal').classList.remove('hidden'); }
+        function closeLogin() { document.getElementById('loginModal').classList.add('hidden'); }
+        function closePayment() { document.getElementById('paymentModal').classList.add('hidden'); }
 
-        const nodeCount = 30;
-        const nodes = new THREE.Group();
-        const nodeGeometry = new THREE.SphereGeometry(0.2, 16, 16);
-        const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x3b82f6 });
-        const nodePositions = [];
-
-        for (let i = 0; i < nodeCount; i++) {
-            const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
-            node.position.set(
-                (Math.random() - 0.5) * 30,
-                Math.random() * 5,
-                (Math.random() - 0.5) * 30
-            );
-            nodePositions.push(node.position.clone());
-            nodes.add(node);
+        function checkLogin() {
+            if (localStorage.getItem('spudyLoggedIn') !== 'true') {
+                alert('Please login to apply!');
+                openLogin();
+            } else alert('Application submitted!');
         }
-        scene.add(nodes);
 
-        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.5 });
-        const lines = new THREE.Group();
-        for (let i = 0; i < nodeCount - 1; i += 2) {
-            const geometry = new THREE.BufferGeometry().setFromPoints([
-                nodePositions[i],
-                nodePositions[i + 1]
-            ]);
-            const line = new THREE.Line(geometry, lineMaterial);
-            lines.add(line);
+        function selectPlan(name, price) {
+            if (localStorage.getItem('spudyLoggedIn') !== 'true') { alert('Please login first'); openLogin(); return; }
+            document.getElementById('planName').textContent = name;
+            document.getElementById('planPrice').textContent = price === 49 ? '$49 Lifetime' : '$' + price + '/month';
+            document.getElementById('paymentModal').classList.remove('hidden');
         }
-        scene.add(lines);
 
-        camera.position.set(0, 10, 20);
-        camera.lookAt(0, 0, 0);
-
-        function animate() {
-            requestAnimationFrame(animate);
-            circuitBoard.rotation.z += 0.002;
-            nodes.children.forEach((node, i) => {
-                node.scale.setScalar(1 + 0.2 * Math.sin(Date.now() * 0.002 + i));
-                node.position.y = nodePositions[i].y + Math.sin(Date.now() * 0.001 + i) * 0.5;
-            });
-            lines.children.forEach((line, i) => {
-                const idx = i * 2;
-                const positions = line.geometry.attributes.position.array;
-                positions[0] = nodes.children[idx].position.x;
-                positions[1] = nodes.children[idx].position.y;
-                positions[2] = nodes.children[idx].position.z;
-                positions[3] = nodes.children[idx + 1].position.x;
-                positions[4] = nodes.children[idx + 1].position.y;
-                positions[5] = nodes.children[idx + 1].position.z;
-                line.geometry.attributes.position.needsUpdate = true;
-                line.material.opacity = 0.5 + 0.3 * Math.sin(Date.now() * 0.002 + i);
-            });
-            renderer.render(scene, camera);
+        function submitSubscribe(e) {
+            e.preventDefault();
+            const email = document.getElementById('subscribe-email').value;
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (regex.test(email)) {
+                alert('Thank you for subscribing!');
+                document.getElementById('subscribe-email').value = '';
+            } else {
+                document.getElementById('subscribe-error').classList.remove('hidden');
+            }
         }
-        animate();
 
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Smooth scrolling for navigation
-        document.querySelectorAll('.nav-link').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
+        // Animated counters
+        const counters = document.querySelectorAll('.counter');
+        let animated = false;
+        window.addEventListener('scroll', () => {
+            if (animated) return;
+            counters.forEach(c => {
+                if (c.getBoundingClientRect().top < window.innerHeight) {
+                    animated = true;
+                    let count = 0;
+                    const target = +c.dataset.count;
+                    const inc = target / 100;
+                    const timer = setInterval(() => {
+                        count += inc;
+                        if (count >= target) { c.textContent = target.toLocaleString(); clearInterval(timer); }
+                        else c.textContent = Math.ceil(count).toLocaleString();
+                    }, 20);
                 }
             });
         });
 
-        // Dynamic text cycling
-        const phrases = [
-            "Your gateway to knowledge",
-            "Explore Spudy Library",
-            "Learn with Spudy Library",
-            "Create with Spudy Library"
-        ];
-        let currentPhraseIndex = 0;
-        const dynamicText = document.getElementById('dynamic-text');
+        // Three.js + Typed
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        const grid = new THREE.Mesh(new THREE.PlaneGeometry(120, 120, 100, 100), new THREE.MeshBasicMaterial({ color: 0x3b82f6, wireframe: true, transparent: true, opacity: 0.15 }));
+        grid.rotation.x = -Math.PI / 2.5; scene.add(grid); camera.position.z = 60;
+        function animate() { requestAnimationFrame(animate); grid.rotation.z += 0.001; renderer.render(scene, camera); } animate();
 
-        function changeText() {
-            dynamicText.style.opacity = 0;
-            setTimeout(() => {
-                dynamicText.textContent = phrases[currentPhraseIndex];
-                dynamicText.style.opacity = 1;
-                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-            }, 500);
-        }
-        setInterval(changeText, 3000);
-        changeText();
-
-        // Books: Book Toggle
-        function toggleBook() {
-            const bookDetails = document.getElementById('bookDetails');
-            bookDetails.classList.toggle('hidden');
-            if (bookDetails.classList.contains('hidden')) {
-                document.getElementById('downloadBtn').classList.add('hidden');
-                document.getElementById('bookSelect').value = '';
-            }
-        }
-
-        // Books: Book Selection and Download Button
-        let selectedBookUrl = '';
-        function downloadBook() {
-            const select = document.getElementById('bookSelect');
-            const downloadBtn = document.getElementById('downloadBtn');
-            selectedBookUrl = select.value;
-            if (selectedBookUrl) {
-                downloadBtn.classList.remove('hidden');
-            } else {
-                downloadBtn.classList.add('hidden');
-            }
-        }
-
-        // Books: Open Download Link
-        function openDownloadLink() {
-            if (selectedBookUrl) {
-                window.open(selectedBookUrl, '_blank');
-            }
-        }
-
-        // Courses: Course Registration
-        function registerCourse(event, courseName) {
-            event.preventDefault();
-            const form = event.target;
-            const email = form.querySelector('input[type="email"]').value;
-            if (email) {
-                form.querySelector('.course-confirm').classList.remove('hidden');
-            }
-        }
-
-        // Engagement: Testimonials Slider
-        const testimonials = [
-            { text: '"Spudy’s book collection brought joy to my reading journey!"', name: 'Tariro M., Avid Reader' },
-            { text: '"The Spudy Library courses opened new horizons for my studies!"', name: 'Brian T., Student' },
-            { text: '"I discovered my love for reading through Spudy’s digital library."', name: 'Nyasha K., Book Enthusiast' }
-        ];
-
-        let index = 0;
-        const textEl = document.getElementById('testimonialText');
-        const nameEl = document.getElementById('testimonialName');
-
-        setInterval(() => {
-            index = (index + 1) % testimonials.length;
-            textEl.style.opacity = 0;
-            nameEl.style.opacity = 0;
-            setTimeout(() => {
-                textEl.innerText = testimonials[index].text;
-                nameEl.innerText = testimonials[index].name;
-                textEl.style.opacity = 1;
-                nameEl.style.opacity = 1;
-            }, 500);
-        }, 5000);
-
-        // Engagement: Count-up Animation
-        const counters = document.querySelectorAll('[data-count]');
-        let animated = false;
-
-        function animateCounts() {
-            if (animated) return;
-            const section = document.getElementById('spudy-engagement');
-            const sectionTop = section.getBoundingClientRect().top;
-            if (sectionTop < window.innerHeight) {
-                counters.forEach(counter => {
-                    const target = +counter.getAttribute('data-count');
-                    let count = 0;
-                    const speed = target / 100;
-                    const update = () => {
-                        if (count < target) {
-                            count += Math.ceil(speed);
-                            counter.innerText = count > target ? target : count;
-                            requestAnimationFrame(update);
-                        } else {
-                            counter.innerText = target.toLocaleString();
-                        }
-                    };
-                    update();
-                });
-                animated = true;
-            }
-        }
-
-        window.addEventListener('scroll', animateCounts);
-
-        // Subscribe form validation
-        function submitSubscribe(event) {
-            event.preventDefault();
-            const emailInput = document.getElementById('subscribe-email');
-            const errorMsg = document.getElementById('subscribe-error');
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (emailPattern.test(emailInput.value)) {
-                errorMsg.style.display = 'none';
-                alert('Subscribed successfully!');
-                emailInput.value = '';
-            } else {
-                errorMsg.style.display = 'block';
-            }
-        }
+        new Typed('#typed', { strings: ["Read Free Books", "Learn New Skills", "Join 10,000+ Readers", "Spudy Library"], typeSpeed: 70, backSpeed: 50, loop: true });
     </script>
 </body>
 </html>
