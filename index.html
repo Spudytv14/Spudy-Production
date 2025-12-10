@@ -15,7 +15,10 @@
         .free-badge { position: absolute; top: 12px; right: 12px; background: #10b981; color: white; font-weight: bold; padding: 8px 16px; border-radius: 50px; font-size: 12px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
         .coming-soon { background: linear-gradient(135deg, #f59e0b, #f97316); }
         .popular-badge { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); background: #facc15; color: black; font-weight: bold; padding: 8px 20px; border-radius: 50px; font-size: 13px; }
-        .counter { font-size: 4rem; font-weight: bold; }
+        .counter { font-size: 4.5rem; font-weight: bold; }
+        .payment-option { transition: all 0.3s; border: 2px solid transparent; cursor: pointer; }
+        .payment-option:hover { transform: translateY(-8px); }
+        .payment-option.selected { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
     </style>
 </head>
 <body>
@@ -46,7 +49,6 @@
     <section id="spudy-books" class="py-24 px-6 bg-black bg-opacity-40">
         <h2 class="text-5xl font-bold glow text-center mb-16">Free Books Collection</h2>
         <div class="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
-
             <!-- Book 1 -->
             <div class="relative p-10 bg-gray-900 bg-opacity-80 rounded-3xl border border-gray-700 hover:border-green-500 transition text-center">
                 <div class="free-badge">100% FREE</div>
@@ -70,9 +72,7 @@
                 </div>
                 <h3 class="text-3xl font-bold glow mt-8">Spudy Book 2</h3>
                 <p class="mt-4 text-lg opacity-90">The journey continues...</p>
-                <button class="mt-8 bg-gray-700 text-gray-400 font-bold py-5 px-12 rounded-full text-xl cursor-not-allowed" disabled>
-                    <i class="fas fa-clock mr-3"></i> Coming Soon
-                </button>
+                <button class="mt-8 bg-gray-700 text-gray-400 font-bold py-5 px-12 rounded-full text-xl cursor-not-allowed" disabled>Coming Soon</button>
             </div>
 
             <!-- Book 3 Coming Soon -->
@@ -85,23 +85,20 @@
                     </div>
                 </div>
                 <h3 class="text-3xl font-bold glow mt-8">Spudy Book 3</h3>
-                <p class="mt-4 text-lg opacity-90">The epic finale awaits...</p>
-                <button class="mt-8 bg-gray-700 text-gray-400 font-bold py-5 px-12 rounded-full text-xl cursor-not-allowed" disabled>
-                    <i class="fas fa-clock mr-3"></i> Coming Soon
-                </button>
+                <p class="mt-4 text-lg opacity-90">The epic finale...</p>
+                <button class="mt-8 bg-gray-700 text-gray-400 font-bold py-5 px-12 rounded-full text-xl cursor-not-allowed" disabled>Coming Soon</button>
             </div>
-
         </div>
     </section>
 
-    <!-- PREMIUM COURSES (ALL 3 BACK) -->
+    <!-- PREMIUM COURSES -->
     <section id="spudy-courses" class="py-24 px-6 bg-black bg-opacity-50">
         <h2 class="text-5xl font-bold glow text-center mb-16">Premium Courses</h2>
         <div class="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
             <div class="p-10 bg-gradient-to-br from-purple-900 to-black rounded-3xl border-2 border-purple-600 hover:border-purple-400 transition text-center">
                 <i class="fas fa-robot text-7xl text-purple-400 mb-6"></i>
                 <h3 class="text-3xl font-bold glow mb-4">AI Fundamentals</h3>
-                <p class="text-lg opacity-90 mb-8">Master AI from scratch</p>
+                <p class="text-lg opacity-90 mb-8">From zero to AI hero in 8 weeks</p>
                 <button onclick="checkLogin()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-110 transition">
                     Apply Now
                 </button>
@@ -109,7 +106,7 @@
             <div class="p-10 bg-gradient-to-br from-blue-900 to-black rounded-3xl border-2 border-blue-600 hover:border-blue-400 transition text-center">
                 <i class="fas fa-laptop-code text-7xl text-blue-400 mb-6"></i>
                 <h3 class="text-3xl font-bold glow mb-4">Tech for Beginners</h3>
-                <p class="text-lg opacity-90 mb-8">Build websites & apps</p>
+                <p class="text-lg opacity-90 mb-8">Build real apps & websites</p>
                 <button onclick="checkLogin()" class="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-110 transition">
                     Apply Now
                 </button>
@@ -117,7 +114,7 @@
             <div class="p-10 bg-gradient-to-br from-yellow-900 to-black rounded-3xl border-2 border-yellow-600 hover:border-yellow-400 transition text-center">
                 <i class="fas fa-pen-fancy text-7xl text-yellow-400 mb-6"></i>
                 <h3 class="text-3xl font-bold glow mb-4">Creative Writing Mastery</h3>
-                <p class="text-lg opacity-90 mb-8">Write your own bestseller</p>
+                <p class="text-lg opacity-90 mb-8">Write your first book with confidence</p>
                 <button onclick="checkLogin()" class="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-black font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-110 transition">
                     Apply Now
                 </button>
@@ -125,53 +122,33 @@
         </div>
     </section>
 
-    <!-- FULL PRICING -->
+    <!-- PRICING -->
     <section id="pricing" class="py-24 px-6">
         <h2 class="text-5xl font-bold glow text-center mb-16">Choose Your Plan</h2>
         <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
             <div class="p-10 bg-gray-900 rounded-3xl border border-gray-700 text-center">
                 <h3 class="text-3xl font-bold glow">Free Forever</h3>
                 <p class="text-5xl font-bold my-8">FREE</p>
-                <ul class="text-left space-y-3 mb-8 text-white text-lg">
-                    <li>✓ All Free Books</li>
-                    <li>✓ Basic Library Access</li>
-                    <li>✓ Community Support</li>
-                </ul>
+                <ul class="text-left space-y-3 mb-8 text-white text-lg"><li>✓ All Free Books</li><li>✓ Basic Library Access</li></ul>
                 <button class="w-full py-4 bg-gray-700 rounded-xl font-bold text-xl">Current Plan</button>
             </div>
-
             <div class="relative p-12 bg-gradient-to-b from-purple-950 to-black rounded-3xl border-4 border-purple-500 shadow-2xl transform scale-105">
                 <div class="popular-badge">MOST POPULAR</div>
                 <h3 class="text-4xl font-bold glow">Library Pro</h3>
                 <p class="text-6xl font-bold my-8">$2.51 <span class="text-2xl">/month</span></p>
-                <ul class="text-left space-y-3 mb-8 text-white text-lg">
-                    <li>✓ Unlimited Premium Books</li>
-                    <li>✓ All Courses Included</li>
-                    <li>✓ Offline Reading</li>
-                    <li>✓ Early Access</li>
-                </ul>
-                <button onclick="selectPlan('Library Pro', 2.51)" class="w-full py-5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-xl font-bold rounded-xl">
-                    Upgrade Now
-                </button>
+                <ul class="text-left space-y-3 mb-8 text-white text-lg"><li>✓ Unlimited Premium Books</li><li>✓ All Courses</li><li>✓ Offline Reading</li></ul>
+                <button onclick="selectPlan('Library Pro', 2.51)" class="w-full py-5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-xl font-bold rounded-xl">Upgrade Now</button>
             </div>
-
             <div class="p-10 bg-gradient-to-b from-cyan-900 to-black rounded-3xl border-4 border-cyan-500 text-center">
                 <h3 class="text-3xl font-bold glow">Lifetime Access</h3>
                 <p class="text-5xl font-bold my-8">$49 <span class="text-xl">one-time</span></p>
-                <ul class="text-left space-y-3 mb-8 text-white text-lg">
-                    <li>✓ Everything in Pro</li>
-                    <li>✓ Lifetime Updates</li>
-                    <li>✓ All Future Books Free</li>
-                    <li>✓ Priority Support</li>
-                </ul>
-                <button onclick="selectPlan('Lifetime Access', 49)" class="w-full py-5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-xl font-bold rounded-xl">
-                    Get Lifetime Access
-                </button>
+                <ul class="text-left space-y-3 mb-8 text-white text-lg"><li>✓ Everything in Pro</li><li>✓ Lifetime Updates</li><li>✓ All Future Books Free</li></ul>
+                <button onclick="selectPlan('Lifetime Access', 49)" class="w-full py-5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-xl font-bold rounded-xl">Get Lifetime</button>
             </div>
         </div>
     </section>
 
-    <!-- Trusted by Readers + Animated Numbers -->
+    <!-- TRUSTED BY READERS + ANIMATED NUMBERS -->
     <section class="py-24 px-6 bg-black bg-opacity-50">
         <h2 class="text-5xl font-bold glow text-center mb-16">Trusted by Readers</h2>
         <div class="max-w-4xl mx-auto text-center mb-16">
@@ -194,7 +171,7 @@
         </div>
     </section>
 
-    <!-- FULL Contact Section -->
+    <!-- CONTACT -->
     <section id="contact" class="py-24 px-6 bg-black bg-opacity-40">
         <h2 class="text-5xl font-bold glow text-center mb-16">Contact Us</h2>
         <div class="max-w-2xl mx-auto text-center">
@@ -202,13 +179,11 @@
                 <a href="https://api.whatsapp.com/send?phone=263716669706" class="text-green-500 hover:scale-110 transition"><i class="fab fa-whatsapp"></i></a>
                 <a href="mailto:spudytv14@gmail.com" class="text-blue-500 hover:scale-110 transition"><i class="fas fa-envelope"></i></a>
             </div>
-
             <div class="bg-gray-900 bg-opacity-80 p-8 rounded-3xl">
                 <input type="email" id="subscribe-email" placeholder="Enter your email for updates" class="w-full p-4 bg-gray-800 rounded-xl mb-4 text-white">
                 <button onclick="submitSubscribe(event)" class="w-full py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold text-xl">Subscribe</button>
                 <div id="subscribe-error" class="text-red-500 mt-2 hidden">Please enter a valid email</div>
             </div>
-
             <div class="mt-10 text-sm space-y-2">
                 <a href="https://spudytv14.github.io/Legai-Services/" target="_blank" class="hover:text-blue-400">Terms of Service</a> |
                 <a href="#" class="hover:text-blue-400">Privacy Centre</a> |
@@ -230,58 +205,104 @@
         <p class="text-xs mt-4 opacity-50">Created by Matipaishe</p>
     </footer>
 
-    <!-- Payment Modal, Login, Full Script -->
-    <!-- (Same as previous – 100% working with images, login, counters) -->
+    <!-- PAYMENT MODAL WITH SELECTION -->
+    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center hidden z-50">
+        <div class="bg-gray-900 p-10 rounded-3xl max-w-4xl w-full text-center relative">
+            <button onclick="closePayment()" class="absolute top-4 right-6 text-4xl text-gray-400 hover:text-white">&times;</button>
+            <h2 class="text-4xl font-bold glow mb-4" id="planName">Library Pro</h2>
+            <p class="text-5xl font-bold mb-10 text-yellow-400" id="planPrice">$2.51/month</p>
+            <p class="text-xl mb-8">Choose your payment method:</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('EcoCash')">
+                    <img src="ecocash.png" alt="EcoCash" class="w-24 h-24 mx-auto mb-4 object-contain">
+                    <p class="font-bold text-green-400">EcoCash</p>
+                </div>
+                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('OneMoney')">
+                    <img src="onemoney.png" alt="OneMoney" class="w-24 h-24 mx-auto mb-4 object-contain">
+                    <p class="font-bold text-blue-400">OneMoney</p>
+                </div>
+                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('NetOne Cash')">
+                    <img src="netone.png" alt="NetOne" class="w-24 h-24 mx-auto mb-4 object-contain">
+                    <p class="font-bold text-red-400">NetOne Cash</p>
+                </div>
+                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('Visa')">
+                    <img src="visa.png" alt="Visa" class="w-24 h-24 mx-auto mb-4 object-contain">
+                    <p class="font-bold text-blue-600">Visa</p>
+                </div>
+                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('Mastercard')">
+                    <img src="mastercard.png" alt="Mastercard" class="w-24 h-24 mx-auto mb-4 object-contain">
+                    <p class="font-bold text-orange-500">Mastercard</p>
+                </div>
+                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('Bank Transfer')">
+                    <i class="fas fa-university text-6xl text-gray-400 mb-4"></i>
+                    <p class="font-bold">Bank Transfer</p>
+                </div>
+            </div>
+            <div id="paymentConfirm" class="hidden mt-10 bg-yellow-600 text-black p-8 rounded-2xl font-bold text-xl">
+                <p>You selected: <span id="selectedMethod"></span></p>
+                <p class="mt-4">Send payment to 071 666 9706</p>
+                <button onclick="sendWhatsAppReceipt()" class="mt-6 bg-white text-yellow-600 px-10 py-4 rounded-xl hover:bg-gray-200 transition">
+                    Send Receipt on WhatsApp
+                </button>
+            </div>
+            <button onclick="closePayment()" class="mt-8 px-12 py-4 bg-red-600 hover:bg-red-500 rounded-xl text-xl font-bold">Close</button>
+        </div>
+    </div>
 
+    <!-- FULL SCRIPT – COUNTERS WORKING! -->
     <script>
-        // Login persistence
-        if (localStorage.getItem('spudyLoggedIn') === 'true') document.getElementById('authBtn').textContent = 'Account';
-
-        function openLogin() { document.getElementById('loginModal').classList.remove('hidden'); }
-        function closeLogin() { document.getElementById('loginModal').classList.add('hidden'); }
-        function closePayment() { document.getElementById('paymentModal').classList.add('hidden'); }
-
-        function checkLogin() {
-            if (localStorage.getItem('spudyLoggedIn') !== 'true') {
-                alert('Please login to apply!');
-                openLogin();
-            } else alert('Application submitted!');
-        }
+        let selectedPlan = '', selectedPrice = '', selectedMethod = '';
 
         function selectPlan(name, price) {
-            if (localStorage.getItem('spudyLoggedIn') !== 'true') { alert('Please login first'); openLogin(); return; }
+            if (localStorage.getItem('spudyLoggedIn') !== 'true') { alert('Please login first!'); openLogin(); return; }
+            selectedPlan = name; selectedPrice = price;
             document.getElementById('planName').textContent = name;
             document.getElementById('planPrice').textContent = price === 49 ? '$49 Lifetime' : '$' + price + '/month';
             document.getElementById('paymentModal').classList.remove('hidden');
+            document.getElementById('paymentConfirm').classList.add('hidden');
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
         }
 
-        function submitSubscribe(e) {
-            e.preventDefault();
-            const email = document.getElementById('subscribe-email').value;
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (regex.test(email)) {
-                alert('Thank you for subscribing!');
-                document.getElementById('subscribe-email').value = '';
-            } else {
-                document.getElementById('subscribe-error').classList.remove('hidden');
-            }
+        function selectPayment(method) {
+            selectedMethod = method;
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            document.getElementById('selectedMethod').textContent = method;
+            document.getElementById('paymentConfirm').classList.remove('hidden');
         }
 
-        // Animated counters
+        function sendWhatsAppReceipt() {
+            const msg = `Hi Spudy Library! I just paid $${selectedPrice} for ${selectedPlan} using ${selectedMethod}. Please activate my account!`;
+            window.open(`https://api.whatsapp.com/send?phone=263716669706&text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function closePayment() { document.getElementById('paymentModal').classList.add('hidden'); }
+
+        // Login
+        if (localStorage.getItem('spudyLoggedIn') === 'true') document.getElementById('authBtn').textContent = 'Account';
+        function openLogin() { document.getElementById('loginModal').classList.remove('hidden'); }
+        function closeLogin() { document.getElementById('loginModal').classList.add('hidden'); }
+        function checkLogin() { if (localStorage.getItem('spudyLoggedIn') !== 'true') { alert('Please login!'); openLogin(); } else alert('Application submitted!'); }
+
+        // Animated Counters – WORKING!
         const counters = document.querySelectorAll('.counter');
         let animated = false;
         window.addEventListener('scroll', () => {
             if (animated) return;
-            counters.forEach(c => {
-                if (c.getBoundingClientRect().top < window.innerHeight) {
+            counters.forEach(counter => {
+                if (counter.getBoundingClientRect().top < window.innerHeight - 100) {
                     animated = true;
                     let count = 0;
-                    const target = +c.dataset.count;
-                    const inc = target / 100;
+                    const target = +counter.dataset.count;
+                    const increment = target / 100;
                     const timer = setInterval(() => {
-                        count += inc;
-                        if (count >= target) { c.textContent = target.toLocaleString(); clearInterval(timer); }
-                        else c.textContent = Math.ceil(count).toLocaleString();
+                        count += increment;
+                        if (count >= target) {
+                            counter.textContent = target.toLocaleString() + '+';
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.ceil(count).toLocaleString() + '+';
+                        }
                     }, 20);
                 }
             });
