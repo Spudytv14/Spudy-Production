@@ -8,6 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap');
 
@@ -18,7 +20,7 @@
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             width: 100%;
-            height: 100%;
+            min-height: 100%;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -41,10 +43,10 @@
         }
 
         .gold-text {
-            background: linear-gradient(135deg, #ffd700, #d4af37, #b8860b);
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 2px 10px rgba(212, 175, 55, 0.3);
+            text-shadow: 0px 2px 10px rgba(14, 165, 233, 0.3);
         }
 
         /* Glassmorphism */
@@ -66,7 +68,7 @@
 
         .glass-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(212, 175, 55, 0.3);
+            border-color: rgba(14, 165, 233, 0.3);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
         }
 
@@ -100,27 +102,27 @@
             top: -14px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #fbbf24, #d4af37);
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
             color: black;
             padding: 6px 18px;
             border-radius: 50px;
             font-size: 12px;
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
         }
 
         /* Buttons */
         .btn-premium {
-            background: linear-gradient(135deg, #d4af37, #b8860b);
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
             color: black;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
         }
 
         .btn-premium:hover {
             transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
         }
 
         .btn-outline {
@@ -131,8 +133,8 @@
         }
 
         .btn-outline:hover {
-            border-color: #d4af37;
-            color: #d4af37;
+            border-color: #38bdf8;
+            color: #38bdf8;
         }
 
         /* Utilities */
@@ -148,7 +150,7 @@
         }
         .payment-option:hover { 
             transform: translateY(-5px); 
-            border-color: #d4af37;
+            border-color: #38bdf8;
             background: rgba(255, 255, 255, 0.03);
         }
         .payment-option.selected { 
@@ -191,7 +193,7 @@
 
     <!-- Hero -->
     <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-4xl mx-auto" data-aos="fade-up">
             <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tight text-white leading-tight">
                 Welcome to <span class="gold-text">Spudy</span>
             </h1>
@@ -208,12 +210,12 @@
     <!-- FREE BOOKS -->
     <section id="spudy-books" class="py-32 px-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-4 text-white">Curated Collection</h2>
-            <p class="text-center text-gray-400 mb-20 text-lg">Access our exclusive library of premium content</p>
+            <h2 class="text-5xl font-bold text-center mb-4 text-white" data-aos="fade-up">Curated Collection</h2>
+            <p class="text-center text-gray-400 mb-20 text-lg" data-aos="fade-up" data-aos-delay="100">Access our exclusive library of premium content</p>
             
             <div class="grid md:grid-cols-3 gap-10">
                 <!-- Book 1 -->
-                <div class="glass-card rounded-3xl p-8 relative group">
+                <div class="glass-card rounded-3xl p-8 relative group" data-aos="fade-up" data-aos-delay="200">
                     <div class="badge badge-free">Free Read</div>
                     <div class="relative overflow-hidden rounded-xl mb-8 shadow-2xl">
                         <img src="spudybook1.png" alt="Spudy Book 1" class="w-full object-cover transform group-hover:scale-105 transition duration-500">
@@ -227,7 +229,7 @@
                 </div>
 
                 <!-- Book 2 Coming Soon -->
-                <div class="glass-card rounded-3xl p-8 relative opacity-75 hover:opacity-100 transition">
+                <div class="glass-card rounded-3xl p-8 relative opacity-75 hover:opacity-100 transition" data-aos="fade-up" data-aos-delay="300">
                     <div class="badge badge-coming-soon">Coming Soon</div>
                     <div class="relative overflow-hidden rounded-xl mb-8 shadow-2xl bg-gray-900 h-64 flex items-center justify-center border border-gray-800">
                         <i class="fas fa-lock text-5xl text-gray-700"></i>
@@ -240,7 +242,7 @@
                 </div>
 
                 <!-- Book 3 Coming Soon -->
-                <div class="glass-card rounded-3xl p-8 relative opacity-75 hover:opacity-100 transition">
+                <div class="glass-card rounded-3xl p-8 relative opacity-75 hover:opacity-100 transition" data-aos="fade-up" data-aos-delay="400">
                     <div class="badge badge-coming-soon">Coming Soon</div>
                     <div class="relative overflow-hidden rounded-xl mb-8 shadow-2xl bg-gray-900 h-64 flex items-center justify-center border border-gray-800">
                          <i class="fas fa-lock text-5xl text-gray-700"></i>
@@ -258,11 +260,11 @@
     <!-- PREMIUM COURSES -->
     <section id="spudy-courses" class="py-32 px-6 bg-gradient-to-b from-transparent to-black/50">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-4 text-white">Elite Courses</h2>
-            <p class="text-center text-gray-400 mb-20 text-lg">Master new skills with our expert-led programs</p>
+            <h2 class="text-5xl font-bold text-center mb-4 text-white" data-aos="fade-up">Elite Courses</h2>
+            <p class="text-center text-gray-400 mb-20 text-lg" data-aos="fade-up" data-aos-delay="100">Master new skills with our expert-led programs</p>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-card p-10 rounded-3xl text-center group">
+                <div class="glass-card p-10 rounded-3xl text-center group" data-aos="fade-up" data-aos-delay="200">
                     <div class="w-20 h-20 mx-auto bg-purple-900/30 rounded-full flex items-center justify-center mb-8 group-hover:bg-purple-600/20 transition">
                         <i class="fas fa-robot text-4xl text-purple-400"></i>
                     </div>
@@ -270,7 +272,7 @@
                     <p class="text-gray-400 mb-8">From zero to AI hero in 8 weeks. Learn the future today.</p>
                     <button onclick="checkLogin()" class="btn-outline w-full py-3 rounded-xl">View Details</button>
                 </div>
-                <div class="glass-card p-10 rounded-3xl text-center group">
+                <div class="glass-card p-10 rounded-3xl text-center group" data-aos="fade-up" data-aos-delay="300">
                     <div class="w-20 h-20 mx-auto bg-blue-900/30 rounded-full flex items-center justify-center mb-8 group-hover:bg-blue-600/20 transition">
                         <i class="fas fa-code text-4xl text-blue-400"></i>
                     </div>
@@ -278,7 +280,7 @@
                     <p class="text-gray-400 mb-8">Build modern, responsive websites and applications.</p>
                     <button onclick="checkLogin()" class="btn-outline w-full py-3 rounded-xl">View Details</button>
                 </div>
-                <div class="glass-card p-10 rounded-3xl text-center group">
+                <div class="glass-card p-10 rounded-3xl text-center group" data-aos="fade-up" data-aos-delay="400">
                     <div class="w-20 h-20 mx-auto bg-yellow-900/30 rounded-full flex items-center justify-center mb-8 group-hover:bg-yellow-600/20 transition">
                         <i class="fas fa-pen-nib text-4xl text-yellow-400"></i>
                     </div>
@@ -293,12 +295,12 @@
     <!-- PRICING -->
     <section id="pricing" class="py-32 px-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-4 text-white">Membership</h2>
-            <p class="text-center text-gray-400 mb-20 text-lg">Choose the plan that fits your ambition</p>
+            <h2 class="text-5xl font-bold text-center mb-4 text-white" data-aos="fade-up">Membership</h2>
+            <p class="text-center text-gray-400 mb-20 text-lg" data-aos="fade-up" data-aos-delay="100">Choose the plan that fits your ambition</p>
 
             <div class="grid md:grid-cols-3 gap-8 items-center">
                 <!-- Free -->
-                <div class="glass-card p-10 rounded-3xl">
+                <div class="glass-card p-10 rounded-3xl" data-aos="fade-right">
                     <h3 class="text-xl font-bold text-gray-300">Starter</h3>
                     <p class="text-4xl font-bold text-white mt-4 mb-2">Free</p>
                     <p class="text-sm text-gray-500 mb-8">Forever</p>
@@ -310,7 +312,7 @@
                 </div>
 
                 <!-- Pro -->
-                <div class="glass-card p-10 rounded-3xl border-t-4 border-yellow-500 relative transform md:scale-110 z-10 bg-gray-900/80">
+                <div class="glass-card p-10 rounded-3xl border-t-4 border-yellow-500 relative transform md:scale-110 z-10 bg-gray-900/80" data-aos="fade-up">
                     <div class="badge badge-popular">MOST POPULAR</div>
                     <h3 class="text-xl font-bold text-white">Library Pro</h3>
                     <p class="text-5xl font-bold text-white mt-4 mb-2">$2.51</p>
@@ -324,7 +326,7 @@
                 </div>
 
                 <!-- Lifetime -->
-                <div class="glass-card p-10 rounded-3xl">
+                <div class="glass-card p-10 rounded-3xl" data-aos="fade-left">
                     <h3 class="text-xl font-bold text-gray-300">Lifetime</h3>
                     <p class="text-4xl font-bold text-white mt-4 mb-2">$49</p>
                     <p class="text-sm text-gray-500 mb-8">one-time payment</p>
@@ -346,11 +348,11 @@
                 <h2 class="text-4xl font-bold mb-8">Trusted by thousands of students worldwide.</h2>
                 <div class="grid grid-cols-2 gap-8">
                     <div>
-                        <div class="counter text-4xl font-bold text-white mb-2" data-count="5000">0</div>
+                        <div class="counter text-4xl font-bold text-white mb-2" data-count="25000">0</div>
                         <p class="text-gray-500">Downloads</p>
                     </div>
                     <div>
-                        <div class="counter text-4xl font-bold text-white mb-2" data-count="1200">0</div>
+                        <div class="counter text-4xl font-bold text-white mb-2" data-count="12000">0</div>
                         <p class="text-gray-500">Students</p>
                     </div>
                 </div>
@@ -544,25 +546,29 @@
 
         // Animated Counters
         const counters = document.querySelectorAll('.counter');
-        let animated = false;
 
         function animateCounters() {
-            if (animated) return;
             const triggerBottom = window.innerHeight * 0.9;
             
             counters.forEach(counter => {
+                if (counter.classList.contains('animated-started')) return;
+
                 const counterTop = counter.getBoundingClientRect().top;
+                
+                // Trigger if the element is visible or has been scrolled past
                 if (counterTop < triggerBottom) {
-                    animated = true; // Simple logic: animate all at once when one is visible
+                    counter.classList.add('animated-started');
                     
                     const updateCounter = () => {
-                        const target = +counter.dataset.count;
+                        const target = +counter.getAttribute('data-count');
                         const c = +counter.innerText.replace(/,/g, '').replace('+', ''); // Clean current value
-                        const increment = target / 100;
+                        
+                        // Dynamic increment based on target size to ensure quick animation
+                        const increment = target / 50; 
 
                         if (c < target) {
                             counter.innerText = `${Math.ceil(c + increment).toLocaleString()}+`;
-                            setTimeout(updateCounter, 20);
+                            setTimeout(updateCounter, 30);
                         } else {
                             counter.innerText = `${target.toLocaleString()}+`;
                         }
@@ -573,6 +579,9 @@
         }
 
         window.addEventListener('scroll', animateCounters);
+        
+        // Initial check in case elements are already in view
+        document.addEventListener('DOMContentLoaded', animateCounters);
 
         // Three.js Background - Subtle Particles
         const initThreeJS = () => {
@@ -599,7 +608,7 @@
 
             const material = new THREE.PointsMaterial({
                 size: 0.05,
-                color: 0xd4af37, // Gold
+                color: 0x38bdf8, // Light Blue
                 transparent: true,
                 opacity: 0.8,
             });
@@ -641,6 +650,12 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({
+                duration: 1000,
+                once: true,
+                offset: 100
+            });
+            
             initThreeJS();
             
             // Typed.js
