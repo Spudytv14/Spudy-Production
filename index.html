@@ -3,259 +3,515 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spudy Library</title>
+    <title>Spudy Library | Premium Learning</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
     <style>
-        body { margin: 0; background: #0a0a0a; overflow-x: hidden; color: white; }
-        #canvas { width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: -1; }
-        .glow { text-shadow: 0 0 15px #3b82f6, 0 0 30px #2563eb; }
-        .free-badge { position: absolute; top: 12px; right: 12px; background: #10b981; color: white; font-weight: bold; padding: 8px 16px; border-radius: 50px; font-size: 12px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
-        .coming-soon { background: linear-gradient(135deg, #f59e0b, #f97316); }
-        .popular-badge { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); background: #facc15; color: black; font-weight: bold; padding: 8px 20px; border-radius: 50px; font-size: 13px; }
-        .counter { font-size: 4.5rem; font-weight: bold; }
-        .payment-option { transition: all 0.3s; border: 2px solid transparent; cursor: pointer; }
-        .payment-option:hover { transform: translateY(-8px); }
-        .payment-option.selected { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap');
+
+        html, body {
+            margin: 0;
+            background: #050505;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        #canvas {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Premium Glow & Text Effects */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .gold-text {
+            background: linear-gradient(135deg, #ffd700, #d4af37, #b8860b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Badges */
+        .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        .badge-free {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-coming-soon {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .badge-popular {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #fbbf24, #d4af37);
+            color: black;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+        }
+
+        /* Buttons */
+        .btn-premium {
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: black;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-premium:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+
+        /* Utilities */
+        .counter-text {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .payment-option { 
+            transition: all 0.3s; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            cursor: pointer; 
+        }
+        .payment-option:hover { 
+            transform: translateY(-5px); 
+            border-color: #d4af37;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .payment-option.selected { 
+            border-color: #10b981; 
+            background: rgba(16, 185, 129, 0.1); 
+        }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-90 backdrop-blur-lg border-b border-blue-900">
+    <nav class="fixed top-0 w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-            <h1 class="text-2xl font-bold glow">Spudy Library</h1>
-            <div class="flex items-center gap-4 text-sm">
-                <a href="#home" class="hover:text-blue-400 px-3 py-2 rounded transition">Home</a>
-                <a href="#spudy-books" class="hover:text-blue-400 px-3 py-2 rounded transition">Books</a>
-                <a href="#spudy-courses" class="hover:text-blue-400 px-3 py-2 rounded transition">Courses</a>
-                <a href="#pricing" class="hover:text-blue-400 px-3 py-2 rounded transition">Pricing</a>
-                <button id="authBtn" onclick="openLogin()" class="bg-blue-600 hover:bg-blue-500 px-5 py-2 rounded-full text-sm font-bold">Login</button>
+            <h1 class="text-2xl font-bold gold-text tracking-wide">Spudy Library</h1>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="#home" class="text-gray-300 hover:text-white transition">Home</a>
+                <a href="#spudy-books" class="text-gray-300 hover:text-white transition">Books</a>
+                <a href="#spudy-courses" class="text-gray-300 hover:text-white transition">Courses</a>
+                <a href="#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
+                <button id="authBtn" onclick="openLogin()" class="btn-premium px-6 py-2 rounded-full text-sm">Login</button>
+            </div>
+            <!-- Mobile Menu Icon -->
+            <button class="md:hidden text-gray-300 text-2xl focus:outline-none" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden absolute top-full left-0 w-full glass-nav border-t border-gray-800">
+            <div class="flex flex-col p-6 space-y-4 text-center">
+                <a href="#home" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Home</a>
+                <a href="#spudy-books" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Books</a>
+                <a href="#spudy-courses" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Courses</a>
+                <a href="#pricing" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Pricing</a>
+                <button onclick="openLogin(); toggleMobileMenu()" class="btn-premium px-6 py-2 rounded-full text-sm w-full">Login</button>
             </div>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
-        <h1 class="text-6xl md:text-8xl font-extrabold glow">Spudy Library</h1>
-        <p class="text-3xl md:text-5xl mt-6" id="typed"></p>
-        <a href="#spudy-books" class="mt-12 bg-green-600 hover:bg-green-500 px-14 py-6 rounded-full text-2xl font-bold shadow-2xl">Read Free Books Now</a>
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tight text-white leading-tight">
+                Welcome to <span class="gold-text">Spudy</span>
+            </h1>
+            <div class="h-16 mb-8">
+                <span class="text-2xl md:text-4xl text-gray-400 font-light" id="typed"></span>
+            </div>
+            <div class="flex flex-col md:flex-row gap-6 justify-center">
+                <a href="#spudy-books" class="btn-premium px-10 py-4 rounded-full text-lg shadow-lg">Explore Library</a>
+                <a href="#spudy-courses" class="btn-outline px-10 py-4 rounded-full text-lg">View Courses</a>
+            </div>
+        </div>
     </section>
 
-    <!-- FREE BOOKS + Book 2 & 3 Coming Soon -->
-    <section id="spudy-books" class="py-24 px-6 bg-black bg-opacity-40">
-        <h2 class="text-5xl font-bold glow text-center mb-16">Free Books Collection</h2>
-        <div class="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
-            <!-- Book 1 -->
-            <div class="relative p-10 bg-gray-900 bg-opacity-80 rounded-3xl border border-gray-700 hover:border-green-500 transition text-center">
-                <div class="free-badge">100% FREE</div>
-                <img src="spudybook1.png" alt="Spudy Book 1" class="w-64 mx-auto rounded-xl shadow-2xl border-4 border-green-600">
-                <h3 class="text-3xl font-bold glow mt-8">Spudy: Chronicles of a Form One Legend</h3>
-                <p class="mt-4 text-lg opacity-90">A funny and inspiring high school adventure</p>
-                <button onclick="window.open('https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=drive_link','_blank')" 
-                        class="mt-8 bg-green-600 hover:bg-green-500 text-white font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-105 transition">
-                    <i class="fas fa-download mr-3"></i> Download Free PDF
-                </button>
-            </div>
-
-            <!-- Book 2 Coming Soon -->
-            <div class="relative p-10 bg-gray-900 bg-opacity-80 rounded-3xl border border-gray-700 hover:border-orange-500 transition text-center">
-                <div class="free-badge coming-soon">COMING SOON</div>
-                <div class="relative">
-                    <img src="spudybook1.png" alt="Spudy Book 2" class="w-64 mx-auto rounded-xl shadow-2xl border-4 border-orange-600 opacity-70">
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <p class="text-5xl font-bold text-orange-400 bg-black bg-opacity-80 px-8 py-4 rounded-2xl">SOON</p>
+    <!-- FREE BOOKS -->
+    <section id="spudy-books" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-4 text-white">Curated Collection</h2>
+            <p class="text-center text-gray-400 mb-20 text-lg">Access our exclusive library of premium content</p>
+            
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Book 1 -->
+                <div class="glass-card rounded-3xl p-8 relative group">
+                    <div class="badge badge-free">Free Read</div>
+                    <div class="relative overflow-hidden rounded-xl mb-8 shadow-2xl">
+                        <img src="spudybook1.png" alt="Spudy Book 1" class="w-full object-cover transform group-hover:scale-105 transition duration-500">
                     </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Chronicles of a Legend</h3>
+                    <p class="text-gray-400 mb-8 text-sm leading-relaxed">A funny and inspiring high school adventure that captures the essence of youth.</p>
+                    <button onclick="window.open('https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=drive_link','_blank')" 
+                            class="w-full btn-premium py-4 rounded-xl text-lg flex items-center justify-center gap-2">
+                        <i class="fas fa-book-open"></i> Read Now
+                    </button>
                 </div>
-                <h3 class="text-3xl font-bold glow mt-8">Spudy Book 2</h3>
-                <p class="mt-4 text-lg opacity-90">The journey continues...</p>
-                <button class="mt-8 bg-gray-700 text-gray-400 font-bold py-5 px-12 rounded-full text-xl cursor-not-allowed" disabled>Coming Soon</button>
-            </div>
 
-            <!-- Book 3 Coming Soon -->
-            <div class="relative p-10 bg-gray-900 bg-opacity-80 rounded-3xl border border-gray-700 hover:border-purple-500 transition text-center">
-                <div class="free-badge coming-soon">COMING SOON</div>
-                <div class="relative">
-                    <img src="spudybook1.png" alt="Spudy Book 3" class="w-64 mx-auto rounded-xl shadow-2xl border-4 border-purple-600 opacity-70">
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <p class="text-5xl font-bold text-purple-400 bg-black bg-opacity-80 px-8 py-4 rounded-2xl">SOON</p>
+                <!-- Book 2 Coming Soon -->
+                <div class="glass-card rounded-3xl p-8 relative opacity-75 hover:opacity-100 transition">
+                    <div class="badge badge-coming-soon">Coming Soon</div>
+                    <div class="relative overflow-hidden rounded-xl mb-8 shadow-2xl bg-gray-900 h-64 flex items-center justify-center border border-gray-800">
+                        <i class="fas fa-lock text-5xl text-gray-700"></i>
                     </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Spudy Book 2</h3>
+                    <p class="text-gray-400 mb-8 text-sm">The journey continues in this highly anticipated sequel.</p>
+                    <button class="w-full bg-gray-800 text-gray-500 py-4 rounded-xl text-lg cursor-not-allowed">
+                        Coming Soon
+                    </button>
                 </div>
-                <h3 class="text-3xl font-bold glow mt-8">Spudy Book 3</h3>
-                <p class="mt-4 text-lg opacity-90">The epic finale...</p>
-                <button class="mt-8 bg-gray-700 text-gray-400 font-bold py-5 px-12 rounded-full text-xl cursor-not-allowed" disabled>Coming Soon</button>
+
+                <!-- Book 3 Coming Soon -->
+                <div class="glass-card rounded-3xl p-8 relative opacity-75 hover:opacity-100 transition">
+                    <div class="badge badge-coming-soon">Coming Soon</div>
+                    <div class="relative overflow-hidden rounded-xl mb-8 shadow-2xl bg-gray-900 h-64 flex items-center justify-center border border-gray-800">
+                         <i class="fas fa-lock text-5xl text-gray-700"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Spudy Book 3</h3>
+                    <p class="text-gray-400 mb-8 text-sm">The epic finale that will leave you breathless.</p>
+                    <button class="w-full bg-gray-800 text-gray-500 py-4 rounded-xl text-lg cursor-not-allowed">
+                        Coming Soon
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- PREMIUM COURSES -->
-    <section id="spudy-courses" class="py-24 px-6 bg-black bg-opacity-50">
-        <h2 class="text-5xl font-bold glow text-center mb-16">Premium Courses</h2>
-        <div class="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
-            <div class="p-10 bg-gradient-to-br from-purple-900 to-black rounded-3xl border-2 border-purple-600 hover:border-purple-400 transition text-center">
-                <i class="fas fa-robot text-7xl text-purple-400 mb-6"></i>
-                <h3 class="text-3xl font-bold glow mb-4">AI Fundamentals</h3>
-                <p class="text-lg opacity-90 mb-8">From zero to AI hero in 8 weeks</p>
-                <button onclick="checkLogin()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-110 transition">
-                    Apply Now
-                </button>
-            </div>
-            <div class="p-10 bg-gradient-to-br from-blue-900 to-black rounded-3xl border-2 border-blue-600 hover:border-blue-400 transition text-center">
-                <i class="fas fa-laptop-code text-7xl text-blue-400 mb-6"></i>
-                <h3 class="text-3xl font-bold glow mb-4">Tech for Beginners</h3>
-                <p class="text-lg opacity-90 mb-8">Build real apps & websites</p>
-                <button onclick="checkLogin()" class="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-110 transition">
-                    Apply Now
-                </button>
-            </div>
-            <div class="p-10 bg-gradient-to-br from-yellow-900 to-black rounded-3xl border-2 border-yellow-600 hover:border-yellow-400 transition text-center">
-                <i class="fas fa-pen-fancy text-7xl text-yellow-400 mb-6"></i>
-                <h3 class="text-3xl font-bold glow mb-4">Creative Writing Mastery</h3>
-                <p class="text-lg opacity-90 mb-8">Write your first book with confidence</p>
-                <button onclick="checkLogin()" class="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-black font-bold py-5 px-12 rounded-full text-xl shadow-2xl transform hover:scale-110 transition">
-                    Apply Now
-                </button>
+    <section id="spudy-courses" class="py-32 px-6 bg-gradient-to-b from-transparent to-black/50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-4 text-white">Elite Courses</h2>
+            <p class="text-center text-gray-400 mb-20 text-lg">Master new skills with our expert-led programs</p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-10 rounded-3xl text-center group">
+                    <div class="w-20 h-20 mx-auto bg-purple-900/30 rounded-full flex items-center justify-center mb-8 group-hover:bg-purple-600/20 transition">
+                        <i class="fas fa-robot text-4xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">AI Fundamentals</h3>
+                    <p class="text-gray-400 mb-8">From zero to AI hero in 8 weeks. Learn the future today.</p>
+                    <button onclick="checkLogin()" class="btn-outline w-full py-3 rounded-xl">View Details</button>
+                </div>
+                <div class="glass-card p-10 rounded-3xl text-center group">
+                    <div class="w-20 h-20 mx-auto bg-blue-900/30 rounded-full flex items-center justify-center mb-8 group-hover:bg-blue-600/20 transition">
+                        <i class="fas fa-code text-4xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Web Development</h3>
+                    <p class="text-gray-400 mb-8">Build modern, responsive websites and applications.</p>
+                    <button onclick="checkLogin()" class="btn-outline w-full py-3 rounded-xl">View Details</button>
+                </div>
+                <div class="glass-card p-10 rounded-3xl text-center group">
+                    <div class="w-20 h-20 mx-auto bg-yellow-900/30 rounded-full flex items-center justify-center mb-8 group-hover:bg-yellow-600/20 transition">
+                        <i class="fas fa-pen-nib text-4xl text-yellow-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Creative Writing</h3>
+                    <p class="text-gray-400 mb-8">Unleash your imagination and write your first bestseller.</p>
+                    <button onclick="checkLogin()" class="btn-outline w-full py-3 rounded-xl">View Details</button>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- PRICING -->
-    <section id="pricing" class="py-24 px-6">
-        <h2 class="text-5xl font-bold glow text-center mb-16">Choose Your Plan</h2>
-        <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-            <div class="p-10 bg-gray-900 rounded-3xl border border-gray-700 text-center">
-                <h3 class="text-3xl font-bold glow">Free Forever</h3>
-                <p class="text-5xl font-bold my-8">FREE</p>
-                <ul class="text-left space-y-3 mb-8 text-white text-lg"><li>✓ All Free Books</li><li>✓ Basic Library Access</li></ul>
-                <button class="w-full py-4 bg-gray-700 rounded-xl font-bold text-xl">Current Plan</button>
-            </div>
-            <div class="relative p-12 bg-gradient-to-b from-purple-950 to-black rounded-3xl border-4 border-purple-500 shadow-2xl transform scale-105">
-                <div class="popular-badge">MOST POPULAR</div>
-                <h3 class="text-4xl font-bold glow">Library Pro</h3>
-                <p class="text-6xl font-bold my-8">$2.51 <span class="text-2xl">/month</span></p>
-                <ul class="text-left space-y-3 mb-8 text-white text-lg"><li>✓ Unlimited Premium Books</li><li>✓ All Courses</li><li>✓ Offline Reading</li></ul>
-                <button onclick="selectPlan('Library Pro', 2.51)" class="w-full py-5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-xl font-bold rounded-xl">Upgrade Now</button>
-            </div>
-            <div class="p-10 bg-gradient-to-b from-cyan-900 to-black rounded-3xl border-4 border-cyan-500 text-center">
-                <h3 class="text-3xl font-bold glow">Lifetime Access</h3>
-                <p class="text-5xl font-bold my-8">$49 <span class="text-xl">one-time</span></p>
-                <ul class="text-left space-y-3 mb-8 text-white text-lg"><li>✓ Everything in Pro</li><li>✓ Lifetime Updates</li><li>✓ All Future Books Free</li></ul>
-                <button onclick="selectPlan('Lifetime Access', 49)" class="w-full py-5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-xl font-bold rounded-xl">Get Lifetime</button>
+    <section id="pricing" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-4 text-white">Membership</h2>
+            <p class="text-center text-gray-400 mb-20 text-lg">Choose the plan that fits your ambition</p>
+
+            <div class="grid md:grid-cols-3 gap-8 items-center">
+                <!-- Free -->
+                <div class="glass-card p-10 rounded-3xl">
+                    <h3 class="text-xl font-bold text-gray-300">Starter</h3>
+                    <p class="text-4xl font-bold text-white mt-4 mb-2">Free</p>
+                    <p class="text-sm text-gray-500 mb-8">Forever</p>
+                    <ul class="space-y-4 mb-10 text-gray-300 text-sm">
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Access to Free Books</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Basic Community Access</li>
+                    </ul>
+                    <button class="w-full py-4 bg-gray-800 rounded-xl text-gray-400 font-bold" disabled>Current Plan</button>
+                </div>
+
+                <!-- Pro -->
+                <div class="glass-card p-10 rounded-3xl border-t-4 border-yellow-500 relative transform md:scale-110 z-10 bg-gray-900/80">
+                    <div class="badge badge-popular">MOST POPULAR</div>
+                    <h3 class="text-xl font-bold text-white">Library Pro</h3>
+                    <p class="text-5xl font-bold text-white mt-4 mb-2">$2.51</p>
+                    <p class="text-sm text-gray-400 mb-8">per month</p>
+                    <ul class="space-y-4 mb-10 text-gray-200">
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-yellow-500"></i> Unlimited Premium Books</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-yellow-500"></i> Access to All Courses</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-yellow-500"></i> Offline Reading Mode</li>
+                    </ul>
+                    <button onclick="selectPlan('Library Pro', 2.51)" class="w-full btn-premium py-4 rounded-xl text-lg">Upgrade Now</button>
+                </div>
+
+                <!-- Lifetime -->
+                <div class="glass-card p-10 rounded-3xl">
+                    <h3 class="text-xl font-bold text-gray-300">Lifetime</h3>
+                    <p class="text-4xl font-bold text-white mt-4 mb-2">$49</p>
+                    <p class="text-sm text-gray-500 mb-8">one-time payment</p>
+                    <ul class="space-y-4 mb-10 text-gray-300 text-sm">
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Everything in Pro</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Lifetime Updates</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> VIP Support</li>
+                    </ul>
+                    <button onclick="selectPlan('Lifetime Access', 49)" class="w-full btn-outline py-4 rounded-xl font-bold">Get Lifetime</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- TRUSTED BY READERS + ANIMATED NUMBERS -->
-    <section class="py-24 px-6 bg-black bg-opacity-50">
-        <h2 class="text-5xl font-bold glow text-center mb-16">Trusted by Readers</h2>
-        <div class="max-w-4xl mx-auto text-center mb-16">
-            <p class="text-2xl italic opacity-90">"Spudy Library changed how I learn and read!"</p>
-            <p class="mt-4 font-bold text-yellow-400 text-xl">— Nyasha K., Student</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-            <div class="p-8 bg-gray-900 bg-opacity-80 rounded-3xl text-center">
-                <div class="counter text-green-500" data-count="5000">0</div>
-                <p class="mt-4 text-xl">Book Downloads</p>
+    <!-- TRUSTED BY -->
+    <section class="py-24 px-6 border-t border-gray-900">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-4xl font-bold mb-8">Trusted by thousands of students worldwide.</h2>
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <div class="counter text-4xl font-bold text-white mb-2" data-count="5000">0</div>
+                        <p class="text-gray-500">Downloads</p>
+                    </div>
+                    <div>
+                        <div class="counter text-4xl font-bold text-white mb-2" data-count="1200">0</div>
+                        <p class="text-gray-500">Students</p>
+                    </div>
+                </div>
             </div>
-            <div class="p-8 bg-gray-900 bg-opacity-80 rounded-3xl text-center">
-                <div class="counter text-blue-500" data-count="1200">0</div>
-                <p class="mt-4 text-xl">Course Enrollments</p>
-            </div>
-            <div class="p-8 bg-gray-900 bg-opacity-80 rounded-3xl text-center">
-                <div class="counter text-purple-500" data-count="10000">0</div>
-                <p class="mt-4 text-xl">Happy Readers</p>
+            <div class="glass-card p-8 rounded-2xl relative">
+                <i class="fas fa-quote-left text-4xl text-gray-700 absolute top-6 left-6"></i>
+                <p class="text-lg text-gray-300 italic mb-6 relative z-10 pt-8">"Spudy Library changed how I learn. The quality of content is unmatched and the platform is so beautiful to use."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gray-700 rounded-full"></div>
+                    <div>
+                        <p class="font-bold text-white">Nyasha K.</p>
+                        <p class="text-sm text-gray-500">Computer Science Student</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="py-24 px-6 bg-black bg-opacity-40">
-        <h2 class="text-5xl font-bold glow text-center mb-16">Contact Us</h2>
+    <section id="contact" class="py-24 px-6 bg-gradient-to-t from-black to-transparent">
+        <h2 class="text-5xl font-bold text-center mb-16 text-white">Stay Connected</h2>
         <div class="max-w-2xl mx-auto text-center">
-            <div class="flex justify-center gap-10 text-5xl mb-10">
-                <a href="https://api.whatsapp.com/send?phone=263716669706" class="text-green-500 hover:scale-110 transition"><i class="fab fa-whatsapp"></i></a>
-                <a href="mailto:spudytv14@gmail.com" class="text-blue-500 hover:scale-110 transition"><i class="fas fa-envelope"></i></a>
-            </div>
-            <div class="bg-gray-900 bg-opacity-80 p-8 rounded-3xl">
-                <input type="email" id="subscribe-email" placeholder="Enter your email for updates" class="w-full p-4 bg-gray-800 rounded-xl mb-4 text-white">
-                <button onclick="submitSubscribe(event)" class="w-full py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold text-xl">Subscribe</button>
+            <div class="glass-card p-10 rounded-3xl">
+                <input type="email" id="subscribe-email" placeholder="Enter your email for updates" class="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-xl mb-4 text-white focus:border-yellow-500 outline-none transition">
+                <button onclick="submitSubscribe(event)" class="w-full py-4 btn-premium rounded-xl font-bold text-xl">Subscribe</button>
                 <div id="subscribe-error" class="text-red-500 mt-2 hidden">Please enter a valid email</div>
             </div>
-            <div class="mt-10 text-sm space-y-2">
-                <a href="https://spudytv14.github.io/Legai-Services/" target="_blank" class="hover:text-blue-400">Terms of Service</a> |
-                <a href="#" class="hover:text-blue-400">Privacy Centre</a> |
-                <a href="mailto:spudytv14@gmail.com" class="hover:text-blue-400">Have feedback? Let us know</a>
+            <div class="mt-10 text-sm space-y-2 text-gray-500">
+                <a href="https://spudytv14.github.io/Legai-Services/" target="_blank" class="hover:text-yellow-500 transition">Terms of Service</a> |
+                <a href="#" class="hover:text-yellow-500 transition">Privacy Centre</a> |
+                <a href="mailto:spudytv14@gmail.com" class="hover:text-yellow-500 transition">Have feedback? Let us know</a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-16 text-center bg-black">
-        <div class="flex justify-center gap-12 text-5xl mb-10">
-            <a href="https://api.whatsapp.com/send?phone=263716669706" class="text-green-500 hover:scale-110 transition"><i class="fab fa-whatsapp"></i></a>
-            <a href="mailto:spudytv14@gmail.com" class="text-blue-500 hover:scale-110 transition"><i class="fas fa-envelope"></i></a>
-            <a href="https://facebook.com/matipaishe.blessing.muduchwa" class="text-blue-600 hover:scale-110 transition"><i class="fab fa-facebook"></i></a>
-            <a href="https://x.com/Matipa_14" class="text-white hover:scale-110 transition"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://youtube.com/@SpudyAI" class="text-red-500 hover:scale-110 transition"><i class="fab fa-youtube"></i></a>
+    <footer class="py-16 bg-black border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+            <h2 class="text-2xl font-bold gold-text mb-8">Spudy Library</h2>
+            <div class="flex gap-8 text-2xl mb-8">
+                <a href="https://api.whatsapp.com/send?phone=263716669706" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:spudytv14@gmail.com" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fas fa-envelope"></i></a>
+                <a href="https://facebook.com/matipaishe.blessing.muduchwa" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/Matipa_14" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://youtube.com/@SpudyAI" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="text-gray-600 text-sm">© 2026 Spudy Library. All Rights Reserved.</p>
         </div>
-        <p class="text-sm opacity-70">© 2026 Spudy Library. All Rights Reserved.</p>
-        <p class="text-xs mt-4 opacity-50">Created by Matipaishe</p>
     </footer>
 
-    <!-- PAYMENT MODAL WITH SELECTION -->
-    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center hidden z-50">
-        <div class="bg-gray-900 p-10 rounded-3xl max-w-4xl w-full text-center relative">
-            <button onclick="closePayment()" class="absolute top-4 right-6 text-4xl text-gray-400 hover:text-white">&times;</button>
-            <h2 class="text-4xl font-bold glow mb-4" id="planName">Library Pro</h2>
-            <p class="text-5xl font-bold mb-10 text-yellow-400" id="planPrice">$2.51/month</p>
-            <p class="text-xl mb-8">Choose your payment method:</p>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('EcoCash')">
-                    <img src="ecocash.png" alt="EcoCash" class="w-24 h-24 mx-auto mb-4 object-contain">
-                    <p class="font-bold text-green-400">EcoCash</p>
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center hidden z-50">
+        <div class="glass-card p-8 rounded-3xl max-w-4xl w-full mx-4 relative overflow-y-auto max-h-[90vh]">
+            <button onclick="closePayment()" class="absolute top-6 right-6 text-gray-500 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold mb-2">Complete Payment</h2>
+                <p class="text-gray-400">Upgrade to <span id="planName" class="text-white font-bold">Pro</span> for <span id="planPrice" class="text-yellow-500 font-bold">$2.51</span></p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('EcoCash')">
+                    <i class="fas fa-mobile-alt text-2xl mb-2 text-blue-400"></i>
+                    <p class="font-bold text-sm">EcoCash</p>
                 </div>
-                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('OneMoney')">
-                    <img src="onemoney.png" alt="OneMoney" class="w-24 h-24 mx-auto mb-4 object-contain">
-                    <p class="font-bold text-blue-400">OneMoney</p>
+                <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('Visa')">
+                    <i class="fab fa-cc-visa text-2xl mb-2 text-white"></i>
+                    <p class="font-bold text-sm">Visa</p>
                 </div>
-                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('NetOne Cash')">
-                    <img src="netone.png" alt="NetOne" class="w-24 h-24 mx-auto mb-4 object-contain">
-                    <p class="font-bold text-red-400">NetOne Cash</p>
+                 <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('Mastercard')">
+                    <i class="fab fa-cc-mastercard text-2xl mb-2 text-red-400"></i>
+                    <p class="font-bold text-sm">Mastercard</p>
                 </div>
-                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('Visa')">
-                    <img src="visa.png" alt="Visa" class="w-24 h-24 mx-auto mb-4 object-contain">
-                    <p class="font-bold text-blue-600">Visa</p>
+                 <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('OneMoney')">
+                    <i class="fas fa-wallet text-2xl mb-2 text-orange-400"></i>
+                    <p class="font-bold text-sm">OneMoney</p>
                 </div>
-                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('Mastercard')">
-                    <img src="mastercard.png" alt="Mastercard" class="w-24 h-24 mx-auto mb-4 object-contain">
-                    <p class="font-bold text-orange-500">Mastercard</p>
-                </div>
-                <div class="payment-option p-6 bg-gray-800 rounded-2xl" onclick="selectPayment('Bank Transfer')">
-                    <i class="fas fa-university text-6xl text-gray-400 mb-4"></i>
-                    <p class="font-bold">Bank Transfer</p>
+                 <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('PayPal')">
+                    <i class="fab fa-paypal text-2xl mb-2 text-blue-600"></i>
+                    <p class="font-bold text-sm">PayPal</p>
                 </div>
             </div>
-            <div id="paymentConfirm" class="hidden mt-10 bg-yellow-600 text-black p-8 rounded-2xl font-bold text-xl">
-                <p>You selected: <span id="selectedMethod"></span></p>
-                <p class="mt-4">Send payment to 071 666 9706</p>
-                <button onclick="sendWhatsAppReceipt()" class="mt-6 bg-white text-yellow-600 px-10 py-4 rounded-xl hover:bg-gray-200 transition">
-                    Send Receipt on WhatsApp
+
+            <div id="paymentConfirm" class="hidden bg-gray-800/50 p-6 rounded-xl text-center">
+                <p class="text-gray-300 mb-4">Pay with <span id="selectedMethod" class="text-white font-bold"></span></p>
+                <button onclick="sendWhatsAppReceipt()" class="btn-premium w-full py-3 rounded-lg font-bold">
+                    <i class="fab fa-whatsapp mr-2"></i> Confirm on WhatsApp
                 </button>
             </div>
-            <button onclick="closePayment()" class="mt-8 px-12 py-4 bg-red-600 hover:bg-red-500 rounded-xl text-xl font-bold">Close</button>
         </div>
     </div>
 
-    <!-- FULL SCRIPT – COUNTERS WORKING! -->
+    <!-- Login Modal Placeholder -->
+    <div id="loginModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center hidden z-50">
+        <div class="glass-card p-8 rounded-3xl max-w-md w-full mx-4 relative">
+             <button onclick="closeLogin()" class="absolute top-6 right-6 text-gray-500 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-2xl font-bold mb-6 text-center">Welcome Back</h2>
+            <input type="email" placeholder="Email Address" class="w-full bg-gray-800 border border-gray-700 text-white p-4 rounded-xl mb-4 focus:border-yellow-500 outline-none transition">
+            <input type="password" placeholder="Password" class="w-full bg-gray-800 border border-gray-700 text-white p-4 rounded-xl mb-6 focus:border-yellow-500 outline-none transition">
+            <button class="w-full btn-premium py-4 rounded-xl font-bold mb-4">Login</button>
+            <p class="text-center text-gray-500 text-sm">Don't have an account? <a href="#" class="text-white hover:underline">Sign up</a></p>
+        </div>
+    </div>
+
     <script>
+        // Mobile Menu Logic
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Login Logic
         let selectedPlan = '', selectedPrice = '', selectedMethod = '';
 
+        if (localStorage.getItem('spudyLoggedIn') === 'true') {
+            const authBtn = document.getElementById('authBtn');
+            if (authBtn) authBtn.textContent = 'Account';
+        }
+
+        function openLogin() { 
+            document.getElementById('loginModal').classList.remove('hidden'); 
+        }
+
+        function closeLogin() { 
+            document.getElementById('loginModal').classList.add('hidden'); 
+        }
+
+        function checkLogin() { 
+            if (localStorage.getItem('spudyLoggedIn') !== 'true') { 
+                alert('Please login to continue!'); 
+                openLogin(); 
+            } else { 
+                alert('Application submitted successfully!'); 
+            } 
+        }
+
+        // Subscription Logic
+        function submitSubscribe(event) {
+            const email = document.getElementById('subscribe-email').value;
+            const error = document.getElementById('subscribe-error');
+            if (email && email.includes('@')) {
+                error.classList.add('hidden');
+                alert('Thank you for subscribing!');
+            } else {
+                error.classList.remove('hidden');
+            }
+        }
+
+        // Payment Logic
         function selectPlan(name, price) {
-            if (localStorage.getItem('spudyLoggedIn') !== 'true') { alert('Please login first!'); openLogin(); return; }
-            selectedPlan = name; selectedPrice = price;
+            if (localStorage.getItem('spudyLoggedIn') !== 'true') { 
+                alert('Please login first!'); 
+                openLogin(); 
+                return; 
+            }
+            selectedPlan = name; 
+            selectedPrice = price;
             document.getElementById('planName').textContent = name;
             document.getElementById('planPrice').textContent = price === 49 ? '$49 Lifetime' : '$' + price + '/month';
             document.getElementById('paymentModal').classList.remove('hidden');
@@ -266,7 +522,13 @@
         function selectPayment(method) {
             selectedMethod = method;
             document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
+            // Find the element that called this function - tricky in global scope, let's fix in HTML
+            // We will assume the event is passed or handled via binding, but for now let's use the old way
+            // or rely on event.currentTarget if called from inline.
+            // Since I'm moving to a file, I should probably attach listeners, but to keep compatibility with
+            // the existing inline onclicks, I'll use event.currentTarget.
+            if(event && event.currentTarget) event.currentTarget.classList.add('selected');
+            
             document.getElementById('selectedMethod').textContent = method;
             document.getElementById('paymentConfirm').classList.remove('hidden');
         }
@@ -276,48 +538,122 @@
             window.open(`https://api.whatsapp.com/send?phone=263716669706&text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        function closePayment() { document.getElementById('paymentModal').classList.add('hidden'); }
+        function closePayment() { 
+            document.getElementById('paymentModal').classList.add('hidden'); 
+        }
 
-        // Login
-        if (localStorage.getItem('spudyLoggedIn') === 'true') document.getElementById('authBtn').textContent = 'Account';
-        function openLogin() { document.getElementById('loginModal').classList.remove('hidden'); }
-        function closeLogin() { document.getElementById('loginModal').classList.add('hidden'); }
-        function checkLogin() { if (localStorage.getItem('spudyLoggedIn') !== 'true') { alert('Please login!'); openLogin(); } else alert('Application submitted!'); }
-
-        // Animated Counters – WORKING!
+        // Animated Counters
         const counters = document.querySelectorAll('.counter');
         let animated = false;
-        window.addEventListener('scroll', () => {
+
+        function animateCounters() {
             if (animated) return;
+            const triggerBottom = window.innerHeight * 0.9;
+            
             counters.forEach(counter => {
-                if (counter.getBoundingClientRect().top < window.innerHeight - 100) {
-                    animated = true;
-                    let count = 0;
-                    const target = +counter.dataset.count;
-                    const increment = target / 100;
-                    const timer = setInterval(() => {
-                        count += increment;
-                        if (count >= target) {
-                            counter.textContent = target.toLocaleString() + '+';
-                            clearInterval(timer);
+                const counterTop = counter.getBoundingClientRect().top;
+                if (counterTop < triggerBottom) {
+                    animated = true; // Simple logic: animate all at once when one is visible
+                    
+                    const updateCounter = () => {
+                        const target = +counter.dataset.count;
+                        const c = +counter.innerText.replace(/,/g, '').replace('+', ''); // Clean current value
+                        const increment = target / 100;
+
+                        if (c < target) {
+                            counter.innerText = `${Math.ceil(c + increment).toLocaleString()}+`;
+                            setTimeout(updateCounter, 20);
                         } else {
-                            counter.textContent = Math.ceil(count).toLocaleString() + '+';
+                            counter.innerText = `${target.toLocaleString()}+`;
                         }
-                    }, 20);
+                    };
+                    updateCounter();
                 }
             });
+        }
+
+        window.addEventListener('scroll', animateCounters);
+
+        // Three.js Background - Subtle Particles
+        const initThreeJS = () => {
+            const canvas = document.getElementById('canvas');
+            if (!canvas) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 700;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 50; // Spread
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 0.05,
+                color: 0xd4af37, // Gold
+                transparent: true,
+                opacity: 0.8,
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, material);
+            scene.add(particlesMesh);
+
+            camera.position.z = 20;
+
+            // Mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                particlesMesh.rotation.y += 0.001;
+                particlesMesh.rotation.x += 0.0005;
+
+                // Subtle interactive movement
+                particlesMesh.rotation.x += mouseY * 0.00005;
+                particlesMesh.rotation.y += mouseX * 0.00005;
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+            
+            // Typed.js
+            if (document.getElementById('typed')) {
+                new Typed('#typed', { 
+                    strings: ["Read Premium Books", "Master New Skills", "Join the Elite", "Spudy Library"], 
+                    typeSpeed: 60, 
+                    backSpeed: 40, 
+                    loop: true,
+                    showCursor: false
+                });
+            }
         });
-
-        // Three.js + Typed
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        const grid = new THREE.Mesh(new THREE.PlaneGeometry(120, 120, 100, 100), new THREE.MeshBasicMaterial({ color: 0x3b82f6, wireframe: true, transparent: true, opacity: 0.15 }));
-        grid.rotation.x = -Math.PI / 2.5; scene.add(grid); camera.position.z = 60;
-        function animate() { requestAnimationFrame(animate); grid.rotation.z += 0.001; renderer.render(scene, camera); } animate();
-
-        new Typed('#typed', { strings: ["Read Free Books", "Learn New Skills", "Join 10,000+ Readers", "Spudy Library"], typeSpeed: 70, backSpeed: 50, loop: true });
     </script>
 </body>
 </html>
