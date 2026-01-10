@@ -33,11 +33,11 @@ def verify_changes():
         page.wait_for_timeout(1000)
         page.screenshot(path="verification/courses_section.png")
 
-        # Scroll to Pricing
-        print(" scrolling to Pricing section...")
-        page.locator("#pricing").scroll_into_view_if_needed()
+        # Scroll to Contact
+        print(" scrolling to Contact section...")
+        page.locator("#contact").scroll_into_view_if_needed()
         page.wait_for_timeout(1000)
-        page.screenshot(path="verification/pricing_section.png")
+        page.screenshot(path="verification/contact_section.png")
 
         browser.close()
 

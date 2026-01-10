@@ -8,7 +8,154 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap');
+
+        html, body {
+            margin: 0;
+            background: #050505;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        #canvas {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Premium Glow & Text Effects */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .gold-text {
+            background: linear-gradient(135deg, #ffd700, #d4af37, #b8860b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Badges */
+        .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        .badge-free {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-coming-soon {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .badge-popular {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #fbbf24, #d4af37);
+            color: black;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+        }
+
+        /* Buttons */
+        .btn-premium {
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: black;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-premium:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+
+        /* Utilities */
+        .counter-text {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .payment-option {
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+        .payment-option:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .payment-option.selected {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
@@ -222,15 +369,33 @@
         </div>
     </section>
 
+    <!-- CONTACT -->
+    <section id="contact" class="py-24 px-6 bg-gradient-to-t from-black to-transparent">
+        <h2 class="text-5xl font-bold text-center mb-16 text-white">Stay Connected</h2>
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="glass-card p-10 rounded-3xl">
+                <input type="email" id="subscribe-email" placeholder="Enter your email for updates" class="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-xl mb-4 text-white focus:border-yellow-500 outline-none transition">
+                <button onclick="submitSubscribe(event)" class="w-full py-4 btn-premium rounded-xl font-bold text-xl">Subscribe</button>
+                <div id="subscribe-error" class="text-red-500 mt-2 hidden">Please enter a valid email</div>
+            </div>
+            <div class="mt-10 text-sm space-y-2 text-gray-500">
+                <a href="https://spudytv14.github.io/Legai-Services/" target="_blank" class="hover:text-yellow-500 transition">Terms of Service</a> |
+                <a href="#" class="hover:text-yellow-500 transition">Privacy Centre</a> |
+                <a href="mailto:spudytv14@gmail.com" class="hover:text-yellow-500 transition">Have feedback? Let us know</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="py-16 bg-black border-t border-gray-900">
         <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
             <h2 class="text-2xl font-bold gold-text mb-8">Spudy Library</h2>
             <div class="flex gap-8 text-2xl mb-8">
-                <a href="#" class="text-gray-500 hover:text-white transition"><i class="fab fa-whatsapp"></i></a>
-                <a href="#" class="text-gray-500 hover:text-white transition"><i class="fas fa-envelope"></i></a>
-                <a href="#" class="text-gray-500 hover:text-white transition"><i class="fab fa-x-twitter"></i></a>
-                <a href="#" class="text-gray-500 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=263716669706" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:spudytv14@gmail.com" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fas fa-envelope"></i></a>
+                <a href="https://facebook.com/matipaishe.blessing.muduchwa" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/Matipa_14" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://youtube.com/@SpudyAI" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-youtube"></i></a>
             </div>
             <p class="text-gray-600 text-sm">© 2026 Spudy Library. All Rights Reserved.</p>
         </div>
@@ -294,6 +459,201 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Mobile Menu Logic
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Login Logic
+        let selectedPlan = '', selectedPrice = '', selectedMethod = '';
+
+        if (localStorage.getItem('spudyLoggedIn') === 'true') {
+            const authBtn = document.getElementById('authBtn');
+            if (authBtn) authBtn.textContent = 'Account';
+        }
+
+        function openLogin() {
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function closeLogin() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function checkLogin() {
+            if (localStorage.getItem('spudyLoggedIn') !== 'true') {
+                alert('Please login to continue!');
+                openLogin();
+            } else {
+                alert('Application submitted successfully!');
+            }
+        }
+
+        // Subscription Logic
+        function submitSubscribe(event) {
+            const email = document.getElementById('subscribe-email').value;
+            const error = document.getElementById('subscribe-error');
+            if (email && email.includes('@')) {
+                error.classList.add('hidden');
+                alert('Thank you for subscribing!');
+            } else {
+                error.classList.remove('hidden');
+            }
+        }
+
+        // Payment Logic
+        function selectPlan(name, price) {
+            if (localStorage.getItem('spudyLoggedIn') !== 'true') {
+                alert('Please login first!');
+                openLogin();
+                return;
+            }
+            selectedPlan = name;
+            selectedPrice = price;
+            document.getElementById('planName').textContent = name;
+            document.getElementById('planPrice').textContent = price === 49 ? '$49 Lifetime' : '$' + price + '/month';
+            document.getElementById('paymentModal').classList.remove('hidden');
+            document.getElementById('paymentConfirm').classList.add('hidden');
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
+        }
+
+        function selectPayment(method) {
+            selectedMethod = method;
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
+            // Find the element that called this function - tricky in global scope, let's fix in HTML
+            // We will assume the event is passed or handled via binding, but for now let's use the old way
+            // or rely on event.currentTarget if called from inline.
+            // Since I'm moving to a file, I should probably attach listeners, but to keep compatibility with
+            // the existing inline onclicks, I'll use event.currentTarget.
+            if(event && event.currentTarget) event.currentTarget.classList.add('selected');
+
+            document.getElementById('selectedMethod').textContent = method;
+            document.getElementById('paymentConfirm').classList.remove('hidden');
+        }
+
+        function sendWhatsAppReceipt() {
+            const msg = `Hi Spudy Library! I just paid $${selectedPrice} for ${selectedPlan} using ${selectedMethod}. Please activate my account!`;
+            window.open(`https://api.whatsapp.com/send?phone=263716669706&text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function closePayment() {
+            document.getElementById('paymentModal').classList.add('hidden');
+        }
+
+        // Animated Counters
+        const counters = document.querySelectorAll('.counter');
+        let animated = false;
+
+        function animateCounters() {
+            if (animated) return;
+            const triggerBottom = window.innerHeight * 0.9;
+
+            counters.forEach(counter => {
+                const counterTop = counter.getBoundingClientRect().top;
+                if (counterTop < triggerBottom) {
+                    animated = true; // Simple logic: animate all at once when one is visible
+
+                    const updateCounter = () => {
+                        const target = +counter.dataset.count;
+                        const c = +counter.innerText.replace(/,/g, '').replace('+', ''); // Clean current value
+                        const increment = target / 100;
+
+                        if (c < target) {
+                            counter.innerText = `${Math.ceil(c + increment).toLocaleString()}+`;
+                            setTimeout(updateCounter, 20);
+                        } else {
+                            counter.innerText = `${target.toLocaleString()}+`;
+                        }
+                    };
+                    updateCounter();
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateCounters);
+
+        // Three.js Background - Subtle Particles
+        const initThreeJS = () => {
+            const canvas = document.getElementById('canvas');
+            if (!canvas) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 700;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 50; // Spread
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 0.05,
+                color: 0xd4af37, // Gold
+                transparent: true,
+                opacity: 0.8,
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, material);
+            scene.add(particlesMesh);
+
+            camera.position.z = 20;
+
+            // Mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                particlesMesh.rotation.y += 0.001;
+                particlesMesh.rotation.x += 0.0005;
+
+                // Subtle interactive movement
+                particlesMesh.rotation.x += mouseY * 0.00005;
+                particlesMesh.rotation.y += mouseX * 0.00005;
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+
+            // Typed.js
+            if (document.getElementById('typed')) {
+                new Typed('#typed', {
+                    strings: ["Read Premium Books", "Master New Skills", "Join the Elite", "Spudy Library"],
+                    typeSpeed: 60,
+                    backSpeed: 40,
+                    loop: true,
+                    showCursor: false
+                });
+            }
+        });
+    </script>
 </body>
 </html>
