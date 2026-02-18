@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spudy Library | Premium Learning</title>
 
-  <!-- libs you already use -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -78,7 +77,6 @@
     }
     .btn-outline:hover{ border-color: #38bdf8; color:#38bdf8; }
 
-    /* advanced library UI additions */
     .chip{
       border: 1px solid rgba(255,255,255,0.14);
       background: rgba(255,255,255,0.05);
@@ -121,9 +119,24 @@
     .badge-free{ background: linear-gradient(135deg,#10b981,#059669); color:#fff; }
     .badge-coming{ background: linear-gradient(135deg,#f59e0b,#d97706); color:#fff; }
 
-    /* small helpers */
     .no-scrollbar::-webkit-scrollbar{ display:none; }
     .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+
+    /* payment-option */
+    .payment-option{
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+    .payment-option:hover{
+      transform: translateY(-5px);
+      border-color: #38bdf8;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .payment-option.selected{
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+    }
   </style>
 </head>
 
@@ -183,10 +196,8 @@
       <p class="text-gray-400 text-lg">Books • Music • Videos • Courses — search, filter, save, and preview.</p>
     </div>
 
-    <!-- toolbar -->
     <div class="glass-card rounded-3xl p-5 md:p-6 mb-10" data-aos="fade-up" data-aos-delay="120">
       <div class="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
-        <!-- search -->
         <div class="flex-1 flex items-center gap-3 px-4 py-3 rounded-2xl pill">
           <i class="fas fa-magnifying-glass text-gray-300"></i>
           <input id="q" type="search" placeholder="Search titles, creators, tags..." class="w-full bg-transparent outline-none text-white placeholder:text-gray-500" />
@@ -196,7 +207,6 @@
           </button>
         </div>
 
-        <!-- chips -->
         <div class="flex gap-2 overflow-x-auto no-scrollbar">
           <button class="chip active px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap" data-type="books">
             <i class="fas fa-book mr-2"></i>Books <span id="countBooks" class="ml-2 px-2 py-0.5 rounded-full bg-white/10 border border-white/10 text-xs">0</span>
@@ -213,7 +223,6 @@
         </div>
       </div>
 
-      <!-- filters row -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mt-4">
         <div class="pill rounded-2xl px-4 py-3 flex items-center justify-between gap-3">
           <div class="text-xs text-gray-400 font-bold">GENRE</div>
@@ -260,12 +269,11 @@
       </div>
     </div>
 
-    <!-- grid -->
     <div id="grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
   </div>
 </section>
 
-<!-- PRICING (kept) -->
+<!-- PRICING -->
 <section id="pricing" class="py-32 px-6">
   <div class="max-w-7xl mx-auto">
     <h2 class="text-5xl font-bold text-center mb-4 text-white" data-aos="fade-up">Membership</h2>
@@ -313,39 +321,7 @@
   </div>
 </section>
 
-<!-- TRUSTED BY (kept) -->
-<section class="py-24 px-6 border-t border-gray-900">
-  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-    <div>
-      <h2 class="text-4xl font-bold mb-8">Trusted by thousands of students worldwide.</h2>
-      <div class="grid grid-cols-2 gap-8">
-        <div>
-          <div class="counter text-4xl font-bold text-white mb-2" data-count="25000">0</div>
-          <p class="text-gray-500">Downloads</p>
-        </div>
-        <div>
-          <div class="counter text-4xl font-bold text-white mb-2" data-count="12000">0</div>
-          <p class="text-gray-500">Students</p>
-        </div>
-      </div>
-    </div>
-    <div class="glass-card p-8 rounded-2xl relative">
-      <i class="fas fa-quote-left text-4xl text-gray-700 absolute top-6 left-6"></i>
-      <p class="text-lg text-gray-300 italic mb-6 relative z-10 pt-8">
-        "Spudy Library changed how I learn. The quality of content is unmatched and the platform is so beautiful to use."
-      </p>
-      <div class="flex items-center gap-4">
-        <div class="w-12 h-12 bg-gray-700 rounded-full"></div>
-        <div>
-          <p class="font-bold text-white">Nyasha K.</p>
-          <p class="text-sm text-gray-500">Computer Science Student</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT (kept) -->
+<!-- CONTACT -->
 <section id="contact" class="py-24 px-6 bg-gradient-to-t from-black to-transparent">
   <h2 class="text-5xl font-bold text-center mb-16 text-white">Stay Connected</h2>
   <div class="max-w-2xl mx-auto text-center">
@@ -355,30 +331,17 @@
       <button onclick="submitSubscribe(event)" class="w-full py-4 btn-premium rounded-xl font-bold text-xl">Subscribe</button>
       <div id="subscribe-error" class="text-red-500 mt-2 hidden">Please enter a valid email</div>
     </div>
-    <div class="mt-10 text-sm space-y-2 text-gray-500">
-      <a href="https://spudytv14.github.io/Legai-Services/" target="_blank" class="hover:text-yellow-500 transition">Terms of Service</a> |
-      <a href="#" class="hover:text-yellow-500 transition">Privacy Centre</a> |
-      <a href="mailto:spudytv14@gmail.com" class="hover:text-yellow-500 transition">Have feedback? Let us know</a>
-    </div>
   </div>
 </section>
 
-<!-- Footer (kept) -->
 <footer class="py-16 bg-black border-t border-gray-900">
   <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
     <h2 class="text-2xl font-bold gold-text mb-8">Spudy Library</h2>
-    <div class="flex gap-8 text-2xl mb-8">
-      <a href="https://api.whatsapp.com/send?phone=263716669706" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-whatsapp"></i></a>
-      <a href="mailto:spudytv14@gmail.com" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fas fa-envelope"></i></a>
-      <a href="https://facebook.com/matipaishe.blessing.muduchwa" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-facebook"></i></a>
-      <a href="https://x.com/Matipa_14" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-x-twitter"></i></a>
-      <a href="https://youtube.com/@SpudyAI" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-youtube"></i></a>
-    </div>
     <p class="text-gray-600 text-sm">© 2026 Spudy Library. All Rights Reserved.</p>
   </div>
 </footer>
 
-<!-- LIBRARY ITEM MODAL -->
+<!-- ITEM MODAL -->
 <div id="itemModal" class="fixed inset-0 hidden items-center justify-center z-50 modalBack p-4">
   <div class="glass-card w-full max-w-5xl rounded-3xl overflow-hidden border border-white/10">
     <div class="flex items-start justify-between p-5 md:p-6 border-b border-white/10 bg-black/25">
@@ -485,21 +448,17 @@
 </div>
 
 <script>
-  /* -----------------------------
-     Your existing logic (kept)
-  ------------------------------*/
+  // Mobile Menu
   function toggleMobileMenu(){ document.getElementById('mobileMenu').classList.toggle('hidden'); }
 
+  // Login
   let selectedPlan = '', selectedPrice = '', selectedMethod = '';
-
   if (localStorage.getItem('spudyLoggedIn') === 'true') {
     const authBtn = document.getElementById('authBtn');
     if (authBtn) authBtn.textContent = 'Account';
   }
-
   function openLogin(){ document.getElementById('loginModal').classList.remove('hidden'); }
   function closeLogin(){ document.getElementById('loginModal').classList.add('hidden'); }
-
   function checkLogin(){
     if (localStorage.getItem('spudyLoggedIn') !== 'true'){
       alert('Please login to continue!');
@@ -509,6 +468,7 @@
     }
   }
 
+  // Subscribe
   function submitSubscribe(){
     const email = document.getElementById('subscribe-email').value;
     const error = document.getElementById('subscribe-error');
@@ -520,6 +480,7 @@
     }
   }
 
+  // Payment
   function selectPlan(name, price){
     if (localStorage.getItem('spudyLoggedIn') !== 'true'){
       alert('Please login first!');
@@ -534,7 +495,6 @@
     document.getElementById('paymentConfirm').classList.add('hidden');
     document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
   }
-
   function selectPayment(method, ev){
     selectedMethod = method;
     document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
@@ -542,41 +502,13 @@
     document.getElementById('selectedMethod').textContent = method;
     document.getElementById('paymentConfirm').classList.remove('hidden');
   }
-
   function sendWhatsAppReceipt(){
     const msg = `Hi Spudy Library! I just paid $${selectedPrice} for ${selectedPlan} using ${selectedMethod}. Please activate my account!`;
     window.open(`https://api.whatsapp.com/send?phone=263716669706&text=${encodeURIComponent(msg)}`, '_blank');
   }
   function closePayment(){ document.getElementById('paymentModal').classList.add('hidden'); }
 
-  // counters
-  const counters = document.querySelectorAll('.counter');
-  function animateCounters(){
-    const triggerBottom = window.innerHeight * 0.9;
-    counters.forEach(counter => {
-      if (counter.classList.contains('animated-started')) return;
-      const counterTop = counter.getBoundingClientRect().top;
-      if (counterTop < triggerBottom){
-        counter.classList.add('animated-started');
-        const updateCounter = () => {
-          const target = +counter.getAttribute('data-count');
-          const c = +counter.innerText.replace(/,/g,'').replace('+','');
-          const increment = target / 50;
-          if (c < target){
-            counter.innerText = `${Math.ceil(c + increment).toLocaleString()}+`;
-            setTimeout(updateCounter, 30);
-          } else {
-            counter.innerText = `${target.toLocaleString()}+`;
-          }
-        };
-        updateCounter();
-      }
-    });
-  }
-  window.addEventListener('scroll', animateCounters);
-  document.addEventListener('DOMContentLoaded', animateCounters);
-
-  // threejs background
+  // Three.js Background
   const initThreeJS = () => {
     const canvas = document.getElementById('canvas');
     if (!canvas) return;
@@ -626,10 +558,29 @@
   };
 
   /* -----------------------------
-     ADVANCED LIBRARY ENGINE
+     YOUTUBE HELPERS (embed + fallback)
+  ------------------------------*/
+  function extractYouTubeId(url){
+    try{
+      const u = new URL(url);
+      if (u.hostname.includes("youtu.be")) return u.pathname.replace("/","").trim();
+      if (u.hostname.includes("youtube.com")) return u.searchParams.get("v") || "";
+      return "";
+    } catch { return ""; }
+  }
+
+  function buildYouTubeEmbed(url){
+    const id = extractYouTubeId(url);
+    if(!id) return "";
+    // use youtube-nocookie for slightly better privacy + fewer issues
+    return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1`;
+  }
+
+  /* -----------------------------
+     ADVANCED LIBRARY (with your 5 links)
   ------------------------------*/
   const catalog = [
-    // BOOKS (includes your real one)
+    // BOOKS
     {
       id:"b1", type:"books",
       title:"Chronicles of a Legend",
@@ -643,116 +594,72 @@
       link:"https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=drive_link",
       preview:{kind:"text", content:"Preview: Youth, chaos, friendships — and the moments that become legends."}
     },
-    {
-      id:"b2", type:"books",
-      title:"Spudy Book 2",
-      creator:"Spudy",
-      year:2026, rating:4.2,
-      genre:"Fiction",
-      tags:["sequel","drama","comedy"],
-      desc:"The journey continues in this highly anticipated sequel.",
-      badge:"coming",
-      actionPrimary:"Coming Soon",
-      preview:{kind:"text", content:"This title is marked as Coming Soon."}
-    },
-    {
-      id:"b3", type:"books",
-      title:"Spudy Book 3",
-      creator:"Spudy",
-      year:2026, rating:4.4,
-      genre:"Fiction",
-      tags:["finale","epic","emotional"],
-      desc:"The epic finale that will leave you breathless.",
-      badge:"coming",
-      actionPrimary:"Coming Soon",
-      preview:{kind:"text", content:"This title is marked as Coming Soon."}
-    },
+    { id:"b2", type:"books", title:"Spudy Book 2", creator:"Spudy", year:2026, rating:4.2, genre:"Fiction", tags:["sequel"], desc:"The journey continues in this highly anticipated sequel.", badge:"coming", actionPrimary:"Coming Soon", preview:{kind:"text", content:"Coming soon."} },
+    { id:"b3", type:"books", title:"Spudy Book 3", creator:"Spudy", year:2026, rating:4.4, genre:"Fiction", tags:["finale"], desc:"The epic finale that will leave you breathless.", badge:"coming", actionPrimary:"Coming Soon", preview:{kind:"text", content:"Coming soon."} },
 
-    // MUSIC
+    // MUSIC (YouTube embeds)
     {
       id:"m1", type:"music",
-      title:"Afro Pulse",
-      creator:"Mzansi Waves",
-      year:2024, rating:4.6,
-      genre:"Afro",
-      tags:["dance","energy","rhythm"],
-      desc:"Upbeat afro-inspired pulses with crisp percussion and modern textures.",
+      title:"YouTube Track 1",
+      creator:"YouTube",
+      year:2026, rating:4.5,
+      genre:"Music",
+      tags:["youtube","track"],
+      desc:"Plays inside the website (YouTube embed).",
       actionPrimary:"Play",
-      preview:{kind:"audio", src:"data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="}
+      youtube:"https://www.youtube.com/watch?v=ylUn0NIX_4I"
     },
     {
       id:"m2", type:"music",
-      title:"Neon Skyline",
-      creator:"Nova Ensemble",
-      year:2023, rating:4.3,
-      genre:"Electronic",
-      tags:["synth","night","focus"],
-      desc:"A smooth synthwave track designed for late-night focus sessions and city vibes.",
+      title:"YouTube Track 2",
+      creator:"YouTube",
+      year:2026, rating:4.4,
+      genre:"Music",
+      tags:["youtube","track"],
+      desc:"Plays inside the website (YouTube embed).",
       actionPrimary:"Play",
-      preview:{kind:"audio", src:"data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="}
+      youtube:"https://youtu.be/Sr0YY9dPgnE?si=TpLBio8P-nSBU0U3"
+    },
+    {
+      id:"m3", type:"music",
+      title:"YouTube Track 3",
+      creator:"YouTube",
+      year:2026, rating:4.3,
+      genre:"Music",
+      tags:["youtube","track"],
+      desc:"Plays inside the website (YouTube embed).",
+      actionPrimary:"Play",
+      youtube:"https://youtu.be/MFTnSuGRf8Q?si=mzkU8ileodaTzxRD"
     },
 
-    // VIDEOS
+    // VIDEOS (YouTube embeds)
     {
       id:"v1", type:"videos",
-      title:"Design Systems 101",
-      creator:"Studio Atlas",
-      year:2024, rating:4.4,
-      genre:"Design",
-      tags:["ui","systems","components"],
-      desc:"A compact guide to building design systems: tokens, components, patterns, and governance.",
+      title:"YouTube Video 1",
+      creator:"YouTube",
+      year:2026, rating:4.6,
+      genre:"Video",
+      tags:["youtube","video"],
+      desc:"Plays inside the website (YouTube embed).",
       actionPrimary:"Watch",
-      preview:{kind:"video", src:""} // add mp4/webm URL to enable playback
+      youtube:"https://youtu.be/HZS40rLS0wY?si=lbD92N_HyT3iV2YY"
     },
     {
       id:"v2", type:"videos",
-      title:"Music Theory for Producers",
-      creator:"SoundCraft",
-      year:2022, rating:4.0,
-      genre:"Music",
-      tags:["chords","melody","beats"],
-      desc:"A practical approach to chords, progressions, and ear training for modern production workflows.",
+      title:"YouTube Video 2",
+      creator:"YouTube",
+      year:2026, rating:4.5,
+      genre:"Video",
+      tags:["youtube","video"],
+      desc:"Plays inside the website (YouTube embed).",
       actionPrimary:"Watch",
-      preview:{kind:"video", src:""}
+      youtube:"https://youtu.be/Q7HFhbZGE0E?si=xmqlrDxaqvdLplSR"
     },
 
-    // COURSES (your existing course ideas)
-    {
-      id:"c1", type:"courses",
-      title:"AI Fundamentals",
-      creator:"Spudy Library",
-      year:2026, rating:4.7,
-      genre:"Technology",
-      tags:["ai","basics","future"],
-      desc:"From zero to AI hero in 8 weeks. Learn the future today.",
-      actionPrimary:"View Details",
-      progress: 18,
-      preview:{kind:"course", modules:["Intro","AI Basics","Prompting","Mini Projects","Final"], current:"AI Basics"}
-    },
-    {
-      id:"c2", type:"courses",
-      title:"Web Development",
-      creator:"Spudy Library",
-      year:2026, rating:4.5,
-      genre:"Technology",
-      tags:["frontend","responsive","projects"],
-      desc:"Build modern, responsive websites and applications.",
-      actionPrimary:"View Details",
-      progress: 42,
-      preview:{kind:"course", modules:["HTML/CSS","JS","UI","APIs","Deploy"], current:"UI"}
-    },
-    {
-      id:"c3", type:"courses",
-      title:"Creative Writing",
-      creator:"Spudy Library",
-      year:2026, rating:4.3,
-      genre:"Writing",
-      tags:["story","style","publishing"],
-      desc:"Unleash your imagination and write your first bestseller.",
-      actionPrimary:"View Details",
-      progress: 8,
-      preview:{kind:"course", modules:["Ideas","Characters","Plot","Drafting","Editing"], current:"Ideas"}
-    }
+    // COURSES
+    { id:"c1", type:"courses", title:"AI Fundamentals", creator:"Spudy Library", year:2026, rating:4.7, genre:"Technology", tags:["ai","basics"], desc:"From zero to AI hero in 8 weeks. Learn the future today.", actionPrimary:"View Details", progress:18, preview:{kind:"course", modules:["Intro","AI Basics","Prompting","Mini Projects","Final"], current:"AI Basics"} },
+    { id:"c2", type:"courses", title:"Web Development", creator:"Spudy Library", year:2026, rating:4.5, genre:"Technology", tags:["frontend","projects"], desc:"Build modern, responsive websites and applications.", actionPrimary:"View Details", progress:42, preview:{kind:"course", modules:["HTML/CSS","JS","UI","APIs","Deploy"], current:"UI"} },
+    { id:"c3", type:"courses", title:"Creative Writing", creator:"Spudy Library", year:2026, rating:4.3, genre:"Writing", tags:["story","style"], desc:"Unleash your imagination and write your first bestseller.", actionPrimary:"View Details", progress:8, preview:{kind:"course", modules:["Ideas","Characters","Plot","Drafting","Editing"], current:"Ideas"} }
   ];
 
   const state = {
@@ -936,12 +843,9 @@
   }
 
   // modal
-  let currentItemId = null;
-
   function openItemModal(id){
     const it = catalog.find(x => x.id === id);
     if(!it) return;
-    currentItemId = id;
 
     $("#mTitle").textContent = it.title;
     $("#mSubtitle").textContent = `${it.creator} • ${it.genre} • ${it.year} • Rating ${Number(it.rating||0).toFixed(1)}`;
@@ -966,24 +870,19 @@
     $("#mDesc").textContent = it.desc;
 
     // actions
-    const mPrimary = $("#mPrimary");
-    const mSave = $("#mSave");
+    $("#mPrimary").textContent = it.actionPrimary || "Start";
+    $("#mPrimary").onclick = () => primaryAction(it);
 
-    mPrimary.textContent = it.actionPrimary || "Start";
-    mPrimary.onclick = () => primaryAction(it);
-
-    mSave.innerHTML = `<i class="fas fa-bookmark mr-2"></i>${saved ? "Unsave" : "Save"}`;
-    mSave.onclick = () => {
+    $("#mSave").innerHTML = `<i class="fas fa-bookmark mr-2"></i>${saved ? "Unsave" : "Save"}`;
+    $("#mSave").onclick = () => {
       toggleSave(it.id);
       renderGrid();
-      // refresh saved KV + button
-      openItemModal(it.id);
+      openItemModal(it.id); // refresh
     };
 
-    // course progress controls
+    // course progress
     const wrap = $("#courseProgressWrap");
     wrap.classList.add("hidden");
-
     if(it.type === "courses"){
       wrap.classList.remove("hidden");
       const pct = clamp((state.courseProgress[it.id] ?? it.progress ?? 0), 0, 100);
@@ -1011,39 +910,59 @@
     const preview = $("#mPreview");
     preview.innerHTML = "";
 
-    if(it.type === "music"){
-      const a = document.createElement("audio");
-      a.controls = true;
-      a.preload = "none";
-      a.src = it.preview?.src || "";
-      preview.appendChild(a);
-
-      preview.insertAdjacentHTML("beforeend", `
-        <div class="grid grid-cols-2 gap-2">
-          <button class="btn-outline px-4 py-3 rounded-xl text-sm font-bold" id="btnQueue"><i class="fas fa-list mr-2"></i>Queue</button>
-          <button class="btn-outline px-4 py-3 rounded-xl text-sm font-bold" id="btnLike"><i class="fas fa-heart mr-2"></i>Like</button>
-        </div>
-      `);
-      $("#btnQueue").onclick = () => alert(`Queued: ${it.title}`);
-      $("#btnLike").onclick = () => alert(`Liked: ${it.title}`);
-    }
-    else if(it.type === "videos"){
-      if(it.preview?.src){
-        const v = document.createElement("video");
-        v.controls = true;
-        v.preload = "none";
-        v.src = it.preview.src;
-        v.className = "w-full rounded-2xl border border-white/10 bg-black/30";
-        preview.appendChild(v);
-      } else {
+    // YOUTUBE embed inside modal for music + videos
+    if((it.type === "music" || it.type === "videos") && it.youtube){
+      const embed = buildYouTubeEmbed(it.youtube);
+      if(embed){
         preview.insertAdjacentHTML("beforeend", `
-          <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <div class="font-extrabold text-white">No video source attached</div>
-            <div class="text-gray-400 text-sm mt-2 leading-relaxed">
-              Add a real MP4/WebM URL into this item's <b>preview.src</b> to enable playback.
-            </div>
+          <div class="rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+            <iframe
+              class="w-full aspect-video"
+              src="${embed}"
+              title="YouTube player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <button class="btn-outline px-4 py-3 rounded-xl text-sm font-bold" id="ytOpen">
+              <i class="fab fa-youtube mr-2"></i>Open in YouTube
+            </button>
+            <button class="btn-premium px-4 py-3 rounded-xl text-sm font-bold" id="ytTryPlay">
+              <i class="fas fa-play mr-2"></i>Play/Watch
+            </button>
+          </div>
+          <div class="text-xs text-gray-500">
+            If playback is blocked, use “Open in YouTube”.
           </div>
         `);
+
+        $("#ytOpen").onclick = () => window.open(it.youtube, "_blank");
+
+        // Try to trigger autoplay-like by reloading embed with autoplay=1; if blocked, user can click Open
+        $("#ytTryPlay").onclick = () => {
+          const id = extractYouTubeId(it.youtube);
+          if(!id){ window.open(it.youtube, "_blank"); return; }
+          const frame = preview.querySelector("iframe");
+          if(frame){
+            frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+          } else {
+            window.open(it.youtube, "_blank");
+          }
+        };
+      } else {
+        // fallback if URL parsing fails
+        preview.insertAdjacentHTML("beforeend", `
+          <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+            <div class="font-extrabold text-white">Cannot embed this link</div>
+            <div class="text-gray-400 text-sm mt-2">Opening on YouTube instead.</div>
+            <button class="btn-premium mt-4 px-4 py-3 rounded-xl text-sm font-bold w-full" id="openYT">
+              <i class="fab fa-youtube mr-2"></i>Open in YouTube
+            </button>
+          </div>
+        `);
+        $("#openYT").onclick = () => window.open(it.youtube, "_blank");
       }
     }
     else if(it.type === "courses"){
@@ -1072,14 +991,6 @@
           <div class="text-gray-200 text-sm mt-3 leading-relaxed">${esc(it.preview?.content || "Preview not available.")}</div>
         </div>
       `);
-      preview.insertAdjacentHTML("beforeend", `
-        <div class="grid grid-cols-2 gap-2">
-          <button class="btn-outline px-4 py-3 rounded-xl text-sm font-bold" id="btnHighlight"><i class="fas fa-highlighter mr-2"></i>Highlight</button>
-          <button class="btn-outline px-4 py-3 rounded-xl text-sm font-bold" id="btnNote"><i class="fas fa-note-sticky mr-2"></i>Note</button>
-        </div>
-      `);
-      $("#btnHighlight").onclick = () => alert("Highlight saved (demo).");
-      $("#btnNote").onclick = () => alert("Note saved (demo).");
     }
 
     $("#itemModal").classList.remove("hidden");
@@ -1091,25 +1002,25 @@
     $("#itemModal").classList.add("hidden");
     $("#itemModal").classList.remove("flex");
     document.body.style.overflow = "";
-    currentItemId = null;
   }
 
   function primaryAction(it){
-    // Books: open link if exists
+    // book
     if(it.type === "books" && it.link){
       window.open(it.link, "_blank");
       return;
     }
-    // Courses: enforce login if you want
+    // course
     if(it.type === "courses"){
       checkLogin();
       return;
     }
-    // Music/videos: try play
-    const audio = $("#mPreview audio");
-    const video = $("#mPreview video");
-    if(audio) audio.play().catch(()=>{});
-    if(video) video.play().catch(()=>{});
+    // music/video: open modal (embed)
+    if((it.type === "music" || it.type === "videos") && it.youtube){
+      // if modal is open, trigger play inside; otherwise open modal
+      openItemModal(it.id);
+      return;
+    }
   }
 
   function setType(t){
@@ -1138,29 +1049,23 @@
       creator: "You",
       year: new Date().getFullYear(),
       rating: 4.0,
-      genre: state.type === "music" ? "Electronic" : state.type === "videos" ? "Design" : state.type === "courses" ? "Technology" : "Fiction",
+      genre: state.type === "music" ? "Music" : state.type === "videos" ? "Video" : state.type === "courses" ? "Technology" : "Fiction",
       tags:["custom","demo"],
       desc:"Quick-added demo item. Replace catalog with your real data source.",
       actionPrimary: state.type === "music" ? "Play" : state.type === "videos" ? "Watch" : state.type === "courses" ? "View Details" : "Read",
       progress: state.type === "courses" ? 0 : undefined,
-      preview:
-        state.type === "music" ? {kind:"audio", src:"data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="} :
-        state.type === "videos" ? {kind:"video", src:""} :
-        state.type === "courses" ? {kind:"course", modules:["Intro","Module 1","Module 2"], current:"Intro"} :
-        {kind:"text", content:"Preview: add your own content."}
+      youtube: (state.type === "music" || state.type === "videos") ? "https://www.youtube.com/watch?v=ylUn0NIX_4I" : undefined,
+      preview: state.type === "courses" ? {kind:"course", modules:["Intro","Module 1","Module 2"], current:"Intro"} : {kind:"text", content:"Preview: add your own content."}
     };
     catalog.unshift(newItem);
     renderGrid();
   }
 
   function wireLibrary(){
-    // tab chips
     $$(".chip[data-type]").forEach(btn => btn.addEventListener("click", () => setType(btn.dataset.type)));
 
-    // search
     $("#q").addEventListener("input", (e) => { state.query = e.target.value; state.sort="relevance"; renderGrid(); });
 
-    // saved only
     $("#savedChip").addEventListener("click", () => {
       state.showSaved = !state.showSaved;
       $("#savedChip").classList.toggle("active", state.showSaved);
@@ -1168,7 +1073,6 @@
       renderGrid();
     });
 
-    // filters
     $("#genre").addEventListener("change", (e) => { state.genre = e.target.value; renderGrid(); });
     $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; renderGrid(); });
 
@@ -1181,7 +1085,6 @@
     $("#btnDiscover").addEventListener("click", discover);
     $("#btnQuickAdd").addEventListener("click", quickAdd);
 
-    // delegate open/save
     $("#grid").addEventListener("click", (e) => {
       const openBtn = e.target.closest("[data-open]");
       const saveBtn = e.target.closest("[data-save]");
@@ -1196,7 +1099,6 @@
       }
     });
 
-    // keyboard: focus search + close modal
     document.addEventListener("keydown", (e) => {
       if(e.key === "/" && document.activeElement !== $("#q")){
         e.preventDefault(); $("#q").focus();
@@ -1206,13 +1108,11 @@
       }
     });
 
-    // click outside modal content
     $("#itemModal").addEventListener("click", (e) => {
       if(e.target === $("#itemModal")) closeItemModal();
     });
   }
 
-  // init
   document.addEventListener('DOMContentLoaded', () => {
     AOS.init({ duration: 1000, once: true, offset: 100 });
     initThreeJS();
@@ -1232,24 +1132,5 @@
     renderGrid();
   });
 </script>
-
-<style>
-  /* payment-option styles (kept, but moved here so they still work) */
-  .payment-option{
-    transition: all 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    cursor: pointer;
-  }
-  .payment-option:hover{
-    transform: translateY(-5px);
-    border-color: #38bdf8;
-    background: rgba(255, 255, 255, 0.03);
-  }
-  .payment-option.selected{
-    border-color: #10b981;
-    background: rgba(16, 185, 129, 0.1);
-  }
-</style>
-
 </body>
 </html>
