@@ -1,674 +1,1255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spudy Library | Premium Learning</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spudy Library | Premium Learning</title>
 
-        html, body {
-            margin: 0;
-            background: #050505;
-            color: #f3f4f6;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            width: 100%;
-            min-height: 100%;
-        }
+  <!-- libs you already use -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
-        }
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap');
 
-        #canvas {
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            pointer-events: none;
-        }
+    html, body {
+      margin: 0;
+      background: #050505;
+      color: #f3f4f6;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      width: 100%;
+      min-height: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
 
-        /* Premium Glow & Text Effects */
-        .glow-text {
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-        }
+    #canvas {
+      width: 100vw; height: 100vh;
+      position: fixed; top: 0; left: 0;
+      z-index: -1; pointer-events: none;
+    }
 
-        .gold-text {
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0px 2px 10px rgba(14, 165, 233, 0.3);
-        }
+    .gold-text{
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0px 2px 10px rgba(14, 165, 233, 0.3);
+    }
 
-        /* Glassmorphism */
-        .glass-nav {
-            background: rgba(10, 10, 10, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
+    .glass-nav{
+      background: rgba(10, 10, 10, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
 
-        .glass-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
+    .glass-card{
+      background: rgba(20, 20, 20, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.35s ease;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    }
+    .glass-card:hover{
+      transform: translateY(-4px);
+      border-color: rgba(14, 165, 233, 0.25);
+      box-shadow: 0 16px 50px rgba(0,0,0,0.55);
+    }
 
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(14, 165, 233, 0.3);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-        }
+    .btn-premium{
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      color: black;
+      font-weight: 700;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.20);
+    }
+    .btn-premium:hover{ transform: translateY(-1px); box-shadow: 0 10px 28px rgba(14,165,233,0.35); }
 
-        /* Badges */
-        .badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            z-index: 10;
-        }
+    .btn-outline{
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.18);
+      color: white;
+      transition: all 0.25s ease;
+    }
+    .btn-outline:hover{ border-color: #38bdf8; color:#38bdf8; }
 
-        .badge-free {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
+    /* advanced library UI additions */
+    .chip{
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      transition: 0.2s ease;
+    }
+    .chip:hover{ border-color: rgba(255,255,255,0.22); transform: translateY(-1px); }
+    .chip.active{
+      background: rgba(14,165,233,0.15);
+      border-color: rgba(14,165,233,0.35);
+      box-shadow: 0 0 0 3px rgba(14,165,233,0.10);
+    }
 
-        .badge-coming-soon {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
-        }
+    .pill{
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+    }
 
-        .badge-popular {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-            color: black;
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
-        }
+    .modalBack{
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
 
-        /* Buttons */
-        .btn-premium {
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-            color: black;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
-        }
+    .progressTrack{
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .progressFill{
+      background: linear-gradient(90deg, rgba(56,189,248,0.95), rgba(14,165,233,0.78), rgba(16,185,129,0.60));
+      width: 0%;
+    }
 
-        .btn-premium:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
-        }
+    .badge{
+      position:absolute; top:12px; right:12px;
+      padding: 6px 12px; border-radius: 999px;
+      font-size: 11px; font-weight: 800; letter-spacing: .4px;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+    .badge-free{ background: linear-gradient(135deg,#10b981,#059669); color:#fff; }
+    .badge-coming{ background: linear-gradient(135deg,#f59e0b,#d97706); color:#fff; }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-        .btn-outline:hover {
-            border-color: #38bdf8;
-            color: #38bdf8;
-        }
-
-        /* Utilities */
-        .counter-text {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-        }
-
-        .payment-option { 
-            transition: all 0.3s; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            cursor: pointer; 
-        }
-        .payment-option:hover { 
-            transform: translateY(-5px); 
-            border-color: #38bdf8;
-            background: rgba(255, 255, 255, 0.03);
-        }
-        .payment-option.selected { 
-            border-color: #10b981; 
-            background: rgba(16, 185, 129, 0.1); 
-        }
-    </style>
+    /* small helpers */
+    .no-scrollbar::-webkit-scrollbar{ display:none; }
+    .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+  </style>
 </head>
+
 <body>
-    <canvas id="canvas"></canvas>
+<canvas id="canvas"></canvas>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass-nav">
-        <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-            <h1 class="text-2xl font-bold gold-text tracking-wide">Spudy Library</h1>
-            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
-                <a href="#home" class="text-gray-300 hover:text-white transition">Home</a>
-                <a href="#spudy-books" class="text-gray-300 hover:text-white transition">Books</a>
-                <a href="#spudy-courses" class="text-gray-300 hover:text-white transition">Courses</a>
-                <a href="#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
-                <button id="authBtn" onclick="openLogin()" class="btn-premium px-6 py-2 rounded-full text-sm">Login</button>
-            </div>
-            <!-- Mobile Menu Icon -->
-            <button class="md:hidden text-gray-300 text-2xl focus:outline-none" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
+<!-- NAV -->
+<nav class="fixed top-0 w-full z-50 glass-nav">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    <h1 class="text-2xl font-bold gold-text tracking-wide">Spudy Library</h1>
 
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden absolute top-full left-0 w-full glass-nav border-t border-gray-800">
-            <div class="flex flex-col p-6 space-y-4 text-center">
-                <a href="#home" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Home</a>
-                <a href="#spudy-books" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Books</a>
-                <a href="#spudy-courses" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Courses</a>
-                <a href="#pricing" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Pricing</a>
-                <button onclick="openLogin(); toggleMobileMenu()" class="btn-premium px-6 py-2 rounded-full text-sm w-full">Login</button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero -->
-    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
-        <div class="max-w-4xl mx-auto" data-aos="fade-up">
-            <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tight text-white leading-tight">
-                Welcome to <span class="gold-text">Spudy</span>
-            </h1>
-            <div class="h-16 mb-8">
-                <span class="text-2xl md:text-4xl text-gray-400 font-light" id="typed"></span>
-            </div>
-            <div class="flex flex-col md:flex-row gap-6 justify-center">
-                <a href="#spudy-books" class="btn-premium px-10 py-4 rounded-full text-lg shadow-lg">Explore Library</a>
-                <a href="#spudy-courses" class="btn-outline px-10 py-4 rounded-full text-lg">View Courses</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- FREE BOOKS -->
-    <section id="spudy-books" class="py-32 px-6">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-4 text-white" data-aos="fade-up">Curated Collection</h2>
-            <p class="text-center text-gray-400 mb-20 text-lg" data-aos="fade-up" data-aos-delay="100">Access our exclusive library of premium content</p>
-            
-            <div class="grid md:grid-cols-3 gap-10">
-                <!-- Book 1 -->
-                <div class="glass-card rounded-3xl p-8 relative group" data-aos="fade-up" data-aos-delay="200">
-                    <div class="badge badge-free">Free Read</div>
-                    <div class="relative overflow-hidden rounded-xl mb-8 shadow-2xl">
-                        <img src="spudybook1.png" alt="Spudy Book 1" class="w-full object-cover transform group-hover:scale-105 transition duration-500">
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Chronicles of a Legend</h3>
-                    <p class="text-gray-400 mb-8 text-sm leading-relaxed">A funny and inspiring high school adventure that captures the essence of youth.</p>
-                    <button onclick="window.open('https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=drive_link','_blank')" 
-                            class="w-full btn-premium py-4 rounded-xl text-lg flex items-center justify-center gap-2">
-                        <i class="fas fa-book-open"></i> Read Now
-                    </button>
-                </div>
-
-                <!-- Book 2 Coming Soon -->
-                <div class="glass-card rounded-3xl p-8 relative opacity-75 hover:opacity-100 transition" data-aos="fade-up" data-aos-delay="300">
-                    <div class="badge badge-coming-soon">Coming Soon</div>
-                    <div class="relative overflow-hidden rounded-xl mb-8 shadow-2xl bg-gray-900 h-64 flex items-center justify-center border border-gray-800">
-                        <i class="fas fa-lock text-5xl text-gray-700"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Spudy Book 2</h3>
-                    <p class="text-gray-400 mb-8 text-sm">The journey continues in this highly anticipated sequel.</p>
-                    <button class="w-full bg-gray-800 text-gray-500 py-4 rounded-xl text-lg cursor-not-allowed">
-                        Coming Soon
-                    </button>
-                </div>
-
-                <!-- Book 3 Coming Soon -->
-                <div class="glass-card rounded-3xl p-8 relative opacity-75 hover:opacity-100 transition" data-aos="fade-up" data-aos-delay="400">
-                    <div class="badge badge-coming-soon">Coming Soon</div>
-                    <div class="relative overflow-hidden rounded-xl mb-8 shadow-2xl bg-gray-900 h-64 flex items-center justify-center border border-gray-800">
-                         <i class="fas fa-lock text-5xl text-gray-700"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Spudy Book 3</h3>
-                    <p class="text-gray-400 mb-8 text-sm">The epic finale that will leave you breathless.</p>
-                    <button class="w-full bg-gray-800 text-gray-500 py-4 rounded-xl text-lg cursor-not-allowed">
-                        Coming Soon
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PREMIUM COURSES -->
-    <section id="spudy-courses" class="py-32 px-6 bg-gradient-to-b from-transparent to-black/50">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-4 text-white" data-aos="fade-up">Elite Courses</h2>
-            <p class="text-center text-gray-400 mb-20 text-lg" data-aos="fade-up" data-aos-delay="100">Master new skills with our expert-led programs</p>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-card p-10 rounded-3xl text-center group" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-20 h-20 mx-auto bg-purple-900/30 rounded-full flex items-center justify-center mb-8 group-hover:bg-purple-600/20 transition">
-                        <i class="fas fa-robot text-4xl text-purple-400"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-4">AI Fundamentals</h3>
-                    <p class="text-gray-400 mb-8">From zero to AI hero in 8 weeks. Learn the future today.</p>
-                    <button onclick="checkLogin()" class="btn-outline w-full py-3 rounded-xl">View Details</button>
-                </div>
-                <div class="glass-card p-10 rounded-3xl text-center group" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-20 h-20 mx-auto bg-blue-900/30 rounded-full flex items-center justify-center mb-8 group-hover:bg-blue-600/20 transition">
-                        <i class="fas fa-code text-4xl text-blue-400"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-4">Web Development</h3>
-                    <p class="text-gray-400 mb-8">Build modern, responsive websites and applications.</p>
-                    <button onclick="checkLogin()" class="btn-outline w-full py-3 rounded-xl">View Details</button>
-                </div>
-                <div class="glass-card p-10 rounded-3xl text-center group" data-aos="fade-up" data-aos-delay="400">
-                    <div class="w-20 h-20 mx-auto bg-yellow-900/30 rounded-full flex items-center justify-center mb-8 group-hover:bg-yellow-600/20 transition">
-                        <i class="fas fa-pen-nib text-4xl text-yellow-400"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-4">Creative Writing</h3>
-                    <p class="text-gray-400 mb-8">Unleash your imagination and write your first bestseller.</p>
-                    <button onclick="checkLogin()" class="btn-outline w-full py-3 rounded-xl">View Details</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRICING -->
-    <section id="pricing" class="py-32 px-6">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-4 text-white" data-aos="fade-up">Membership</h2>
-            <p class="text-center text-gray-400 mb-20 text-lg" data-aos="fade-up" data-aos-delay="100">Choose the plan that fits your ambition</p>
-
-            <div class="grid md:grid-cols-3 gap-8 items-center">
-                <!-- Free -->
-                <div class="glass-card p-10 rounded-3xl" data-aos="fade-right">
-                    <h3 class="text-xl font-bold text-gray-300">Starter</h3>
-                    <p class="text-4xl font-bold text-white mt-4 mb-2">Free</p>
-                    <p class="text-sm text-gray-500 mb-8">Forever</p>
-                    <ul class="space-y-4 mb-10 text-gray-300 text-sm">
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Access to Free Books</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Basic Community Access</li>
-                    </ul>
-                    <button class="w-full py-4 bg-gray-800 rounded-xl text-gray-400 font-bold" disabled>Current Plan</button>
-                </div>
-
-                <!-- Pro -->
-                <div class="glass-card p-10 rounded-3xl border-t-4 border-yellow-500 relative transform md:scale-110 z-10 bg-gray-900/80" data-aos="fade-up">
-                    <div class="badge badge-popular">MOST POPULAR</div>
-                    <h3 class="text-xl font-bold text-white">Library Pro</h3>
-                    <p class="text-5xl font-bold text-white mt-4 mb-2">$2.51</p>
-                    <p class="text-sm text-gray-400 mb-8">per month</p>
-                    <ul class="space-y-4 mb-10 text-gray-200">
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-yellow-500"></i> Unlimited Premium Books</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-yellow-500"></i> Access to All Courses</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-yellow-500"></i> Offline Reading Mode</li>
-                    </ul>
-                    <button onclick="selectPlan('Library Pro', 2.51)" class="w-full btn-premium py-4 rounded-xl text-lg">Upgrade Now</button>
-                </div>
-
-                <!-- Lifetime -->
-                <div class="glass-card p-10 rounded-3xl" data-aos="fade-left">
-                    <h3 class="text-xl font-bold text-gray-300">Lifetime</h3>
-                    <p class="text-4xl font-bold text-white mt-4 mb-2">$49</p>
-                    <p class="text-sm text-gray-500 mb-8">one-time payment</p>
-                    <ul class="space-y-4 mb-10 text-gray-300 text-sm">
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Everything in Pro</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Lifetime Updates</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> VIP Support</li>
-                    </ul>
-                    <button onclick="selectPlan('Lifetime Access', 49)" class="w-full btn-outline py-4 rounded-xl font-bold">Get Lifetime</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TRUSTED BY -->
-    <section class="py-24 px-6 border-t border-gray-900">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div>
-                <h2 class="text-4xl font-bold mb-8">Trusted by thousands of students worldwide.</h2>
-                <div class="grid grid-cols-2 gap-8">
-                    <div>
-                        <div class="counter text-4xl font-bold text-white mb-2" data-count="25000">0</div>
-                        <p class="text-gray-500">Downloads</p>
-                    </div>
-                    <div>
-                        <div class="counter text-4xl font-bold text-white mb-2" data-count="12000">0</div>
-                        <p class="text-gray-500">Students</p>
-                    </div>
-                </div>
-            </div>
-            <div class="glass-card p-8 rounded-2xl relative">
-                <i class="fas fa-quote-left text-4xl text-gray-700 absolute top-6 left-6"></i>
-                <p class="text-lg text-gray-300 italic mb-6 relative z-10 pt-8">"Spudy Library changed how I learn. The quality of content is unmatched and the platform is so beautiful to use."</p>
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-gray-700 rounded-full"></div>
-                    <div>
-                        <p class="font-bold text-white">Nyasha K.</p>
-                        <p class="text-sm text-gray-500">Computer Science Student</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="py-24 px-6 bg-gradient-to-t from-black to-transparent">
-        <h2 class="text-5xl font-bold text-center mb-16 text-white">Stay Connected</h2>
-        <div class="max-w-2xl mx-auto text-center">
-            <div class="glass-card p-10 rounded-3xl">
-                <input type="email" id="subscribe-email" placeholder="Enter your email for updates" class="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-xl mb-4 text-white focus:border-yellow-500 outline-none transition">
-                <button onclick="submitSubscribe(event)" class="w-full py-4 btn-premium rounded-xl font-bold text-xl">Subscribe</button>
-                <div id="subscribe-error" class="text-red-500 mt-2 hidden">Please enter a valid email</div>
-            </div>
-            <div class="mt-10 text-sm space-y-2 text-gray-500">
-                <a href="https://spudytv14.github.io/Legai-Services/" target="_blank" class="hover:text-yellow-500 transition">Terms of Service</a> |
-                <a href="#" class="hover:text-yellow-500 transition">Privacy Centre</a> |
-                <a href="mailto:spudytv14@gmail.com" class="hover:text-yellow-500 transition">Have feedback? Let us know</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-16 bg-black border-t border-gray-900">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
-            <h2 class="text-2xl font-bold gold-text mb-8">Spudy Library</h2>
-            <div class="flex gap-8 text-2xl mb-8">
-                <a href="https://api.whatsapp.com/send?phone=263716669706" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-whatsapp"></i></a>
-                <a href="mailto:spudytv14@gmail.com" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fas fa-envelope"></i></a>
-                <a href="https://facebook.com/matipaishe.blessing.muduchwa" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-facebook"></i></a>
-                <a href="https://x.com/Matipa_14" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-x-twitter"></i></a>
-                <a href="https://youtube.com/@SpudyAI" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-youtube"></i></a>
-            </div>
-            <p class="text-gray-600 text-sm">© 2026 Spudy Library. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Payment Modal -->
-    <div id="paymentModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center hidden z-50">
-        <div class="glass-card p-8 rounded-3xl max-w-4xl w-full mx-4 relative overflow-y-auto max-h-[90vh]">
-            <button onclick="closePayment()" class="absolute top-6 right-6 text-gray-500 hover:text-white text-xl">
-                <i class="fas fa-times"></i>
-            </button>
-            
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold mb-2">Complete Payment</h2>
-                <p class="text-gray-400">Upgrade to <span id="planName" class="text-white font-bold">Pro</span> for <span id="planPrice" class="text-yellow-500 font-bold">$2.51</span></p>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-                <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('EcoCash')">
-                    <i class="fas fa-mobile-alt text-2xl mb-2 text-blue-400"></i>
-                    <p class="font-bold text-sm">EcoCash</p>
-                </div>
-                <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('Visa')">
-                    <i class="fab fa-cc-visa text-2xl mb-2 text-white"></i>
-                    <p class="font-bold text-sm">Visa</p>
-                </div>
-                 <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('Mastercard')">
-                    <i class="fab fa-cc-mastercard text-2xl mb-2 text-red-400"></i>
-                    <p class="font-bold text-sm">Mastercard</p>
-                </div>
-                 <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('OneMoney')">
-                    <i class="fas fa-wallet text-2xl mb-2 text-orange-400"></i>
-                    <p class="font-bold text-sm">OneMoney</p>
-                </div>
-                 <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('PayPal')">
-                    <i class="fab fa-paypal text-2xl mb-2 text-blue-600"></i>
-                    <p class="font-bold text-sm">PayPal</p>
-                </div>
-            </div>
-
-            <div id="paymentConfirm" class="hidden bg-gray-800/50 p-6 rounded-xl text-center">
-                <p class="text-gray-300 mb-4">Pay with <span id="selectedMethod" class="text-white font-bold"></span></p>
-                <button onclick="sendWhatsAppReceipt()" class="btn-premium w-full py-3 rounded-lg font-bold">
-                    <i class="fab fa-whatsapp mr-2"></i> Confirm on WhatsApp
-                </button>
-            </div>
-        </div>
+    <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+      <a href="#home" class="text-gray-300 hover:text-white transition">Home</a>
+      <a href="#library" class="text-gray-300 hover:text-white transition">Library</a>
+      <a href="#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
+      <a href="#contact" class="text-gray-300 hover:text-white transition">Contact</a>
+      <button id="authBtn" onclick="openLogin()" class="btn-premium px-6 py-2 rounded-full text-sm">Login</button>
     </div>
 
-    <!-- Login Modal Placeholder -->
-    <div id="loginModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center hidden z-50">
-        <div class="glass-card p-8 rounded-3xl max-w-md w-full mx-4 relative">
-             <button onclick="closeLogin()" class="absolute top-6 right-6 text-gray-500 hover:text-white text-xl">
-                <i class="fas fa-times"></i>
-            </button>
-            <h2 class="text-2xl font-bold mb-6 text-center">Welcome Back</h2>
-            <input type="email" placeholder="Email Address" class="w-full bg-gray-800 border border-gray-700 text-white p-4 rounded-xl mb-4 focus:border-yellow-500 outline-none transition">
-            <input type="password" placeholder="Password" class="w-full bg-gray-800 border border-gray-700 text-white p-4 rounded-xl mb-6 focus:border-yellow-500 outline-none transition">
-            <button class="w-full btn-premium py-4 rounded-xl font-bold mb-4">Login</button>
-            <p class="text-center text-gray-500 text-sm">Don't have an account? <a href="#" class="text-white hover:underline">Sign up</a></p>
-        </div>
+    <button class="md:hidden text-gray-300 text-2xl focus:outline-none" onclick="toggleMobileMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <div id="mobileMenu" class="hidden md:hidden absolute top-full left-0 w-full glass-nav border-t border-gray-800">
+    <div class="flex flex-col p-6 space-y-4 text-center">
+      <a href="#home" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Home</a>
+      <a href="#library" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Library</a>
+      <a href="#pricing" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Pricing</a>
+      <a href="#contact" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Contact</a>
+      <button onclick="openLogin(); toggleMobileMenu()" class="btn-premium px-6 py-2 rounded-full text-sm w-full">Login</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
+  <div class="max-w-4xl mx-auto" data-aos="fade-up">
+    <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tight text-white leading-tight">
+      Welcome to <span class="gold-text">Spudy</span>
+    </h1>
+    <div class="h-16 mb-8">
+      <span class="text-2xl md:text-4xl text-gray-400 font-light" id="typed"></span>
+    </div>
+    <div class="flex flex-col md:flex-row gap-6 justify-center">
+      <a href="#library" class="btn-premium px-10 py-4 rounded-full text-lg shadow-lg">Explore Library</a>
+      <a href="#pricing" class="btn-outline px-10 py-4 rounded-full text-lg">View Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANCED LIBRARY -->
+<section id="library" class="py-28 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10" data-aos="fade-up">
+      <h2 class="text-5xl font-bold text-white mb-3">Advanced Library</h2>
+      <p class="text-gray-400 text-lg">Books • Music • Videos • Courses — search, filter, save, and preview.</p>
     </div>
 
-    <script>
-        // Mobile Menu Logic
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        }
+    <!-- toolbar -->
+    <div class="glass-card rounded-3xl p-5 md:p-6 mb-10" data-aos="fade-up" data-aos-delay="120">
+      <div class="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+        <!-- search -->
+        <div class="flex-1 flex items-center gap-3 px-4 py-3 rounded-2xl pill">
+          <i class="fas fa-magnifying-glass text-gray-300"></i>
+          <input id="q" type="search" placeholder="Search titles, creators, tags..." class="w-full bg-transparent outline-none text-white placeholder:text-gray-500" />
+          <button id="savedChip" class="chip px-3 py-1.5 rounded-full text-xs font-bold text-gray-200 flex items-center gap-2" aria-pressed="false" title="Show saved only">
+            <i class="fas fa-bookmark"></i>
+            Saved <span id="savedCount" class="ml-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/10 text-gray-200">0</span>
+          </button>
+        </div>
 
-        // Login Logic
-        let selectedPlan = '', selectedPrice = '', selectedMethod = '';
+        <!-- chips -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar">
+          <button class="chip active px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap" data-type="books">
+            <i class="fas fa-book mr-2"></i>Books <span id="countBooks" class="ml-2 px-2 py-0.5 rounded-full bg-white/10 border border-white/10 text-xs">0</span>
+          </button>
+          <button class="chip px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap" data-type="music">
+            <i class="fas fa-music mr-2"></i>Music <span id="countMusic" class="ml-2 px-2 py-0.5 rounded-full bg-white/10 border border-white/10 text-xs">0</span>
+          </button>
+          <button class="chip px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap" data-type="videos">
+            <i class="fas fa-video mr-2"></i>Videos <span id="countVideos" class="ml-2 px-2 py-0.5 rounded-full bg-white/10 border border-white/10 text-xs">0</span>
+          </button>
+          <button class="chip px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap" data-type="courses">
+            <i class="fas fa-graduation-cap mr-2"></i>Courses <span id="countCourses" class="ml-2 px-2 py-0.5 rounded-full bg-white/10 border border-white/10 text-xs">0</span>
+          </button>
+        </div>
+      </div>
 
-        if (localStorage.getItem('spudyLoggedIn') === 'true') {
-            const authBtn = document.getElementById('authBtn');
-            if (authBtn) authBtn.textContent = 'Account';
-        }
+      <!-- filters row -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mt-4">
+        <div class="pill rounded-2xl px-4 py-3 flex items-center justify-between gap-3">
+          <div class="text-xs text-gray-400 font-bold">GENRE</div>
+          <select id="genre" class="bg-black/30 border border-white/10 rounded-xl px-3 py-2 text-sm outline-none text-white w-2/3"></select>
+        </div>
 
-        function openLogin() { 
-            document.getElementById('loginModal').classList.remove('hidden'); 
-        }
+        <div class="pill rounded-2xl px-4 py-3 flex items-center justify-between gap-3">
+          <div class="text-xs text-gray-400 font-bold">SORT</div>
+          <select id="sort" class="bg-black/30 border border-white/10 rounded-xl px-3 py-2 text-sm outline-none text-white w-2/3">
+            <option value="relevance">Relevance</option>
+            <option value="rating_desc">Rating (high → low)</option>
+            <option value="rating_asc">Rating (low → high)</option>
+            <option value="year_desc">Year (new → old)</option>
+            <option value="year_asc">Year (old → new)</option>
+            <option value="title_asc">Title (A → Z)</option>
+            <option value="title_desc">Title (Z → A)</option>
+          </select>
+        </div>
 
-        function closeLogin() { 
-            document.getElementById('loginModal').classList.add('hidden'); 
-        }
+        <div class="pill rounded-2xl px-4 py-3 flex items-center justify-between gap-3">
+          <div class="text-xs text-gray-400 font-bold">MIN RATING</div>
+          <div class="flex items-center gap-3 w-2/3">
+            <input id="minRating" type="range" min="1" max="5" step="0.5" value="1" class="w-full">
+            <span id="minRatingVal" class="px-2 py-1 rounded-xl bg-white/10 border border-white/10 text-xs font-bold">1.0</span>
+          </div>
+        </div>
 
-        function checkLogin() { 
-            if (localStorage.getItem('spudyLoggedIn') !== 'true') { 
-                alert('Please login to continue!'); 
-                openLogin(); 
-            } else { 
-                alert('Application submitted successfully!'); 
-            } 
-        }
+        <div class="pill rounded-2xl px-4 py-3 flex items-center justify-between gap-3">
+          <div class="text-xs text-gray-400 font-bold">ACTIONS</div>
+          <div class="flex gap-2">
+            <button id="btnDiscover" class="btn-outline px-4 py-2 rounded-xl text-sm font-bold">
+              <i class="fas fa-wand-magic-sparkles mr-2"></i>Discover
+            </button>
+            <button id="btnQuickAdd" class="btn-premium px-4 py-2 rounded-xl text-sm font-bold">
+              <i class="fas fa-plus mr-2"></i>Add
+            </button>
+          </div>
+        </div>
+      </div>
 
-        // Subscription Logic
-        function submitSubscribe(event) {
-            const email = document.getElementById('subscribe-email').value;
-            const error = document.getElementById('subscribe-error');
-            if (email && email.includes('@')) {
-                error.classList.add('hidden');
-                alert('Thank you for subscribing!');
-            } else {
-                error.classList.remove('hidden');
-            }
-        }
+      <div class="mt-4 text-xs text-gray-500 flex flex-wrap gap-4">
+        <div><b class="text-gray-300">Tip:</b> press <b>/</b> to focus search.</div>
+        <div><b class="text-gray-300">Saved:</b> items are stored in your browser.</div>
+      </div>
+    </div>
 
-        // Payment Logic
-        function selectPlan(name, price) {
-            if (localStorage.getItem('spudyLoggedIn') !== 'true') { 
-                alert('Please login first!'); 
-                openLogin(); 
-                return; 
-            }
-            selectedPlan = name; 
-            selectedPrice = price;
-            document.getElementById('planName').textContent = name;
-            document.getElementById('planPrice').textContent = price === 49 ? '$49 Lifetime' : '$' + price + '/month';
-            document.getElementById('paymentModal').classList.remove('hidden');
-            document.getElementById('paymentConfirm').classList.add('hidden');
-            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
-        }
+    <!-- grid -->
+    <div id="grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+  </div>
+</section>
 
-        function selectPayment(method) {
-            selectedMethod = method;
-            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
-            // Find the element that called this function - tricky in global scope, let's fix in HTML
-            // We will assume the event is passed or handled via binding, but for now let's use the old way
-            // or rely on event.currentTarget if called from inline.
-            // Since I'm moving to a file, I should probably attach listeners, but to keep compatibility with
-            // the existing inline onclicks, I'll use event.currentTarget.
-            if(event && event.currentTarget) event.currentTarget.classList.add('selected');
-            
-            document.getElementById('selectedMethod').textContent = method;
-            document.getElementById('paymentConfirm').classList.remove('hidden');
-        }
+<!-- PRICING (kept) -->
+<section id="pricing" class="py-32 px-6">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-5xl font-bold text-center mb-4 text-white" data-aos="fade-up">Membership</h2>
+    <p class="text-center text-gray-400 mb-20 text-lg" data-aos="fade-up" data-aos-delay="100">Choose the plan that fits your ambition</p>
 
-        function sendWhatsAppReceipt() {
-            const msg = `Hi Spudy Library! I just paid $${selectedPrice} for ${selectedPlan} using ${selectedMethod}. Please activate my account!`;
-            window.open(`https://api.whatsapp.com/send?phone=263716669706&text=${encodeURIComponent(msg)}`, '_blank');
-        }
+    <div class="grid md:grid-cols-3 gap-8 items-center">
+      <div class="glass-card p-10 rounded-3xl" data-aos="fade-right">
+        <h3 class="text-xl font-bold text-gray-300">Starter</h3>
+        <p class="text-4xl font-bold text-white mt-4 mb-2">Free</p>
+        <p class="text-sm text-gray-500 mb-8">Forever</p>
+        <ul class="space-y-4 mb-10 text-gray-300 text-sm">
+          <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Access to Free Books</li>
+          <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Basic Community Access</li>
+        </ul>
+        <button class="w-full py-4 bg-gray-800 rounded-xl text-gray-400 font-bold" disabled>Current Plan</button>
+      </div>
 
-        function closePayment() { 
-            document.getElementById('paymentModal').classList.add('hidden'); 
-        }
+      <div class="glass-card p-10 rounded-3xl border-t-4 border-yellow-500 relative transform md:scale-110 z-10 bg-gray-900/80" data-aos="fade-up">
+        <div class="badge" style="top:-14px; left:50%; transform:translateX(-50%); right:auto; background:linear-gradient(135deg,#38bdf8,#0ea5e9); color:black; padding:6px 18px; font-size:12px; font-weight:900;">
+          MOST POPULAR
+        </div>
+        <h3 class="text-xl font-bold text-white">Library Pro</h3>
+        <p class="text-5xl font-bold text-white mt-4 mb-2">$2.51</p>
+        <p class="text-sm text-gray-400 mb-8">per month</p>
+        <ul class="space-y-4 mb-10 text-gray-200">
+          <li class="flex items-center gap-3"><i class="fas fa-check text-yellow-500"></i> Unlimited Premium Books</li>
+          <li class="flex items-center gap-3"><i class="fas fa-check text-yellow-500"></i> Access to All Courses</li>
+          <li class="flex items-center gap-3"><i class="fas fa-check text-yellow-500"></i> Offline Reading Mode</li>
+        </ul>
+        <button onclick="selectPlan('Library Pro', 2.51)" class="w-full btn-premium py-4 rounded-xl text-lg">Upgrade Now</button>
+      </div>
 
-        // Animated Counters
-        const counters = document.querySelectorAll('.counter');
+      <div class="glass-card p-10 rounded-3xl" data-aos="fade-left">
+        <h3 class="text-xl font-bold text-gray-300">Lifetime</h3>
+        <p class="text-4xl font-bold text-white mt-4 mb-2">$49</p>
+        <p class="text-sm text-gray-500 mb-8">one-time payment</p>
+        <ul class="space-y-4 mb-10 text-gray-300 text-sm">
+          <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Everything in Pro</li>
+          <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> Lifetime Updates</li>
+          <li class="flex items-center gap-3"><i class="fas fa-check text-blue-500"></i> VIP Support</li>
+        </ul>
+        <button onclick="selectPlan('Lifetime Access', 49)" class="w-full btn-outline py-4 rounded-xl font-bold">Get Lifetime</button>
+      </div>
+    </div>
+  </div>
+</section>
 
-        function animateCounters() {
-            const triggerBottom = window.innerHeight * 0.9;
-            
-            counters.forEach(counter => {
-                if (counter.classList.contains('animated-started')) return;
+<!-- TRUSTED BY (kept) -->
+<section class="py-24 px-6 border-t border-gray-900">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <div>
+      <h2 class="text-4xl font-bold mb-8">Trusted by thousands of students worldwide.</h2>
+      <div class="grid grid-cols-2 gap-8">
+        <div>
+          <div class="counter text-4xl font-bold text-white mb-2" data-count="25000">0</div>
+          <p class="text-gray-500">Downloads</p>
+        </div>
+        <div>
+          <div class="counter text-4xl font-bold text-white mb-2" data-count="12000">0</div>
+          <p class="text-gray-500">Students</p>
+        </div>
+      </div>
+    </div>
+    <div class="glass-card p-8 rounded-2xl relative">
+      <i class="fas fa-quote-left text-4xl text-gray-700 absolute top-6 left-6"></i>
+      <p class="text-lg text-gray-300 italic mb-6 relative z-10 pt-8">
+        "Spudy Library changed how I learn. The quality of content is unmatched and the platform is so beautiful to use."
+      </p>
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-gray-700 rounded-full"></div>
+        <div>
+          <p class="font-bold text-white">Nyasha K.</p>
+          <p class="text-sm text-gray-500">Computer Science Student</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                const counterTop = counter.getBoundingClientRect().top;
-                
-                // Trigger if the element is visible or has been scrolled past
-                if (counterTop < triggerBottom) {
-                    counter.classList.add('animated-started');
-                    
-                    const updateCounter = () => {
-                        const target = +counter.getAttribute('data-count');
-                        const c = +counter.innerText.replace(/,/g, '').replace('+', ''); // Clean current value
-                        
-                        // Dynamic increment based on target size to ensure quick animation
-                        const increment = target / 50; 
+<!-- CONTACT (kept) -->
+<section id="contact" class="py-24 px-6 bg-gradient-to-t from-black to-transparent">
+  <h2 class="text-5xl font-bold text-center mb-16 text-white">Stay Connected</h2>
+  <div class="max-w-2xl mx-auto text-center">
+    <div class="glass-card p-10 rounded-3xl">
+      <input type="email" id="subscribe-email" placeholder="Enter your email for updates"
+             class="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-xl mb-4 text-white focus:border-yellow-500 outline-none transition">
+      <button onclick="submitSubscribe(event)" class="w-full py-4 btn-premium rounded-xl font-bold text-xl">Subscribe</button>
+      <div id="subscribe-error" class="text-red-500 mt-2 hidden">Please enter a valid email</div>
+    </div>
+    <div class="mt-10 text-sm space-y-2 text-gray-500">
+      <a href="https://spudytv14.github.io/Legai-Services/" target="_blank" class="hover:text-yellow-500 transition">Terms of Service</a> |
+      <a href="#" class="hover:text-yellow-500 transition">Privacy Centre</a> |
+      <a href="mailto:spudytv14@gmail.com" class="hover:text-yellow-500 transition">Have feedback? Let us know</a>
+    </div>
+  </div>
+</section>
 
-                        if (c < target) {
-                            counter.innerText = `${Math.ceil(c + increment).toLocaleString()}+`;
-                            setTimeout(updateCounter, 30);
-                        } else {
-                            counter.innerText = `${target.toLocaleString()}+`;
-                        }
-                    };
-                    updateCounter();
-                }
-            });
-        }
+<!-- Footer (kept) -->
+<footer class="py-16 bg-black border-t border-gray-900">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+    <h2 class="text-2xl font-bold gold-text mb-8">Spudy Library</h2>
+    <div class="flex gap-8 text-2xl mb-8">
+      <a href="https://api.whatsapp.com/send?phone=263716669706" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-whatsapp"></i></a>
+      <a href="mailto:spudytv14@gmail.com" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fas fa-envelope"></i></a>
+      <a href="https://facebook.com/matipaishe.blessing.muduchwa" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-facebook"></i></a>
+      <a href="https://x.com/Matipa_14" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://youtube.com/@SpudyAI" target="_blank" class="text-gray-500 hover:text-white transition transform hover:scale-110"><i class="fab fa-youtube"></i></a>
+    </div>
+    <p class="text-gray-600 text-sm">© 2026 Spudy Library. All Rights Reserved.</p>
+  </div>
+</footer>
 
-        window.addEventListener('scroll', animateCounters);
-        
-        // Initial check in case elements are already in view
-        document.addEventListener('DOMContentLoaded', animateCounters);
+<!-- LIBRARY ITEM MODAL -->
+<div id="itemModal" class="fixed inset-0 hidden items-center justify-center z-50 modalBack p-4">
+  <div class="glass-card w-full max-w-5xl rounded-3xl overflow-hidden border border-white/10">
+    <div class="flex items-start justify-between p-5 md:p-6 border-b border-white/10 bg-black/25">
+      <div>
+        <h3 id="mTitle" class="text-xl md:text-2xl font-bold text-white">—</h3>
+        <p id="mSubtitle" class="text-sm text-gray-400 mt-1">—</p>
+      </div>
+      <button onclick="closeItemModal()" class="text-gray-400 hover:text-white text-xl px-3 py-2 rounded-xl border border-white/10 bg-white/5">
+        <i class="fas fa-xmark"></i>
+      </button>
+    </div>
 
-        // Three.js Background - Subtle Particles
-        const initThreeJS = () => {
-            const canvas = document.getElementById('canvas');
-            if (!canvas) return;
+    <div class="grid md:grid-cols-2 gap-4 p-5 md:p-6">
+      <div class="glass-card rounded-2xl p-4 border border-white/10">
+        <h4 class="font-bold text-white mb-3">Details</h4>
+        <div id="mKV" class="grid grid-cols-2 gap-3"></div>
 
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-            
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+        <p id="mDesc" class="text-gray-300 text-sm leading-relaxed mt-4">—</p>
 
-            // Particles
-            const particlesGeometry = new THREE.BufferGeometry();
-            const particlesCount = 700;
-            const posArray = new Float32Array(particlesCount * 3);
+        <div id="courseProgressWrap" class="mt-4 hidden">
+          <div class="flex items-center justify-between mb-2">
+            <div class="text-xs text-gray-400 font-bold">PROGRESS</div>
+            <div id="coursePct" class="text-xs font-extrabold text-white">0%</div>
+          </div>
+          <div class="progressTrack rounded-full h-3 overflow-hidden">
+            <div id="courseBar" class="progressFill h-3 rounded-full"></div>
+          </div>
+          <div class="flex gap-2 mt-3">
+            <button id="btnAdvance" class="btn-premium px-4 py-2 rounded-xl text-sm font-bold w-full"><i class="fas fa-forward mr-2"></i>Advance +10%</button>
+            <button id="btnReset" class="btn-outline px-4 py-2 rounded-xl text-sm font-bold w-full"><i class="fas fa-rotate-left mr-2"></i>Reset</button>
+          </div>
+        </div>
 
-            for(let i = 0; i < particlesCount * 3; i++) {
-                posArray[i] = (Math.random() - 0.5) * 50; // Spread
-            }
+        <div class="flex gap-2 mt-4">
+          <button id="mPrimary" class="btn-premium px-4 py-3 rounded-xl text-sm font-extrabold w-full">Start</button>
+          <button id="mSave" class="btn-outline px-4 py-3 rounded-xl text-sm font-extrabold w-full"><i class="fas fa-bookmark mr-2"></i>Save</button>
+        </div>
+      </div>
 
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      <div class="glass-card rounded-2xl p-4 border border-white/10">
+        <h4 class="font-bold text-white mb-3">Preview</h4>
+        <div id="mPreview" class="space-y-3"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-            const material = new THREE.PointsMaterial({
-                size: 0.05,
-                color: 0x38bdf8, // Light Blue
-                transparent: true,
-                opacity: 0.8,
-            });
+<!-- Payment Modal (kept) -->
+<div id="paymentModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center hidden z-50">
+  <div class="glass-card p-8 rounded-3xl max-w-4xl w-full mx-4 relative overflow-y-auto max-h-[90vh]">
+    <button onclick="closePayment()" class="absolute top-6 right-6 text-gray-500 hover:text-white text-xl">
+      <i class="fas fa-times"></i>
+    </button>
 
-            const particlesMesh = new THREE.Points(particlesGeometry, material);
-            scene.add(particlesMesh);
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold mb-2">Complete Payment</h2>
+      <p class="text-gray-400">Upgrade to <span id="planName" class="text-white font-bold">Pro</span> for <span id="planPrice" class="text-yellow-500 font-bold">$2.51</span></p>
+    </div>
 
-            camera.position.z = 20;
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+      <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('EcoCash', event)">
+        <i class="fas fa-mobile-alt text-2xl mb-2 text-blue-400"></i>
+        <p class="font-bold text-sm">EcoCash</p>
+      </div>
+      <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('Visa', event)">
+        <i class="fab fa-cc-visa text-2xl mb-2 text-white"></i>
+        <p class="font-bold text-sm">Visa</p>
+      </div>
+      <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('Mastercard', event)">
+        <i class="fab fa-cc-mastercard text-2xl mb-2 text-red-400"></i>
+        <p class="font-bold text-sm">Mastercard</p>
+      </div>
+      <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('OneMoney', event)">
+        <i class="fas fa-wallet text-2xl mb-2 text-orange-400"></i>
+        <p class="font-bold text-sm">OneMoney</p>
+      </div>
+      <div class="payment-option p-4 rounded-xl text-center" onclick="selectPayment('PayPal', event)">
+        <i class="fab fa-paypal text-2xl mb-2 text-blue-600"></i>
+        <p class="font-bold text-sm">PayPal</p>
+      </div>
+    </div>
 
-            // Mouse interaction
-            let mouseX = 0;
-            let mouseY = 0;
+    <div id="paymentConfirm" class="hidden bg-gray-800/50 p-6 rounded-xl text-center">
+      <p class="text-gray-300 mb-4">Pay with <span id="selectedMethod" class="text-white font-bold"></span></p>
+      <button onclick="sendWhatsAppReceipt()" class="btn-premium w-full py-3 rounded-lg font-bold">
+        <i class="fab fa-whatsapp mr-2"></i> Confirm on WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
 
-            document.addEventListener('mousemove', (event) => {
-                mouseX = event.clientX;
-                mouseY = event.clientY;
-            });
+<!-- Login Modal (kept) -->
+<div id="loginModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center hidden z-50">
+  <div class="glass-card p-8 rounded-3xl max-w-md w-full mx-4 relative">
+    <button onclick="closeLogin()" class="absolute top-6 right-6 text-gray-500 hover:text-white text-xl">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2 class="text-2xl font-bold mb-6 text-center">Welcome Back</h2>
+    <input type="email" placeholder="Email Address" class="w-full bg-gray-800 border border-gray-700 text-white p-4 rounded-xl mb-4 focus:border-yellow-500 outline-none transition">
+    <input type="password" placeholder="Password" class="w-full bg-gray-800 border border-gray-700 text-white p-4 rounded-xl mb-6 focus:border-yellow-500 outline-none transition">
+    <button class="w-full btn-premium py-4 rounded-xl font-bold mb-4">Login</button>
+    <p class="text-center text-gray-500 text-sm">Don't have an account? <a href="#" class="text-white hover:underline">Sign up</a></p>
+  </div>
+</div>
 
-            const animate = () => {
-                requestAnimationFrame(animate);
-                particlesMesh.rotation.y += 0.001;
-                particlesMesh.rotation.x += 0.0005;
+<script>
+  /* -----------------------------
+     Your existing logic (kept)
+  ------------------------------*/
+  function toggleMobileMenu(){ document.getElementById('mobileMenu').classList.toggle('hidden'); }
 
-                // Subtle interactive movement
-                particlesMesh.rotation.x += mouseY * 0.00005;
-                particlesMesh.rotation.y += mouseX * 0.00005;
+  let selectedPlan = '', selectedPrice = '', selectedMethod = '';
 
-                renderer.render(scene, camera);
-            };
+  if (localStorage.getItem('spudyLoggedIn') === 'true') {
+    const authBtn = document.getElementById('authBtn');
+    if (authBtn) authBtn.textContent = 'Account';
+  }
 
-            animate();
+  function openLogin(){ document.getElementById('loginModal').classList.remove('hidden'); }
+  function closeLogin(){ document.getElementById('loginModal').classList.add('hidden'); }
 
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
+  function checkLogin(){
+    if (localStorage.getItem('spudyLoggedIn') !== 'true'){
+      alert('Please login to continue!');
+      openLogin();
+    } else {
+      alert('Application submitted successfully!');
+    }
+  }
+
+  function submitSubscribe(){
+    const email = document.getElementById('subscribe-email').value;
+    const error = document.getElementById('subscribe-error');
+    if (email && email.includes('@')){
+      error.classList.add('hidden');
+      alert('Thank you for subscribing!');
+    } else {
+      error.classList.remove('hidden');
+    }
+  }
+
+  function selectPlan(name, price){
+    if (localStorage.getItem('spudyLoggedIn') !== 'true'){
+      alert('Please login first!');
+      openLogin();
+      return;
+    }
+    selectedPlan = name;
+    selectedPrice = price;
+    document.getElementById('planName').textContent = name;
+    document.getElementById('planPrice').textContent = price === 49 ? '$49 Lifetime' : '$' + price + '/month';
+    document.getElementById('paymentModal').classList.remove('hidden');
+    document.getElementById('paymentConfirm').classList.add('hidden');
+    document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
+  }
+
+  function selectPayment(method, ev){
+    selectedMethod = method;
+    document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
+    if(ev && ev.currentTarget) ev.currentTarget.classList.add('selected');
+    document.getElementById('selectedMethod').textContent = method;
+    document.getElementById('paymentConfirm').classList.remove('hidden');
+  }
+
+  function sendWhatsAppReceipt(){
+    const msg = `Hi Spudy Library! I just paid $${selectedPrice} for ${selectedPlan} using ${selectedMethod}. Please activate my account!`;
+    window.open(`https://api.whatsapp.com/send?phone=263716669706&text=${encodeURIComponent(msg)}`, '_blank');
+  }
+  function closePayment(){ document.getElementById('paymentModal').classList.add('hidden'); }
+
+  // counters
+  const counters = document.querySelectorAll('.counter');
+  function animateCounters(){
+    const triggerBottom = window.innerHeight * 0.9;
+    counters.forEach(counter => {
+      if (counter.classList.contains('animated-started')) return;
+      const counterTop = counter.getBoundingClientRect().top;
+      if (counterTop < triggerBottom){
+        counter.classList.add('animated-started');
+        const updateCounter = () => {
+          const target = +counter.getAttribute('data-count');
+          const c = +counter.innerText.replace(/,/g,'').replace('+','');
+          const increment = target / 50;
+          if (c < target){
+            counter.innerText = `${Math.ceil(c + increment).toLocaleString()}+`;
+            setTimeout(updateCounter, 30);
+          } else {
+            counter.innerText = `${target.toLocaleString()}+`;
+          }
         };
+        updateCounter();
+      }
+    });
+  }
+  window.addEventListener('scroll', animateCounters);
+  document.addEventListener('DOMContentLoaded', animateCounters);
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            AOS.init({
-                duration: 1000,
-                once: true,
-                offset: 100
-            });
-            
-            initThreeJS();
-            
-            // Typed.js
-            if (document.getElementById('typed')) {
-                new Typed('#typed', { 
-                    strings: ["Read Premium Books", "Master New Skills", "Join the Elite", "Spudy Library"], 
-                    typeSpeed: 60, 
-                    backSpeed: 40, 
-                    loop: true,
-                    showCursor: false
-                });
-            }
-        });
-    </script>
+  // threejs background
+  const initThreeJS = () => {
+    const canvas = document.getElementById('canvas');
+    if (!canvas) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 700;
+    const posArray = new Float32Array(particlesCount * 3);
+    for(let i=0;i<particlesCount*3;i++){ posArray[i] = (Math.random()-0.5)*50; }
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray,3));
+
+    const material = new THREE.PointsMaterial({
+      size: 0.05,
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.8,
+    });
+
+    const particlesMesh = new THREE.Points(particlesGeometry, material);
+    scene.add(particlesMesh);
+    camera.position.z = 20;
+
+    let mouseX=0, mouseY=0;
+    document.addEventListener('mousemove', (event) => { mouseX = event.clientX; mouseY = event.clientY; });
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      particlesMesh.rotation.y += 0.001;
+      particlesMesh.rotation.x += 0.0005;
+      particlesMesh.rotation.x += mouseY * 0.00005;
+      particlesMesh.rotation.y += mouseX * 0.00005;
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  };
+
+  /* -----------------------------
+     ADVANCED LIBRARY ENGINE
+  ------------------------------*/
+  const catalog = [
+    // BOOKS (includes your real one)
+    {
+      id:"b1", type:"books",
+      title:"Chronicles of a Legend",
+      creator:"Spudy",
+      year:2026, rating:4.6,
+      genre:"Fiction",
+      tags:["highschool","funny","inspiring"],
+      desc:"A funny and inspiring high school adventure that captures the essence of youth.",
+      badge:"free",
+      actionPrimary:"Read Now",
+      link:"https://drive.google.com/file/d/12KQLWB37FYcVyzzM2raGUMBc1FBi0yD1/view?usp=drive_link",
+      preview:{kind:"text", content:"Preview: Youth, chaos, friendships — and the moments that become legends."}
+    },
+    {
+      id:"b2", type:"books",
+      title:"Spudy Book 2",
+      creator:"Spudy",
+      year:2026, rating:4.2,
+      genre:"Fiction",
+      tags:["sequel","drama","comedy"],
+      desc:"The journey continues in this highly anticipated sequel.",
+      badge:"coming",
+      actionPrimary:"Coming Soon",
+      preview:{kind:"text", content:"This title is marked as Coming Soon."}
+    },
+    {
+      id:"b3", type:"books",
+      title:"Spudy Book 3",
+      creator:"Spudy",
+      year:2026, rating:4.4,
+      genre:"Fiction",
+      tags:["finale","epic","emotional"],
+      desc:"The epic finale that will leave you breathless.",
+      badge:"coming",
+      actionPrimary:"Coming Soon",
+      preview:{kind:"text", content:"This title is marked as Coming Soon."}
+    },
+
+    // MUSIC
+    {
+      id:"m1", type:"music",
+      title:"Afro Pulse",
+      creator:"Mzansi Waves",
+      year:2024, rating:4.6,
+      genre:"Afro",
+      tags:["dance","energy","rhythm"],
+      desc:"Upbeat afro-inspired pulses with crisp percussion and modern textures.",
+      actionPrimary:"Play",
+      preview:{kind:"audio", src:"data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="}
+    },
+    {
+      id:"m2", type:"music",
+      title:"Neon Skyline",
+      creator:"Nova Ensemble",
+      year:2023, rating:4.3,
+      genre:"Electronic",
+      tags:["synth","night","focus"],
+      desc:"A smooth synthwave track designed for late-night focus sessions and city vibes.",
+      actionPrimary:"Play",
+      preview:{kind:"audio", src:"data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="}
+    },
+
+    // VIDEOS
+    {
+      id:"v1", type:"videos",
+      title:"Design Systems 101",
+      creator:"Studio Atlas",
+      year:2024, rating:4.4,
+      genre:"Design",
+      tags:["ui","systems","components"],
+      desc:"A compact guide to building design systems: tokens, components, patterns, and governance.",
+      actionPrimary:"Watch",
+      preview:{kind:"video", src:""} // add mp4/webm URL to enable playback
+    },
+    {
+      id:"v2", type:"videos",
+      title:"Music Theory for Producers",
+      creator:"SoundCraft",
+      year:2022, rating:4.0,
+      genre:"Music",
+      tags:["chords","melody","beats"],
+      desc:"A practical approach to chords, progressions, and ear training for modern production workflows.",
+      actionPrimary:"Watch",
+      preview:{kind:"video", src:""}
+    },
+
+    // COURSES (your existing course ideas)
+    {
+      id:"c1", type:"courses",
+      title:"AI Fundamentals",
+      creator:"Spudy Library",
+      year:2026, rating:4.7,
+      genre:"Technology",
+      tags:["ai","basics","future"],
+      desc:"From zero to AI hero in 8 weeks. Learn the future today.",
+      actionPrimary:"View Details",
+      progress: 18,
+      preview:{kind:"course", modules:["Intro","AI Basics","Prompting","Mini Projects","Final"], current:"AI Basics"}
+    },
+    {
+      id:"c2", type:"courses",
+      title:"Web Development",
+      creator:"Spudy Library",
+      year:2026, rating:4.5,
+      genre:"Technology",
+      tags:["frontend","responsive","projects"],
+      desc:"Build modern, responsive websites and applications.",
+      actionPrimary:"View Details",
+      progress: 42,
+      preview:{kind:"course", modules:["HTML/CSS","JS","UI","APIs","Deploy"], current:"UI"}
+    },
+    {
+      id:"c3", type:"courses",
+      title:"Creative Writing",
+      creator:"Spudy Library",
+      year:2026, rating:4.3,
+      genre:"Writing",
+      tags:["story","style","publishing"],
+      desc:"Unleash your imagination and write your first bestseller.",
+      actionPrimary:"View Details",
+      progress: 8,
+      preview:{kind:"course", modules:["Ideas","Characters","Plot","Drafting","Editing"], current:"Ideas"}
+    }
+  ];
+
+  const state = {
+    type: "books",
+    query: "",
+    genre: "All",
+    sort: "relevance",
+    minRating: 1,
+    showSaved: false,
+    saved: new Set(JSON.parse(localStorage.getItem("spudy_saved") || "[]")),
+    courseProgress: JSON.parse(localStorage.getItem("spudy_progress") || "{}")
+  };
+
+  const $ = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+  const clamp = (n,min,max) => Math.max(min, Math.min(max, n));
+
+  function persistLibrary(){
+    localStorage.setItem("spudy_saved", JSON.stringify([...state.saved]));
+    localStorage.setItem("spudy_progress", JSON.stringify(state.courseProgress));
+  }
+
+  function esc(str){
+    return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  function relevanceScore(item, q){
+    if(!q) return 0;
+    const hay = (item.title+" "+item.creator+" "+item.genre+" "+(item.tags||[]).join(" ")).toLowerCase();
+    let score = 0;
+    for(const tok of q.toLowerCase().split(/\s+/).filter(Boolean)){
+      if(hay.includes(tok)) score += 3;
+      if(item.title.toLowerCase().includes(tok)) score += 4;
+      if((item.tags||[]).join(" ").toLowerCase().includes(tok)) score += 2;
+    }
+    return score;
+  }
+
+  function counts(){
+    const c = {books:0,music:0,videos:0,courses:0};
+    catalog.forEach(x => c[x.type]++);
+    return c;
+  }
+
+  function buildGenreOptions(){
+    const sel = $("#genre");
+    const items = catalog.filter(x => x.type === state.type);
+    const genres = ["All", ...Array.from(new Set(items.map(x => x.genre))).sort()];
+    sel.innerHTML = genres.map(g => `<option value="${esc(g)}">${esc(g)}</option>`).join("");
+    sel.value = state.genre;
+  }
+
+  function applyFilters(){
+    let items = catalog.filter(x => x.type === state.type);
+
+    if(state.showSaved) items = items.filter(x => state.saved.has(x.id));
+
+    const q = state.query.trim();
+    if(q){
+      items = items.map(x => ({...x, _rel: relevanceScore(x,q)})).filter(x => x._rel > 0);
+    } else {
+      items = items.map(x => ({...x, _rel: 0}));
+    }
+
+    if(state.genre !== "All") items = items.filter(x => x.genre === state.genre);
+    items = items.filter(x => (x.rating || 0) >= state.minRating);
+
+    const s = state.sort;
+    items.sort((a,b) => {
+      if(s === "relevance"){
+        if(b._rel !== a._rel) return b._rel - a._rel;
+        return (b.rating||0) - (a.rating||0);
+      }
+      if(s === "rating_desc") return (b.rating||0) - (a.rating||0);
+      if(s === "rating_asc") return (a.rating||0) - (b.rating||0);
+      if(s === "year_desc") return (b.year||0) - (a.year||0);
+      if(s === "year_asc") return (a.year||0) - (b.year||0);
+      if(s === "title_asc") return a.title.localeCompare(b.title);
+      if(s === "title_desc") return b.title.localeCompare(a.title);
+      return 0;
+    });
+
+    return items;
+  }
+
+  function toggleSave(id){
+    if(state.saved.has(id)) state.saved.delete(id);
+    else state.saved.add(id);
+    persistLibrary();
+  }
+
+  function renderGrid(){
+    const c = counts();
+    $("#countBooks").textContent = c.books;
+    $("#countMusic").textContent = c.music;
+    $("#countVideos").textContent = c.videos;
+    $("#countCourses").textContent = c.courses;
+
+    $("#savedCount").textContent = state.saved.size;
+
+    buildGenreOptions();
+
+    const items = applyFilters();
+    const grid = $("#grid");
+
+    if(items.length === 0){
+      grid.innerHTML = `
+        <div class="glass-card rounded-3xl p-8 border border-white/10 md:col-span-2 lg:col-span-3">
+          <h3 class="text-2xl font-bold text-white mb-2">No results</h3>
+          <p class="text-gray-400">Try clearing filters, lowering minimum rating, or changing your search.</p>
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = items.map(it => {
+      const saved = state.saved.has(it.id);
+      const badge =
+        it.badge === "free" ? `<div class="badge badge-free">Free</div>` :
+        it.badge === "coming" ? `<div class="badge badge-coming">Coming</div>` : "";
+
+      const topIcon =
+        it.type === "books" ? "fa-book" :
+        it.type === "music" ? "fa-music" :
+        it.type === "videos" ? "fa-video" : "fa-graduation-cap";
+
+      const primaryDisabled = (it.badge === "coming");
+      const primaryText = esc(it.actionPrimary || "Open");
+
+      const tags = (it.tags || []).slice(0,4).map(t => `<span class="px-2 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300">#${esc(t)}</span>`).join("");
+
+      return `
+        <article class="glass-card rounded-3xl p-7 relative border border-white/10 group">
+          ${badge}
+          <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                <i class="fas ${topIcon} text-sky-300"></i>
+              </div>
+              <div>
+                <div class="text-xs text-gray-400 font-bold uppercase tracking-wider">${esc(it.genre)} • ${esc(it.year)}</div>
+                <div class="text-xs text-gray-500 mt-1">${esc(it.creator)}</div>
+              </div>
+            </div>
+
+            <div class="px-3 py-1.5 rounded-full bg-black/20 border border-white/10 text-xs font-extrabold text-gray-200">
+              <i class="fas fa-star text-yellow-400 mr-1"></i>${Number(it.rating||0).toFixed(1)}
+            </div>
+          </div>
+
+          <h3 class="text-2xl font-bold text-white mb-2">${esc(it.title)}</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-5">${esc(it.desc)}</p>
+
+          <div class="flex flex-wrap gap-2 mb-6">${tags}</div>
+
+          ${it.type === "courses" ? `
+            <div class="mb-5">
+              <div class="flex items-center justify-between text-xs mb-2">
+                <span class="text-gray-500 font-bold">Course Progress</span>
+                <span class="text-gray-300 font-extrabold">${clamp((state.courseProgress[it.id] ?? it.progress ?? 0),0,100)}%</span>
+              </div>
+              <div class="progressTrack rounded-full h-2 overflow-hidden">
+                <div class="progressFill h-2 rounded-full" style="width:${clamp((state.courseProgress[it.id] ?? it.progress ?? 0),0,100)}%"></div>
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="flex gap-3">
+            <button class="${primaryDisabled ? "bg-gray-800 text-gray-500 cursor-not-allowed" : "btn-premium"} w-full py-3 rounded-xl text-sm font-extrabold"
+              ${primaryDisabled ? "disabled" : ""} data-open="${esc(it.id)}">
+              ${primaryText}
+            </button>
+
+            <button class="btn-outline w-full py-3 rounded-xl text-sm font-extrabold" data-save="${esc(it.id)}">
+              <i class="fas fa-bookmark mr-2"></i>${saved ? "Saved" : "Save"}
+            </button>
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  // modal
+  let currentItemId = null;
+
+  function openItemModal(id){
+    const it = catalog.find(x => x.id === id);
+    if(!it) return;
+    currentItemId = id;
+
+    $("#mTitle").textContent = it.title;
+    $("#mSubtitle").textContent = `${it.creator} • ${it.genre} • ${it.year} • Rating ${Number(it.rating||0).toFixed(1)}`;
+
+    const saved = state.saved.has(it.id);
+
+    const kv = [
+      ["Type", it.type],
+      ["Genre", it.genre],
+      ["Year", it.year],
+      ["Rating", Number(it.rating||0).toFixed(1)],
+      ["Tags", (it.tags||[]).slice(0,6).join(", ") || "—"],
+      ["Saved", saved ? "Yes" : "No"]
+    ];
+    $("#mKV").innerHTML = kv.map(([k,v]) => `
+      <div class="rounded-2xl p-3 border border-white/10 bg-black/20">
+        <div class="text-[11px] text-gray-400 font-bold uppercase">${esc(k)}</div>
+        <div class="text-sm font-extrabold text-white mt-1">${esc(v)}</div>
+      </div>
+    `).join("");
+
+    $("#mDesc").textContent = it.desc;
+
+    // actions
+    const mPrimary = $("#mPrimary");
+    const mSave = $("#mSave");
+
+    mPrimary.textContent = it.actionPrimary || "Start";
+    mPrimary.onclick = () => primaryAction(it);
+
+    mSave.innerHTML = `<i class="fas fa-bookmark mr-2"></i>${saved ? "Unsave" : "Save"}`;
+    mSave.onclick = () => {
+      toggleSave(it.id);
+      renderGrid();
+      // refresh saved KV + button
+      openItemModal(it.id);
+    };
+
+    // course progress controls
+    const wrap = $("#courseProgressWrap");
+    wrap.classList.add("hidden");
+
+    if(it.type === "courses"){
+      wrap.classList.remove("hidden");
+      const pct = clamp((state.courseProgress[it.id] ?? it.progress ?? 0), 0, 100);
+      $("#coursePct").textContent = `${pct}%`;
+      $("#courseBar").style.width = `${pct}%`;
+
+      $("#btnAdvance").onclick = () => {
+        const next = clamp((state.courseProgress[it.id] ?? pct) + 10, 0, 100);
+        state.courseProgress[it.id] = next;
+        persistLibrary();
+        $("#coursePct").textContent = `${next}%`;
+        $("#courseBar").style.width = `${next}%`;
+        renderGrid();
+      };
+      $("#btnReset").onclick = () => {
+        state.courseProgress[it.id] = 0;
+        persistLibrary();
+        $("#coursePct").textContent = `0%`;
+        $("#courseBar").style.width = `0%`;
+        renderGrid();
+      };
+    }
+
+    // preview
+    const preview = $("#mPreview");
+    preview.innerHTML = "";
+
+    if(it.type === "music"){
+      const a = document.createElement("audio");
+      a.controls = true;
+      a.preload = "none";
+      a.src = it.preview?.src || "";
+      preview.appendChild(a);
+
+      preview.insertAdjacentHTML("beforeend", `
+        <div class="grid grid-cols-2 gap-2">
+          <button class="btn-outline px-4 py-3 rounded-xl text-sm font-bold" id="btnQueue"><i class="fas fa-list mr-2"></i>Queue</button>
+          <button class="btn-outline px-4 py-3 rounded-xl text-sm font-bold" id="btnLike"><i class="fas fa-heart mr-2"></i>Like</button>
+        </div>
+      `);
+      $("#btnQueue").onclick = () => alert(`Queued: ${it.title}`);
+      $("#btnLike").onclick = () => alert(`Liked: ${it.title}`);
+    }
+    else if(it.type === "videos"){
+      if(it.preview?.src){
+        const v = document.createElement("video");
+        v.controls = true;
+        v.preload = "none";
+        v.src = it.preview.src;
+        v.className = "w-full rounded-2xl border border-white/10 bg-black/30";
+        preview.appendChild(v);
+      } else {
+        preview.insertAdjacentHTML("beforeend", `
+          <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+            <div class="font-extrabold text-white">No video source attached</div>
+            <div class="text-gray-400 text-sm mt-2 leading-relaxed">
+              Add a real MP4/WebM URL into this item's <b>preview.src</b> to enable playback.
+            </div>
+          </div>
+        `);
+      }
+    }
+    else if(it.type === "courses"){
+      const mods = it.preview?.modules || [];
+      const current = it.preview?.current || mods[0] || "Module";
+      preview.insertAdjacentHTML("beforeend", `
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-xs text-gray-400 font-bold uppercase">Current Module</div>
+              <div class="text-white font-extrabold mt-1">${esc(current)}</div>
+            </div>
+            <div class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-gray-200">${mods.length} modules</div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-4">
+            ${mods.map(m => `<span class="px-2 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300">${esc(m)}</span>`).join("")}
+          </div>
+        </div>
+      `);
+    }
+    else {
+      // books
+      preview.insertAdjacentHTML("beforeend", `
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+          <div class="text-xs text-gray-400 font-bold uppercase">Reading Preview</div>
+          <div class="text-gray-200 text-sm mt-3 leading-relaxed">${esc(it.preview?.content || "Preview not available.")}</div>
+        </div>
+      `);
+      preview.insertAdjacentHTML("beforeend", `
+        <div class="grid grid-cols-2 gap-2">
+          <button class="btn-outline px-4 py-3 rounded-xl text-sm font-bold" id="btnHighlight"><i class="fas fa-highlighter mr-2"></i>Highlight</button>
+          <button class="btn-outline px-4 py-3 rounded-xl text-sm font-bold" id="btnNote"><i class="fas fa-note-sticky mr-2"></i>Note</button>
+        </div>
+      `);
+      $("#btnHighlight").onclick = () => alert("Highlight saved (demo).");
+      $("#btnNote").onclick = () => alert("Note saved (demo).");
+    }
+
+    $("#itemModal").classList.remove("hidden");
+    $("#itemModal").classList.add("flex");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeItemModal(){
+    $("#itemModal").classList.add("hidden");
+    $("#itemModal").classList.remove("flex");
+    document.body.style.overflow = "";
+    currentItemId = null;
+  }
+
+  function primaryAction(it){
+    // Books: open link if exists
+    if(it.type === "books" && it.link){
+      window.open(it.link, "_blank");
+      return;
+    }
+    // Courses: enforce login if you want
+    if(it.type === "courses"){
+      checkLogin();
+      return;
+    }
+    // Music/videos: try play
+    const audio = $("#mPreview audio");
+    const video = $("#mPreview video");
+    if(audio) audio.play().catch(()=>{});
+    if(video) video.play().catch(()=>{});
+  }
+
+  function setType(t){
+    state.type = t;
+    state.genre = "All";
+    state.sort = "relevance";
+    state.showSaved = false;
+    $("#savedChip").classList.remove("active");
+    $("#savedChip").setAttribute("aria-pressed","false");
+    $$(".chip[data-type]").forEach(b => b.classList.toggle("active", b.dataset.type === t));
+    renderGrid();
+  }
+
+  function discover(){
+    const pool = catalog.filter(x => x.type === state.type);
+    if(pool.length === 0) return;
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    openItemModal(pick.id);
+  }
+
+  function quickAdd(){
+    const id = "x" + Math.random().toString(16).slice(2,8);
+    const newItem = {
+      id, type: state.type,
+      title: `New ${state.type.slice(0,1).toUpperCase()+state.type.slice(1)} Item`,
+      creator: "You",
+      year: new Date().getFullYear(),
+      rating: 4.0,
+      genre: state.type === "music" ? "Electronic" : state.type === "videos" ? "Design" : state.type === "courses" ? "Technology" : "Fiction",
+      tags:["custom","demo"],
+      desc:"Quick-added demo item. Replace catalog with your real data source.",
+      actionPrimary: state.type === "music" ? "Play" : state.type === "videos" ? "Watch" : state.type === "courses" ? "View Details" : "Read",
+      progress: state.type === "courses" ? 0 : undefined,
+      preview:
+        state.type === "music" ? {kind:"audio", src:"data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="} :
+        state.type === "videos" ? {kind:"video", src:""} :
+        state.type === "courses" ? {kind:"course", modules:["Intro","Module 1","Module 2"], current:"Intro"} :
+        {kind:"text", content:"Preview: add your own content."}
+    };
+    catalog.unshift(newItem);
+    renderGrid();
+  }
+
+  function wireLibrary(){
+    // tab chips
+    $$(".chip[data-type]").forEach(btn => btn.addEventListener("click", () => setType(btn.dataset.type)));
+
+    // search
+    $("#q").addEventListener("input", (e) => { state.query = e.target.value; state.sort="relevance"; renderGrid(); });
+
+    // saved only
+    $("#savedChip").addEventListener("click", () => {
+      state.showSaved = !state.showSaved;
+      $("#savedChip").classList.toggle("active", state.showSaved);
+      $("#savedChip").setAttribute("aria-pressed", String(state.showSaved));
+      renderGrid();
+    });
+
+    // filters
+    $("#genre").addEventListener("change", (e) => { state.genre = e.target.value; renderGrid(); });
+    $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; renderGrid(); });
+
+    $("#minRating").addEventListener("input", (e) => {
+      state.minRating = Number(e.target.value);
+      $("#minRatingVal").textContent = state.minRating.toFixed(1);
+      renderGrid();
+    });
+
+    $("#btnDiscover").addEventListener("click", discover);
+    $("#btnQuickAdd").addEventListener("click", quickAdd);
+
+    // delegate open/save
+    $("#grid").addEventListener("click", (e) => {
+      const openBtn = e.target.closest("[data-open]");
+      const saveBtn = e.target.closest("[data-save]");
+      if(openBtn){
+        const id = openBtn.getAttribute("data-open");
+        openItemModal(id);
+      }
+      if(saveBtn){
+        const id = saveBtn.getAttribute("data-save");
+        toggleSave(id);
+        renderGrid();
+      }
+    });
+
+    // keyboard: focus search + close modal
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "/" && document.activeElement !== $("#q")){
+        e.preventDefault(); $("#q").focus();
+      }
+      if(e.key === "Escape"){
+        if(!$("#itemModal").classList.contains("hidden")) closeItemModal();
+      }
+    });
+
+    // click outside modal content
+    $("#itemModal").addEventListener("click", (e) => {
+      if(e.target === $("#itemModal")) closeItemModal();
+    });
+  }
+
+  // init
+  document.addEventListener('DOMContentLoaded', () => {
+    AOS.init({ duration: 1000, once: true, offset: 100 });
+    initThreeJS();
+
+    if (document.getElementById('typed')){
+      new Typed('#typed', {
+        strings: ["Read Premium Books", "Listen to Music", "Watch Videos", "Master New Skills", "Spudy Library"],
+        typeSpeed: 60,
+        backSpeed: 40,
+        loop: true,
+        showCursor: false
+      });
+    }
+
+    $("#minRatingVal").textContent = Number($("#minRating").value).toFixed(1);
+    wireLibrary();
+    renderGrid();
+  });
+</script>
+
+<style>
+  /* payment-option styles (kept, but moved here so they still work) */
+  .payment-option{
+    transition: all 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+  }
+  .payment-option:hover{
+    transform: translateY(-5px);
+    border-color: #38bdf8;
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .payment-option.selected{
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+  }
+</style>
+
 </body>
 </html>
