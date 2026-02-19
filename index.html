@@ -27,6 +27,12 @@
     }
     h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
 
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #050505; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #444; }
+
     #canvas {
       width: 100vw; height: 100vh;
       position: fixed; top: 0; left: 0;
@@ -45,20 +51,20 @@
     /* glass */
     .glass-nav{
       background: rgba(10, 10, 10, 0.72);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     .glass-card{
       background: rgba(20, 20, 20, 0.62);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255,255,255,0.07);
       transition: all 0.35s ease;
       box-shadow: 0 8px 50px rgba(0,0,0,0.35);
+      transform-style: preserve-3d;
     }
     .glass-card:hover{
-      transform: translateY(-4px);
       border-color: rgba(14,165,233,0.24);
       box-shadow: 0 18px 70px rgba(0,0,0,0.55);
     }
@@ -148,6 +154,38 @@
       border-color: #10b981;
       background: rgba(16, 185, 129, 0.1);
     }
+
+    /* TOASTS */
+    .toast-container {
+      position: fixed; bottom: 6rem; right: 2rem; z-index: 9999;
+      display: flex; flex-direction: column; gap: 0.75rem;
+      pointer-events: none;
+    }
+    .toast {
+      pointer-events: auto;
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      color: white; font-weight: 700; font-size: 0.9rem;
+      display: flex; items-center; gap: 0.75rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transform: translateX(120%);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .toast.show { transform: translateX(0); }
+    .toast-success { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3); color: #86efac; }
+    .toast-error { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #fca5a5; }
+    .toast-info { background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.3); color: #bae6fd; }
+
+    /* Skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 0.5rem;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
   </style>
 </head>
 
@@ -175,12 +213,9 @@
       <a href="#contact" class="text-gray-300 hover:text-white transition">Contact</a>
 
       <div id="navWelcome" class="hidden items-center gap-3">
-        <div class="px-3 py-2 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-200">
-          <i class="fas fa-sparkles text-yellow-300 mr-2"></i>
-          <span id="welcomeName">Welcome</span>
-        </div>
-        <button onclick="logout()" class="btn-outline px-4 py-2 rounded-full text-xs font-extrabold">
-          <i class="fas fa-right-from-bracket mr-2"></i>Logout
+        <button onclick="openProfile()" class="px-3 py-2 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-200 hover:bg-white/10 transition flex items-center gap-2">
+          <div class="w-5 h-5 rounded-full bg-gradient-to-tr from-sky-400 to-emerald-400 flex items-center justify-center text-[10px] text-black font-bold">U</div>
+          <span id="welcomeName">User</span>
         </button>
       </div>
 
@@ -204,12 +239,8 @@
       <a href="#contact" class="text-gray-300 hover:text-white transition py-2" onclick="toggleMobileMenu()">Contact</a>
 
       <div id="mobileWelcome" class="hidden">
-        <div class="px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-gray-200 mb-3">
-          <i class="fas fa-sparkles text-yellow-300 mr-2"></i>
-          <span id="welcomeNameMobile">Welcome</span>
-        </div>
-        <button onclick="logout(); toggleMobileMenu()" class="btn-outline px-6 py-3 rounded-2xl text-sm font-extrabold w-full">
-          <i class="fas fa-right-from-bracket mr-2"></i>Logout
+        <button onclick="openProfile(); toggleMobileMenu()" class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-gray-200 mb-3 flex items-center justify-center gap-2">
+           <i class="fas fa-user-circle"></i> <span id="welcomeNameMobile">Profile</span>
         </button>
       </div>
 
@@ -286,7 +317,7 @@
         <button id="btnRefreshYT" class="btn-outline px-5 py-3 rounded-2xl text-sm font-extrabold">
           <i class="fas fa-rotate mr-2"></i>Refresh YouTube Titles
         </button>
-        <button onclick="requireAuth(() => alert('You are signed in ✅'))" class="btn-premium px-5 py-3 rounded-2xl text-sm font-extrabold">
+        <button onclick="requireAuth(() => toast('You are signed in ✅', 'success'))" class="btn-premium px-5 py-3 rounded-2xl text-sm font-extrabold">
           <i class="fas fa-crown mr-2"></i>Member Tools
         </button>
       </div>
@@ -689,6 +720,52 @@
   </div>
 </div>
 
+<!-- PROFILE MODAL -->
+<div id="profileModal" class="fixed inset-0 hidden items-center justify-center z-[60] modalBack p-4">
+  <div class="glass-card w-full max-w-md rounded-3xl border border-white/10 overflow-hidden relative">
+    <button onclick="closeProfile()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+    <div class="p-8 text-center">
+      <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-tr from-sky-400 to-emerald-400 p-1 mb-4">
+        <div class="w-full h-full rounded-full bg-black flex items-center justify-center text-3xl font-bold text-white uppercase" id="pAvatar">U</div>
+      </div>
+      <h3 class="text-2xl font-bold text-white mb-1" id="pNameDisp">User</h3>
+      <p class="text-gray-400 text-sm mb-6" id="pEmailDisp">user@example.com</p>
+
+      <div class="space-y-4 text-left">
+        <div>
+          <label class="text-xs text-gray-500 font-extrabold ml-1">DISPLAY NAME</label>
+          <input id="pNameInput" type="text" class="w-full p-3 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-sky-400 transition mt-1">
+        </div>
+        <button onclick="saveProfile()" class="btn-premium w-full py-3 rounded-xl font-extrabold text-sm">Save Changes</button>
+        <button onclick="logout(); closeProfile()" class="btn-outline w-full py-3 rounded-xl font-extrabold text-sm text-red-400 border-red-500/30 hover:bg-red-500/10 hover:border-red-500">Log Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUDIO PLAYER -->
+<div id="audioPlayer" class="fixed bottom-0 left-0 w-full z-[100] glass-nav border-t border-white/10 transform translate-y-full transition-transform duration-300">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
+    <div class="w-12 h-12 rounded-xl bg-white/10 flex-shrink-0 flex items-center justify-center">
+      <i class="fas fa-music text-sky-400"></i>
+    </div>
+    <div class="flex-1 min-w-0">
+      <div id="audioTitle" class="text-sm font-bold text-white truncate">Track Title</div>
+      <div id="audioArtist" class="text-xs text-gray-400 truncate">Artist</div>
+    </div>
+    <div class="flex items-center gap-4">
+      <button onclick="toggleAudio()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition">
+        <i id="audioPlayBtn" class="fas fa-pause"></i>
+      </button>
+      <button onclick="closeAudio()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+    </div>
+  </div>
+  <iframe id="audioFrame" class="hidden" allow="autoplay"></iframe>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container" class="toast-container"></div>
+
 <script>
   /* -----------------------------
      UTIL
@@ -774,7 +851,7 @@
       setSession({ userId: user.id });
       closeAuth();
       syncAuthUI();
-      toast(`Welcome, ${user.name}! ✅`);
+      toast(`Welcome, ${user.name}! ✅`, 'success');
       return;
     }
 
@@ -784,13 +861,13 @@
     setSession({ userId: user.id });
     closeAuth();
     syncAuthUI();
-    toast(`Welcome back, ${user.name}! ✅`);
+    toast(`Welcome back, ${user.name}! ✅`, 'success');
   }
 
   function logout(){
     localStorage.removeItem(SESSION_KEY);
     syncAuthUI();
-    toast("Logged out.");
+    toast("Logged out.", 'info');
   }
 
   function currentUser(){
@@ -822,24 +899,69 @@
     $('#mobileAuthBtn').classList.toggle('hidden', !!user);
 
     if(user){
-      $('#welcomeName').textContent = `Welcome, ${user.name}`;
-      $('#welcomeNameMobile').textContent = `Welcome, ${user.name}`;
+      $('#welcomeName').textContent = user.name;
+      $('#welcomeNameMobile').textContent = `Profile (${user.name})`;
       $('#heroWelcome').classList.remove('hidden');
       $('#heroWelcome').textContent = `Welcome, ${user.name} 👋`;
+      // profile modal
+      $('#pNameDisp').textContent = user.name;
+      $('#pEmailDisp').textContent = user.email;
+      $('#pNameInput').value = user.name;
+      $('#pAvatar').textContent = user.name.charAt(0);
     } else {
       $('#heroWelcome').classList.add('hidden');
       $('#heroWelcome').textContent = "";
     }
   }
 
-  function toast(msg){
-    // minimal toast
-    const t = document.createElement("div");
-    t.className = "fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-sm font-extrabold text-white";
-    t.textContent = msg;
-    document.body.appendChild(t);
-    setTimeout(() => t.style.opacity = "0", 1600);
-    setTimeout(() => t.remove(), 2000);
+  /* -----------------------------
+     PROFILE MODAL
+  ------------------------------*/
+  function openProfile(){
+    const user = currentUser();
+    if(!user) return;
+    syncAuthUI();
+    $('#profileModal').classList.remove('hidden');
+    $('#profileModal').classList.add('flex');
+  }
+  function closeProfile(){
+    $('#profileModal').classList.add('hidden');
+    $('#profileModal').classList.remove('flex');
+  }
+  function saveProfile(){
+    const user = currentUser();
+    if(!user) return;
+    const newName = $('#pNameInput').value.trim();
+    if(!newName) return toast('Name cannot be empty', 'error');
+
+    const users = getUsers();
+    const idx = users.findIndex(u => u.id === user.id);
+    if(idx >= 0){
+      users[idx].name = newName;
+      setUsers(users);
+      syncAuthUI();
+      toast('Profile updated successfully!', 'success');
+      closeProfile();
+    }
+  }
+
+  /* -----------------------------
+     TOASTS
+  ------------------------------*/
+  function toast(msg, type='info'){
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    const icon = type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle';
+    t.className = `toast toast-${type}`;
+    t.innerHTML = `<i class="fas fa-${icon} text-lg"></i><span>${msg}</span>`;
+    c.appendChild(t);
+
+    requestAnimationFrame(() => t.classList.add('show'));
+
+    setTimeout(() => {
+      t.classList.remove('show');
+      setTimeout(() => t.remove(), 400);
+    }, 4000);
   }
 
   /* -----------------------------
@@ -850,7 +972,7 @@
     const error = $('#subscribe-error');
     if(email && email.includes('@')){
       error.classList.add('hidden');
-      toast('Subscribed ✅');
+      toast('Subscribed successfully!', 'success');
       $('#subscribe-email').value = "";
     } else {
       error.classList.remove('hidden');
@@ -927,10 +1049,10 @@
     const id = ytId(url);
     return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : "";
   }
-  function buildYouTubeEmbed(url){
+  function buildYouTubeEmbed(url, autoplay=false){
     const id = ytId(url);
     if(!id) return "";
-    return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1`;
+    return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1${autoplay ? '&autoplay=1' : ''}`;
   }
   async function fetchYouTubeMeta(url){
     const id = ytId(url);
@@ -1176,12 +1298,14 @@
 
       const tags = (it.tags || []).slice(0,4).map(t => `<span class="px-2 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-gray-300 font-bold">#${esc(t)}</span>`).join("");
 
+      // Skeleton for image
       const thumb = mediaThumb(it);
       const thumbHtml = thumb
         ? `<div class="relative overflow-hidden rounded-2xl border border-white/10 bg-black/30 mb-5">
-             <img src="${esc(thumb)}" alt="" class="w-full h-44 object-cover opacity-90 group-hover:opacity-100 transition">
-             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
-             <div class="absolute bottom-3 left-3 text-xs font-extrabold text-white/90 flex items-center gap-2">
+             <img src="${esc(thumb)}" alt="" class="w-full h-44 object-cover opacity-90 group-hover:opacity-100 transition relative z-10" loading="lazy" onload="this.previousElementSibling.style.display='none'">
+             <div class="absolute inset-0 skeleton z-0"></div>
+             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-20"></div>
+             <div class="absolute bottom-3 left-3 text-xs font-extrabold text-white/90 flex items-center gap-2 z-30">
                <span class="px-2 py-1 rounded-full bg-black/50 border border-white/10"><i class="fas ${topIcon} mr-1"></i>${esc(it.type.toUpperCase())}</span>
              </div>
            </div>`
@@ -1238,6 +1362,70 @@
         </article>
       `;
     }).join("");
+
+    initTilt();
+  }
+
+  /* -----------------------------
+     3D TILT EFFECT
+  ------------------------------*/
+  function initTilt() {
+    $$('.glass-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -4;
+        const rotateY = ((x - centerX) / centerX) * 4;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+      });
+    });
+  }
+
+  /* -----------------------------
+     AUDIO PLAYER
+  ------------------------------*/
+  let currentAudio = null;
+  let isPlaying = false;
+
+  function playAudio(item){
+    if(!item.youtube) return;
+    currentAudio = item;
+    $('#audioTitle').textContent = item.title;
+    $('#audioArtist').textContent = item.creator;
+    $('#audioFrame').src = buildYouTubeEmbed(item.youtube, true);
+    $('#audioPlayer').classList.remove('translate-y-full');
+    $('#audioPlayBtn').className = 'fas fa-pause';
+    isPlaying = true;
+  }
+  function toggleAudio(){
+    if(!currentAudio) return;
+    const frame = $('#audioFrame');
+    // YouTube iframe API control is limited without full API, but we can toggle src to stop/start
+    // For a real app, use YouTube Player API. Here we just toggle visibility/state logic for UI.
+    // Re-loading iframe is the only way to "pause" a simple embed reliably without API.
+    if(isPlaying){
+       // pause (clear src)
+       frame.src = '';
+       $('#audioPlayBtn').className = 'fas fa-play';
+       isPlaying = false;
+    } else {
+       // play
+       frame.src = buildYouTubeEmbed(currentAudio.youtube, true);
+       $('#audioPlayBtn').className = 'fas fa-pause';
+       isPlaying = true;
+    }
+  }
+  function closeAudio(){
+    $('#audioPlayer').classList.add('translate-y-full');
+    $('#audioFrame').src = '';
+    currentAudio = null;
+    isPlaying = false;
   }
 
   /* -----------------------------
@@ -1296,7 +1484,7 @@
         $("#coursePct").textContent = `${next}%`;
         $("#courseBar").style.width = `${next}%`;
         renderGrid();
-        toast("Progress updated ✅");
+        toast("Progress updated ✅", 'success');
       });
 
       $("#btnReset").onclick = () => requireAuth(() => {
@@ -1305,7 +1493,7 @@
         $("#coursePct").textContent = `0%`;
         $("#courseBar").style.width = `0%`;
         renderGrid();
-        toast("Progress reset ✅");
+        toast("Progress reset ✅", 'info');
       });
     }
 
@@ -1413,11 +1601,19 @@
     }
     // courses: require auth
     if(it.type === "courses"){
-      requireAuth(() => toast("Course opened ✅ (demo)"));
+      requireAuth(() => toast("Course opened ✅ (demo)", 'success'));
       return;
     }
-    // music/videos: open modal
-    if((it.type === "music" || it.type === "videos") && it.youtube){
+    // music: play in persistent player
+    if(it.type === "music" && it.youtube){
+      playAudio(it);
+      toast("Now Playing 🎵", 'success');
+      // close modal if open
+      closeItemModal();
+      return;
+    }
+    // videos: open modal
+    if(it.type === "videos" && it.youtube){
       openItemModal(it.id);
       return;
     }
@@ -1461,7 +1657,7 @@
       };
       catalog.unshift(newItem);
       renderGrid();
-      toast("Item added ✅");
+      toast("Item added ✅", 'success');
     });
   }
 
@@ -1493,7 +1689,7 @@
       const saveBtn = e.target.closest("[data-save]");
       if(openBtn){
         const id = openBtn.getAttribute("data-open");
-        openItemModal(id);
+        primaryAction(catalog.find(x => x.id === id));
       }
       if(saveBtn){
         const id = saveBtn.getAttribute("data-save");
@@ -1509,6 +1705,7 @@
       if(e.key === "Escape"){
         if(!$("#itemModal").classList.contains("hidden")) closeItemModal();
         if(!$("#authModal").classList.contains("hidden")) closeAuth();
+        if(!$("#profileModal").classList.contains("hidden")) closeProfile();
       }
     });
 
@@ -1518,10 +1715,13 @@
     $("#authModal").addEventListener("click", (e) => {
       if(e.target === $("#authModal")) closeAuth();
     });
+    $("#profileModal").addEventListener("click", (e) => {
+      if(e.target === $("#profileModal")) closeProfile();
+    });
 
     $("#btnRefreshYT").addEventListener("click", async () => {
       await warmYouTubeMeta(true);
-      toast("YouTube titles refreshed ✅");
+      toast("YouTube titles refreshed ✅", 'success');
     });
   }
 
